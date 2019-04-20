@@ -1,6 +1,7 @@
 const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest
 const uuid = require('uuid')
 const Parse = require('parse/node')
+const Parser = require('./parser')
 
 start()
 
@@ -15,14 +16,10 @@ function start() {
     request.setRequestHeader("user-key", apiKey)
     request.addEventListener('load', function(event) {
         if (request.status >= 200 && request.status < 300) {
-            parseResponse(request.responseText)
+            Parser.parseResponse(request.responseText)
         } else {
             console.log(request.responseText)
         }
     })
     request.send()
-}
-
-function parseResponse(response) {
-    console.log(response)
 }
