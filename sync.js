@@ -16,7 +16,7 @@ function syncGames() {
     const endpoint = `/games/?fields=*&filter[first_release_date][gt]=${year}-01-01&order=release_dates.date%3Aasc&limit=20&offset=0`
     const url = host + endpoint
 
-    var request = new XMLHttpRequest()
+    const request = new XMLHttpRequest()
     request.open("GET", url)
     request.setRequestHeader("user-key", apiKey)
     request.addEventListener('load', function(event) {
@@ -38,7 +38,7 @@ function syncMovies() {
     const endpoint = `/discover/movie?language=${language}&page=${page}&release_date.gte=${year}&sort_by=release_date.asc&api_key=${apiKey}`
     const url = host + endpoint
 
-    var request = new XMLHttpRequest()
+    const request = new XMLHttpRequest()
     request.open("GET", url)
     request.addEventListener('load', function(event) {
         if (request.status >= 200 && request.status < 300) {
