@@ -17,36 +17,38 @@ module.exports = {
             release.set("imageUrlForCover", "https:" + dto.cover.replace("/t_thumb/", "/t_1080p/"))
             Database.save(release, {})
         })
-    }
-}
-
-module.exports = {
+    },
     parseJsonFromMovieDb:function(json) {
         const discoverDto = JSON.parse(json)
         const page = discoverDto.page
         const pageCount = discoverDto.total_pages
         const results = discoverDto.results
-        saveMovies(results, 0)
+        saveMovie(results, 0)
     }
 }
 
-function saveMovies(dtos, index) {
+function saveMovie(dtos, index) {
     const dto = dtos[index]
-    const release = new Release()
-    release.set("externalId", dto.id.toString())
-    release.set("title", dto.title)
-    release.set("description", dto.overview)
-    release.set("releasedAt", new Date(Date.parse(dto.release_date)))
-    release.set("popularity", dto.popularity)
-    release.set("imageUrlForThumbnail", IMAGE_HOST_MOVIE_DB + "/w342/" + dto.poster_path)
-    release.set("imageUrlForCover", IMAGE_HOST_MOVIE_DB + "/w780/" + dto.poster_path)
-    release.set("imageUrlForWallpaper", IMAGE_HOST_MOVIE_DB + "/w1280/" + dto.backdrop_path)
-    Database.save(release, function() {
-        const hasMore = index < dtos.length
-        if (hasMore) {
-            saveMovies(dtos, index + 1)
-        } else {
-            console.log("Finished saving movies")
-        }
+    const externalId = dto.id.toString()
+    Database.getByExternalId(externalId, Release).then(function(release) {
+        release = release != null ? release : new Release()
+        release.set("externalId", externalId)
+        release.set("title", dto.title)
+        release.set("description", dto.overview)
+        release.set("releasedAt", new Date(Date.parse(dto.release_date)))
+        release.set("popularity", dto.popularity)
+        release.set("imageUrlForThumbnail", IMAGE_HOST_MOVIE_DB + "/w342/" + dto.poster_path)
+        release.set("imageUrlForCover", IMAGE_HOST_MOVIE_DB + "/w780/" + dto.poster_path)
+        release.set("imageUrlForWallpaper", IMAGE_HOST_MOVIE_DB + "/w1280/" + dto.backdrop_path)
+        Database.save(release, function() {
+            const hasMore = index < (dtos.length - 1)
+            if (hasMore) {
+                saveMovie(dtos, index + 1)
+            } else {
+                console.log("Finished saving movies")
+            }
+        }, function(error) {
+            console.log(error)
+        })
     })
 }
