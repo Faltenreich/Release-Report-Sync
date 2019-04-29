@@ -2,6 +2,9 @@ const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest
 const uuid = require('uuid')
 const Parser = require('./parser')
 
+const MOVIE_DB_HOST = "https://api.themoviedb.org/3"
+const MOVIE_DB_API_KEY = "3f49b57b1f30fc4de49d48e7d4a92d6f"
+
 module.exports = {
     start:function() {
         // syncGames()
@@ -30,13 +33,12 @@ function syncGames() {
 }
 
 function syncMovies() {
-    const host = "https://api.themoviedb.org/3"
-    const apiKey = "3f49b57b1f30fc4de49d48e7d4a92d6f"
-    const language = "en"
-    const page = 1
-    const year = 2019
-    const endpoint = `/discover/movie?language=${language}&page=${page}&release_date.gte=${year}&sort_by=release_date.asc&api_key=${apiKey}`
-    const url = host + endpoint
+    syncMovies(1, "en")
+}
+
+function syncMovies(page, language) {
+    const endpoint = `/movie/upcoming?language=${language}&page=${page}&api_key=${MOVIE_DB_API_KEY}`
+    const url = MOVIE_DB_HOST + endpoint
 
     const request = new XMLHttpRequest()
     request.open("GET", url)
@@ -45,6 +47,7 @@ function syncMovies() {
             Parser.parseJsonFromMovieDb(request.responseText)
         } else {
             console.log(request.responseText)
+            reject()
         }
     })
     request.send()
