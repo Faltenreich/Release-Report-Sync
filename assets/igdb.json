@@ -1,0 +1,1900 @@
+[
+    {
+        "id": 112916,
+        "age_ratings": [
+            23688,
+            23691
+        ],
+        "aggregated_rating": 79.875,
+        "aggregated_rating_count": 11,
+        "alternative_names": [
+            23479
+        ],
+        "artworks": [
+            6401,
+            6722,
+            6723
+        ],
+        "category": 0,
+        "collection": 22,
+        "cover": 70935,
+        "created_at": 1543881600,
+        "external_games": [
+            1686154,
+            1698319
+        ],
+        "first_release_date": 1555977600,
+        "game_engines": [
+            351
+        ],
+        "game_modes": [
+            1,
+            2
+        ],
+        "genres": [
+            4
+        ],
+        "hypes": 8,
+        "involved_companies": [
+            77358,
+            77359,
+            77360
+        ],
+        "keywords": [
+            109,
+            1308
+        ],
+        "name": "Mortal Kombat 11",
+        "platforms": [
+            6,
+            48,
+            49,
+            130
+        ],
+        "player_perspectives": [
+            4
+        ],
+        "popularity": 1560.536505379109,
+        "pulse_count": 753,
+        "rating": 90,
+        "rating_count": 5,
+        "release_dates": [
+            161924,
+            161925,
+            161926,
+            161937
+        ],
+        "screenshots": [
+            268601,
+            268602,
+            268603,
+            268604,
+            268605,
+            268606,
+            268607,
+            298938,
+            298939,
+            298940,
+            298941,
+            298942
+        ],
+        "similar_games": [
+            19164,
+            54775,
+            76064,
+            81249,
+            101608,
+            103282,
+            103288,
+            103369,
+            106987,
+            112589
+        ],
+        "slug": "mortal-kombat-11",
+        "summary": "Mortal Kombat is back and better than ever in the next evolution of the iconic franchise. \n \nThe all new Custom Character Variations give you unprecedented control of your fighters to make them your own. The new graphics engine showcases every skull-shattering, eye-popping moment, bringing you so close to the fight you can feel it. Featuring a roster of new and returning Klassic Fighters, Mortal Kombat's best-in-class cinematic story mode continues the epic saga over 25 years in the making.",
+        "tags": [
+            1,
+            17,
+            268435460,
+            536871021,
+            536872220
+        ],
+        "themes": [
+            1,
+            17
+        ],
+        "total_rating": 84.9375,
+        "total_rating_count": 16,
+        "updated_at": 1556582400,
+        "url": "https://www.igdb.com/games/mortal-kombat-11",
+        "videos": [
+            23616,
+            24253,
+            24254,
+            24255,
+            24256,
+            24257,
+            24961,
+            25300,
+            25655,
+            25747,
+            25790,
+            25801
+        ],
+        "websites": [
+            95220,
+            95221,
+            95222,
+            95223,
+            95224,
+            98300
+        ]
+    },
+    {
+        "id": 114455,
+        "category": 0,
+        "cover": 71287,
+        "created_at": 1548460800,
+        "external_games": [
+            1703979,
+            1711504
+        ],
+        "first_release_date": 1550793600,
+        "game_engines": [
+            439
+        ],
+        "game_modes": [
+            1,
+            2,
+            3
+        ],
+        "genres": [
+            15,
+            31,
+            32
+        ],
+        "hypes": 21,
+        "involved_companies": [
+            73952,
+            73956,
+            73957
+        ],
+        "keywords": [
+            131,
+            135,
+            1120,
+            1473,
+            1836,
+            2653,
+            2938,
+            3747
+        ],
+        "multiplayer_modes": [
+            9232,
+            9233
+        ],
+        "name": "Pacify",
+        "platforms": [
+            6,
+            14
+        ],
+        "player_perspectives": [
+            1
+        ],
+        "popularity": 1244.476978314986,
+        "rating": 89,
+        "rating_count": 10,
+        "release_dates": [
+            164848,
+            164849
+        ],
+        "screenshots": [
+            282044,
+            282045,
+            282046,
+            282047,
+            282048,
+            282049,
+            282050
+        ],
+        "similar_games": [
+            13189,
+            18020,
+            19817,
+            25311,
+            25646,
+            26658,
+            33661,
+            37419,
+            44076,
+            56033
+        ],
+        "slug": "pacify",
+        "storyline": "You just signed on with PAH Inc. Paranormal Activity Helpers Incorporated, yeah sounds corny, but the pay is great. They said you won't ever be in any real danger, and they have tons of work right now. Your first job is at some old haunted house. There is a broker wanting to put the house for sale, but with everyone in the town spreading rumors of evil living inside the house, he needs some proof that it is safe. He actually seems creeped out himself. Anyway, he hired PAH Inc. to check the place out. You can go check it out alone if you'd like, but I would take at least 3 more friends with me. Check the place out, and if there is anything supernatural going on, try to bring evidence back to PAH Inc.",
+        "summary": "An indie, multiplayer, horror game with fast paced game play for up to 4 players. Teams will need to explore an eerie mansion with a rumored past of funeral services including contacting deceased loved ones. A scary girl roams the house, and players need to keep her pacified to survive.",
+        "tags": [
+            1,
+            19,
+            268435471,
+            268435487,
+            268435488,
+            536871043,
+            536871047,
+            536872032,
+            536872385,
+            536872748,
+            536873565,
+            536873850,
+            536874659
+        ],
+        "themes": [
+            1,
+            19
+        ],
+        "total_rating": 89,
+        "total_rating_count": 10,
+        "updated_at": 1556323200,
+        "url": "https://www.igdb.com/games/pacify",
+        "videos": [
+            24532
+        ],
+        "websites": [
+            99347,
+            99348,
+            99349,
+            99350,
+            99351,
+            99352,
+            99353
+        ]
+    },
+    {
+        "id": 55036,
+        "age_ratings": [
+            14040
+        ],
+        "aggregated_rating": 81,
+        "aggregated_rating_count": 4,
+        "artworks": [
+            460,
+            461,
+            5670,
+            5671,
+            6938
+        ],
+        "category": 0,
+        "collection": 158,
+        "cover": 69280,
+        "created_at": 1503360000,
+        "external_games": [
+            186641,
+            1707325,
+            1717750
+        ],
+        "first_release_date": 1555372800,
+        "game_modes": [
+            1,
+            2
+        ],
+        "genres": [
+            13,
+            15
+        ],
+        "hypes": 29,
+        "involved_companies": [
+            53423,
+            53424
+        ],
+        "keywords": [
+            994,
+            3782
+        ],
+        "name": "Anno 1800",
+        "platforms": [
+            6
+        ],
+        "player_perspectives": [
+            3
+        ],
+        "popularity": 891.1384627690268,
+        "pulse_count": 71,
+        "rating": 60,
+        "rating_count": 4,
+        "release_dates": [
+            164136
+        ],
+        "screenshots": [
+            118714,
+            118715,
+            118716,
+            118717,
+            118718,
+            256060,
+            256061,
+            256062,
+            256063,
+            256064,
+            256065,
+            256066,
+            256067,
+            256068
+        ],
+        "similar_games": [
+            17613,
+            23345,
+            29173,
+            31515,
+            35463,
+            36346,
+            36553,
+            55590,
+            79134,
+            102163
+        ],
+        "slug": "anno-1800",
+        "summary": "Welcome to the dawn of the industrial age. The path you choose will define your world. Are you renovator or exploiter? Suppressor or liberator? It's up to you how the world will remember your name. \n \nIn Anno 1800, players will take charge of their own fortune as they navigate the rapidly evolving technological and malicious political landscape of the 19th century in their quest to build an empire that will stand the test of time. \n \nCombining beloved features with innovative gameplay in a memorable new setting, Anno 1800 marks the beginning of a new era for the Anno franchise.",
+        "tags": [
+            22,
+            268435469,
+            268435471,
+            536871906,
+            536874694
+        ],
+        "themes": [
+            22
+        ],
+        "total_rating": 70.5,
+        "total_rating_count": 8,
+        "updated_at": 1556668800,
+        "url": "https://www.igdb.com/games/anno-1800",
+        "videos": [
+            15599,
+            15600,
+            20597,
+            21739,
+            26142,
+            26491
+        ],
+        "websites": [
+            54662,
+            86835,
+            105532
+        ]
+    },
+    {
+        "id": 20910,
+        "age_ratings": [
+            23998
+        ],
+        "aggregated_rating": 60.6666666666667,
+        "aggregated_rating_count": 6,
+        "alternative_names": [
+            13083
+        ],
+        "artworks": [
+            6554,
+            6555
+        ],
+        "category": 0,
+        "cover": 71568,
+        "created_at": 1469059200,
+        "external_games": [
+            207919
+        ],
+        "first_release_date": 1555372800,
+        "franchise": 831,
+        "franchises": [
+            831
+        ],
+        "game_engines": [
+            618
+        ],
+        "game_modes": [
+            3
+        ],
+        "genres": [
+            5
+        ],
+        "hypes": 8,
+        "involved_companies": [
+            58871,
+            58872,
+            72112
+        ],
+        "keywords": [
+            5,
+            1320,
+            12087,
+            12618,
+            23382
+        ],
+        "name": "World War Z",
+        "platforms": [
+            6,
+            48,
+            49
+        ],
+        "player_perspectives": [
+            2
+        ],
+        "popularity": 883.0917676499322,
+        "pulse_count": 143,
+        "rating": 69.7326874808664,
+        "rating_count": 7,
+        "release_dates": [
+            164999,
+            165000,
+            165001
+        ],
+        "screenshots": [
+            138510,
+            138511,
+            211426,
+            211427,
+            211428,
+            211429,
+            211430,
+            211431,
+            211432
+        ],
+        "similar_games": [
+            970,
+            6188,
+            19561,
+            19686,
+            26192,
+            36646,
+            37016,
+            76882,
+            76887,
+            102584
+        ],
+        "slug": "world-war-z",
+        "summary": "Saber Interactive and Paramount pictures presents World War Z, a new four-player coop third-person shooter coming in 2019 for PlayStation 4, Xbox One, and PC.",
+        "tags": [
+            21,
+            268435461,
+            536870917,
+            536872232,
+            536882999,
+            536883530,
+            536894294
+        ],
+        "themes": [
+            21
+        ],
+        "total_rating": 65.19967707376655,
+        "total_rating_count": 13,
+        "updated_at": 1556668800,
+        "url": "https://www.igdb.com/games/world-war-z",
+        "videos": [
+            17109,
+            20158,
+            21747,
+            23679,
+            24832,
+            25168,
+            25511,
+            25906,
+            26198,
+            26440,
+            26753,
+            26859
+        ],
+        "websites": [
+            63728,
+            63729,
+            63730,
+            63731,
+            63732
+        ]
+    },
+    {
+        "id": 102060,
+        "age_ratings": [
+            24091
+        ],
+        "aggregated_rating": 91,
+        "aggregated_rating_count": 2,
+        "category": 0,
+        "cover": 71602,
+        "created_at": 1526688000,
+        "external_games": [
+            775282,
+            1457827
+        ],
+        "first_release_date": 1556150400,
+        "game_engines": [
+            670
+        ],
+        "game_modes": [
+            1,
+            2
+        ],
+        "genres": [
+            13,
+            15,
+            16,
+            24
+        ],
+        "hypes": 5,
+        "involved_companies": [
+            74249,
+            74250
+        ],
+        "keywords": [
+            149,
+            605,
+            3515,
+            23664
+        ],
+        "name": "Imperator: Rome",
+        "platforms": [
+            3,
+            6,
+            14
+        ],
+        "player_perspectives": [
+            3
+        ],
+        "popularity": 836.551422907061,
+        "pulse_count": 27,
+        "rating": 50,
+        "rating_count": 1,
+        "release_dates": [
+            164720,
+            164721,
+            164958
+        ],
+        "screenshots": [
+            212651,
+            212652,
+            212653,
+            212654
+        ],
+        "similar_games": [
+            13196,
+            18623,
+            23183,
+            23345,
+            27747,
+            36553,
+            55036,
+            79134,
+            102057,
+            102163
+        ],
+        "slug": "imperator-rome",
+        "summary": "\"Paradox Development Studio returns to ancient history with Imperator: Rome, a new title set around the growth of Roman power in a threatening Mediterranean. Unify Italy and then the world under the eagles of your legions. Or rule an Eastern monarchy with claims to the mantle of Alexander. Slaves, barbarians and war elephants bring the distant past to life in Imperator: Rome. Can you be a Caesar?\"",
+        "tags": [
+            17,
+            22,
+            41,
+            268435469,
+            268435471,
+            268435472,
+            268435480,
+            536871061,
+            536871517,
+            536874427,
+            536894576
+        ],
+        "themes": [
+            17,
+            22,
+            41
+        ],
+        "total_rating": 70.5,
+        "total_rating_count": 3,
+        "updated_at": 1556236800,
+        "url": "https://www.igdb.com/games/imperator-rome",
+        "videos": [
+            26256,
+            26257,
+            26258,
+            26819
+        ],
+        "websites": [
+            79322,
+            79323,
+            79324,
+            79334,
+            104330
+        ]
+    },
+    {
+        "id": 19561,
+        "age_ratings": [
+            23943
+        ],
+        "aggregated_rating": 76.7142857142857,
+        "aggregated_rating_count": 9,
+        "alternative_names": [
+            9348
+        ],
+        "category": 0,
+        "cover": 71279,
+        "created_at": 1465862400,
+        "external_games": [
+            107076,
+            190020,
+            252089
+        ],
+        "first_release_date": 1556236800,
+        "game_engines": [
+            439
+        ],
+        "game_modes": [
+            1
+        ],
+        "genres": [
+            5,
+            31
+        ],
+        "hypes": 131,
+        "involved_companies": [
+            36442,
+            36443
+        ],
+        "keywords": [
+            5,
+            57,
+            69,
+            129,
+            534,
+            1027,
+            1033,
+            1459,
+            2438,
+            2452,
+            4131,
+            4224,
+            4883,
+            4907,
+            6737,
+            6916
+        ],
+        "name": "Days Gone",
+        "platforms": [
+            48
+        ],
+        "player_perspectives": [
+            2
+        ],
+        "popularity": 825.8949888304223,
+        "pulse_count": 496,
+        "release_dates": [
+            160154
+        ],
+        "screenshots": [
+            44402,
+            44403,
+            44404,
+            44405,
+            44406,
+            212323,
+            212324,
+            212326,
+            212327,
+            212328,
+            212329,
+            213661
+        ],
+        "similar_games": [
+            13210,
+            17379,
+            19164,
+            19249,
+            19541,
+            28168,
+            37016,
+            44076,
+            101211,
+            102584
+        ],
+        "slug": "days-gone",
+        "storyline": "Set in the beautiful, volcanic scarred high-desert of the Pacific Northwest, Days Gone is an open-world action-adventure game where you play as Deacon St. John, a Drifter and bounty hunter who would rather risk the dangers of the broken road than live in one of the “safe” wilderness encampments. The game takes place two years after a global pandemic has killed almost everyone, but transformed millions of others into what survivors call Freakers – mindless, feral creatures, more animal than human but very much alive and quickly evolving. In the demo you saw two types of Freaks – Newts, which were adolescents when infected, are opportunistic hunters, preferring to hit and run from the shadows; and a Horde. Made up of hundreds of individual Freakers, Hordes eat, move and attack together, almost as one. Some Hordes roam the highways at night, while others, like the one in the demo, have found a food source that keeps it in a single location. Skills learned in his prior life as an outlaw biker have given Deacon a slight edge in the seemingly never-ending fight to stay alive. But will it be enough?",
+        "summary": "Days Gone is an open-world action-adventure game set in a harsh wilderness two years after a devastating global pandemic. Play as Deacon St. John, a Drifter and bounty hunter who rides the broken road, fighting to survive while searching for a reason to live. \n \nAt its core, Days Gone is about survivors and what makes them human: desperation, loss, madness, betrayal, friendship, brotherhood, regret, love – and hope. It’s about how even when confronted with such enormous tragedy they find a reason to live. Hope never dies.",
+        "tags": [
+            1,
+            19,
+            21,
+            33,
+            38,
+            268435461,
+            268435487,
+            536870917,
+            536870969,
+            536870981,
+            536871041,
+            536871446,
+            536871939,
+            536871945,
+            536872371,
+            536873350,
+            536873364,
+            536875043,
+            536875136,
+            536875795,
+            536875819,
+            536877649,
+            536877828
+        ],
+        "themes": [
+            1,
+            19,
+            21,
+            33,
+            38
+        ],
+        "total_rating": 76.7142857142857,
+        "total_rating_count": 9,
+        "updated_at": 1556668800,
+        "url": "https://www.igdb.com/games/days-gone",
+        "videos": [
+            22292,
+            22293,
+            22294,
+            22295,
+            22296,
+            24240,
+            24900,
+            25602,
+            25793
+        ],
+        "websites": [
+            52217,
+            52218,
+            59852,
+            79028,
+            79029,
+            79030,
+            79031
+        ]
+    },
+    {
+        "id": 22422,
+        "alternative_names": [
+            7170
+        ],
+        "category": 0,
+        "collection": 2360,
+        "cover": 16642,
+        "created_at": 1470873600,
+        "expansions": [
+            22463
+        ],
+        "external_games": [
+            143021
+        ],
+        "first_release_date": 1159488000,
+        "game_modes": [
+            1
+        ],
+        "genres": [
+            13,
+            31
+        ],
+        "involved_companies": [
+            38365
+        ],
+        "keywords": [
+            78,
+            343,
+            358,
+            847,
+            1027,
+            1098,
+            1148,
+            1484,
+            1714,
+            1834,
+            1961,
+            2071,
+            2452,
+            3985,
+            4305,
+            4364,
+            4369,
+            4644,
+            4921,
+            5394,
+            6270,
+            6318,
+            6399,
+            6474,
+            7412,
+            9749,
+            10445,
+            10518,
+            10748,
+            12002
+        ],
+        "name": "Sexy Beach 3",
+        "platforms": [
+            6
+        ],
+        "player_perspectives": [
+            1
+        ],
+        "popularity": 341.4026181469474,
+        "rating": 83.5279150798153,
+        "rating_count": 12,
+        "release_dates": [
+            54956
+        ],
+        "screenshots": [
+            30162,
+            30163,
+            30164,
+            30165,
+            30166
+        ],
+        "similar_games": [
+            19785,
+            19808,
+            22421,
+            22423,
+            22425,
+            22469,
+            22471,
+            22482,
+            22486,
+            59218
+        ],
+        "slug": "sexy-beach-3",
+        "summary": "Sexy Beach 3 is the third game in the Sexy Beach franchise developed by Illusion Software.",
+        "tags": [
+            42,
+            268435469,
+            268435487,
+            536870990,
+            536871255,
+            536871270,
+            536871759,
+            536871939,
+            536872010,
+            536872060,
+            536872396,
+            536872626,
+            536872746,
+            536872873,
+            536872983,
+            536873364,
+            536874897,
+            536875217,
+            536875276,
+            536875281,
+            536875556,
+            536875833,
+            536876306,
+            536877182,
+            536877230,
+            536877311,
+            536877386,
+            536878324,
+            536880661,
+            536881357,
+            536881430,
+            536881660,
+            536882914
+        ],
+        "themes": [
+            42
+        ],
+        "total_rating": 83.5279150798153,
+        "total_rating_count": 12,
+        "updated_at": 1556409600,
+        "url": "https://www.igdb.com/games/sexy-beach-3"
+    },
+    {
+        "id": 79134,
+        "category": 0,
+        "cover": 55170,
+        "created_at": 1514332800,
+        "game_modes": [
+            1
+        ],
+        "genres": [
+            13,
+            15
+        ],
+        "hypes": 18,
+        "involved_companies": [
+            59485
+        ],
+        "multiplayer_modes": [
+            7911
+        ],
+        "name": "Ancient Cities",
+        "player_perspectives": [
+            3
+        ],
+        "popularity": 328.8893754860939,
+        "pulse_count": 1,
+        "screenshots": [
+            139898,
+            139899,
+            139900
+        ],
+        "similar_games": [
+            17613,
+            18623,
+            23345,
+            28244,
+            33603,
+            36553,
+            55036,
+            65827,
+            102163,
+            112754
+        ],
+        "slug": "ancient-cities",
+        "status": 5,
+        "storyline": "Starting in with a nomadic tribe you will have to guide your people through the Neolithic revolution, discovering and improving technologies, managing resources and population, facing enemies, and ultimately, building the most fantastic city of the antiquity.",
+        "summary": "Ancient Citiesis a Survival and Strategy City Builder PC game through the ages, strongly focused on history and realism. Currently being developed by Uncasual Games. \n \nStarting in the Neolithic era, you will have to guide your people through generations, discovering and improving technologies, managing resources and population, facing threats from raiders and Mother Nature herself. And, ultimately, building the most fantastic city of antiquity through the ages in a fully simulated world and ecosystem.",
+        "tags": [
+            22,
+            268435469,
+            268435471
+        ],
+        "themes": [
+            22
+        ],
+        "updated_at": 1555459200,
+        "url": "https://www.igdb.com/games/ancient-cities",
+        "videos": [
+            17354
+        ],
+        "websites": [
+            64594,
+            64595,
+            64596,
+            64597
+        ]
+    },
+    {
+        "id": 19164,
+        "age_ratings": [
+            24425
+        ],
+        "artworks": [
+            6931,
+            6932,
+            6933
+        ],
+        "category": 0,
+        "collection": 225,
+        "cover": 72914,
+        "created_at": 1463097600,
+        "external_games": [
+            108729
+        ],
+        "first_release_date": 1568332800,
+        "franchise": 808,
+        "franchises": [
+            808
+        ],
+        "game_modes": [
+            1,
+            2
+        ],
+        "genres": [
+            5
+        ],
+        "hypes": 25,
+        "involved_companies": [
+            76875,
+            76876
+        ],
+        "keywords": [
+            4131
+        ],
+        "name": "Borderlands 3",
+        "platforms": [
+            6,
+            48,
+            49
+        ],
+        "player_perspectives": [
+            1
+        ],
+        "popularity": 303.2266235884112,
+        "pulse_count": 311,
+        "release_dates": [
+            167478,
+            167479,
+            167480
+        ],
+        "screenshots": [
+            296740,
+            296741
+        ],
+        "similar_games": [
+            54775,
+            55038,
+            65445,
+            81249,
+            90099,
+            101211,
+            103298,
+            103301,
+            106987,
+            112916
+        ],
+        "slug": "borderlands-3",
+        "summary": "The original shooter-looter returns, packing bazillions of guns and a mayhem-fueled adventure! Blast through new worlds and enemies as one of four new Vault Hunters. Play solo or with friends to take on insane enemies, score loads of loot and save your home from the most ruthless cult leaders in the galaxy.",
+        "tags": [
+            1,
+            17,
+            27,
+            38,
+            268435461,
+            536875043
+        ],
+        "themes": [
+            1,
+            17,
+            27,
+            38
+        ],
+        "updated_at": 1556064000,
+        "url": "https://www.igdb.com/games/borderlands-3",
+        "videos": [
+            25887,
+            25949,
+            26108
+        ],
+        "websites": [
+            103793,
+            103794,
+            104032,
+            104033,
+            104051,
+            104052,
+            104053,
+            104054
+        ]
+    },
+    {
+        "id": 22472,
+        "age_ratings": [
+            9372
+        ],
+        "alternative_names": [
+            7199
+        ],
+        "category": 0,
+        "collection": 2364,
+        "cover": 44628,
+        "created_at": 1471046400,
+        "first_release_date": 1402617600,
+        "game_modes": [
+            1
+        ],
+        "genres": [
+            13
+        ],
+        "involved_companies": [
+            38471
+        ],
+        "keywords": [
+            343,
+            847,
+            1270,
+            1484,
+            1961,
+            3586
+        ],
+        "name": "Artificial Academy 2",
+        "platforms": [
+            6
+        ],
+        "player_perspectives": [
+            1
+        ],
+        "popularity": 289.228758916948,
+        "rating": 79.8106319872234,
+        "rating_count": 21,
+        "release_dates": [
+            55078
+        ],
+        "similar_games": [
+            19075,
+            19809,
+            22426,
+            22470,
+            22471,
+            22482,
+            28465,
+            41895,
+            43130,
+            68049
+        ],
+        "slug": "artificial-academy-2",
+        "summary": "Artificial Academy 2 is an eroge high school social simulation, sequel of Artificial Academy. \n \nCreate and play up to 25 students of varying gender, orientation with interaction abilities and personal inclinations. Make friends and lovers as the class competes for achievements in academics, athletics, popularity, and romance.",
+        "tags": [
+            42,
+            268435469,
+            536871255,
+            536871759,
+            536872182,
+            536872396,
+            536872873,
+            536874498
+        ],
+        "themes": [
+            42
+        ],
+        "total_rating": 79.8106319872234,
+        "total_rating_count": 21,
+        "updated_at": 1554681600,
+        "url": "https://www.igdb.com/games/artificial-academy-2",
+        "websites": [
+            8823
+        ]
+    },
+    {
+        "id": 26163,
+        "category": 0,
+        "cover": 22491,
+        "created_at": 1480550400,
+        "game_engines": [
+            334
+        ],
+        "game_modes": [
+            1
+        ],
+        "genres": [
+            12,
+            31,
+            32
+        ],
+        "hypes": 10,
+        "name": "The Legend of Queen Opala",
+        "player_perspectives": [
+            2
+        ],
+        "popularity": 240.6604102841436,
+        "similar_games": [
+            37382,
+            43097,
+            47823,
+            80916,
+            81249,
+            90825,
+            96217,
+            101608,
+            106987,
+            116530
+        ],
+        "slug": "the-legend-of-queen-opala",
+        "tags": [
+            17,
+            38,
+            42,
+            43,
+            268435468,
+            268435487,
+            268435488
+        ],
+        "themes": [
+            17,
+            38,
+            42,
+            43
+        ],
+        "updated_at": 1553558400,
+        "url": "https://www.igdb.com/games/the-legend-of-queen-opala",
+        "websites": [
+            10727,
+            10728
+        ]
+    },
+    {
+        "id": 37419,
+        "category": 0,
+        "cover": 66684,
+        "created_at": 1497830400,
+        "external_games": [
+            60088
+        ],
+        "first_release_date": 1498867200,
+        "game_modes": [
+            1
+        ],
+        "genres": [
+            13,
+            31,
+            32
+        ],
+        "involved_companies": [
+            71837
+        ],
+        "name": "Dude Simulator",
+        "platforms": [
+            6
+        ],
+        "popularity": 226.0262790367048,
+        "rating": 85.7682619647355,
+        "rating_count": 20,
+        "release_dates": [
+            85498
+        ],
+        "screenshots": [
+            104714,
+            104715,
+            104716,
+            104717,
+            104718
+        ],
+        "similar_games": [
+            18234,
+            25311,
+            28277,
+            76263,
+            80916,
+            81680,
+            87975,
+            96217,
+            105011,
+            113360
+        ],
+        "slug": "dude-simulator",
+        "summary": "Dude Simulator is an open world sandbox game. This is a life simulator. The main objective is to enjoy what you are doing.",
+        "tags": [
+            1,
+            268435469,
+            268435487,
+            268435488
+        ],
+        "themes": [
+            1
+        ],
+        "total_rating": 85.7682619647355,
+        "total_rating_count": 20,
+        "updated_at": 1553990400,
+        "url": "https://www.igdb.com/games/dude-simulator",
+        "videos": [
+            20974
+        ],
+        "websites": [
+            48269,
+            94363
+        ]
+    },
+    {
+        "id": 116236,
+        "artworks": [
+            6778,
+            6780
+        ],
+        "category": 2,
+        "cover": 72290,
+        "created_at": 1552608000,
+        "hypes": 1,
+        "name": "Hearthstone: Rise of Shadows",
+        "parent_game": 1279,
+        "popularity": 217.5180518006976,
+        "pulse_count": 11,
+        "screenshots": [
+            297987,
+            297988,
+            297989,
+            297990,
+            297991,
+            297992,
+            297993,
+            297994
+        ],
+        "slug": "hearthstone-rise-of-shadows",
+        "updated_at": 1555027200,
+        "url": "https://www.igdb.com/games/hearthstone-rise-of-shadows"
+    },
+    {
+        "id": 113098,
+        "aggregated_rating": 85,
+        "aggregated_rating_count": 1,
+        "artworks": [
+            5934
+        ],
+        "category": 2,
+        "cover": 69987,
+        "created_at": 1543968000,
+        "first_release_date": 1555977600,
+        "game_modes": [
+            1
+        ],
+        "genres": [
+            31
+        ],
+        "hypes": 1,
+        "involved_companies": [
+            71979
+        ],
+        "keywords": [
+            34,
+            202
+        ],
+        "name": "Assassin's Creed: Odyssey - The Fate of Atlantis",
+        "parent_game": 103054,
+        "platforms": [
+            6,
+            48,
+            49
+        ],
+        "player_perspectives": [
+            2
+        ],
+        "popularity": 214.5636380256986,
+        "pulse_count": 15,
+        "release_dates": [
+            168300,
+            168301,
+            168302
+        ],
+        "screenshots": [
+            298992,
+            298993,
+            298994,
+            298995,
+            298996,
+            298997,
+            298998,
+            298999
+        ],
+        "similar_games": [
+            34155,
+            37419,
+            74701,
+            78632,
+            87622,
+            101608,
+            103054,
+            106987,
+            107212,
+            109423
+        ],
+        "slug": "assassins-creed-odyssey-the-fate-of-atlantis",
+        "summary": "The story arc will be cut into three episodes, with each episode being released roughly every six weeks after the release of the first, and will set players against mythic creatures while they uncover the mysteries of the fabled sunken city of Atlantis.",
+        "tags": [
+            1,
+            22,
+            268435487,
+            536870946,
+            536871114
+        ],
+        "themes": [
+            1,
+            22
+        ],
+        "total_rating": 85,
+        "total_rating_count": 1,
+        "updated_at": 1556064000,
+        "url": "https://www.igdb.com/games/assassins-creed-odyssey-the-fate-of-atlantis",
+        "videos": [
+            26583
+        ],
+        "websites": [
+            95136,
+            95137
+        ]
+    },
+    {
+        "id": 16309,
+        "alternative_names": [
+            5988
+        ],
+        "category": 0,
+        "collection": 2298,
+        "cover": 13890,
+        "created_at": 1452902400,
+        "first_release_date": 1467849600,
+        "game_engines": [
+            13
+        ],
+        "game_modes": [
+            1
+        ],
+        "genres": [
+            12,
+            13,
+            32
+        ],
+        "hypes": 3,
+        "involved_companies": [
+            37801
+        ],
+        "keywords": [
+            847,
+            1991,
+            2146,
+            2147
+        ],
+        "name": "A Life in Silk - The First Cumming",
+        "platforms": [
+            6,
+            14
+        ],
+        "player_perspectives": [
+            5
+        ],
+        "popularity": 213.3009475171927,
+        "pulse_count": 2,
+        "rating": 80,
+        "rating_count": 8,
+        "release_dates": [
+            53289,
+            53290
+        ],
+        "screenshots": [
+            19734,
+            19928
+        ],
+        "similar_games": [
+            9655,
+            22472,
+            25311,
+            26163,
+            28465,
+            43097,
+            51991,
+            55077,
+            74368,
+            109339
+        ],
+        "slug": "a-life-in-silk-the-first-cumming",
+        "storyline": "A Life in Silk is a highly-interactive visual-novel, that tells the story of a feminine sissy boy, who just recently turned 18 and dreams only of becoming a glamorous T-girl Goddess and rule the Big City with his beauty and never ending sexual appetite.\n\nBut while stuck in a small suburban town with his single but very libertine Mommy, he knows that to reach his expensive dream of perfect feminine transformation, he will need to seduce as many Sugar Daddies as he can with his advanced oral skills and erotically charge fashion sense, in hopes they will sponsor his transformation.",
+        "summary": "A Life in Silk is a highly-interactive visual-novel, that tells the story of a feminine sissy boy, who just recently turned 18 and dreams only of becoming a glamorous T-girl Goddess and rule the Big City with his beauty and never ending sexual appetite.\n\nBut while stuck in a small suburban town with his single but very libertine Mommy, he knows that to reach his expensive dream of perfect feminine transformation, he will need to seduce as many Sugar Daddies as he can with his advanced oral skills and erotically charge fashion sense, in hopes they will sponsor his transformation.",
+        "tags": [
+            27,
+            42,
+            268435468,
+            268435469,
+            268435488,
+            536871759,
+            536872903,
+            536873058,
+            536873059
+        ],
+        "themes": [
+            27,
+            42
+        ],
+        "total_rating": 80,
+        "total_rating_count": 8,
+        "updated_at": 1555286400,
+        "url": "https://www.igdb.com/games/a-life-in-silk-the-first-cumming",
+        "websites": [
+            8402
+        ]
+    },
+    {
+        "id": 55029,
+        "alternative_names": [
+            10474,
+            21982
+        ],
+        "category": 0,
+        "collection": 33,
+        "cover": 64918,
+        "created_at": 1503273600,
+        "external_games": [
+            186746,
+            1709033
+        ],
+        "first_release_date": 1577750400,
+        "franchise": 1330,
+        "franchises": [
+            1330
+        ],
+        "game_engines": [
+            669
+        ],
+        "game_modes": [
+            1,
+            2
+        ],
+        "genres": [
+            11,
+            15
+        ],
+        "hypes": 33,
+        "involved_companies": [
+            53376,
+            77181
+        ],
+        "keywords": [
+            1471,
+            1905
+        ],
+        "name": "Age of Empires IV",
+        "platforms": [
+            6
+        ],
+        "player_perspectives": [
+            3
+        ],
+        "popularity": 198.8789051284124,
+        "pulse_count": 20,
+        "release_dates": [
+            155872
+        ],
+        "screenshots": [
+            132081
+        ],
+        "similar_games": [
+            2015,
+            6985,
+            8773,
+            9856,
+            10243,
+            28794,
+            30229,
+            77334,
+            78550,
+            79134
+        ],
+        "slug": "age-of-empires-iv",
+        "summary": "It's time to battle through history once more in the latest entry of the landmark Age of Empires franchise.",
+        "tags": [
+            22,
+            39,
+            268435467,
+            268435471,
+            536872383,
+            536872817
+        ],
+        "themes": [
+            22,
+            39
+        ],
+        "updated_at": 1556409600,
+        "url": "https://www.igdb.com/games/age-of-empires-iv",
+        "videos": [
+            15503
+        ],
+        "websites": [
+            54533,
+            54534,
+            54535,
+            54536
+        ]
+    },
+    {
+        "id": 116998,
+        "alternative_names": [
+            24225,
+            24226
+        ],
+        "category": 0,
+        "cover": 72944,
+        "created_at": 1554249600,
+        "first_release_date": 1554249600,
+        "game_modes": [
+            1
+        ],
+        "hypes": 1,
+        "involved_companies": [
+            76895
+        ],
+        "keywords": [
+            169,
+            1496,
+            2241,
+            2642,
+            3032,
+            3486,
+            3833,
+            4165,
+            8236
+        ],
+        "name": "LSD: The Game",
+        "platforms": [
+            6,
+            14,
+            34,
+            39,
+            74
+        ],
+        "player_perspectives": [
+            4
+        ],
+        "popularity": 192.3041505099978,
+        "release_dates": [
+            167493,
+            167494,
+            167495,
+            167496,
+            167497
+        ],
+        "screenshots": [
+            297125,
+            297126,
+            297127,
+            297128,
+            297129,
+            297130,
+            297146
+        ],
+        "similar_games": [
+            2933,
+            9284,
+            14593,
+            15389,
+            18812,
+            23198,
+            27336,
+            76065,
+            83731,
+            99044
+        ],
+        "slug": "lsd-the-game",
+        "summary": "An official game by LSD. A fast-paced, three-stage game where you play as famous singer-songwiter Sia, Labrinth or Diplo through 9 levels and 3 boss levels! After the bosses you get access to the snippets of the songs from the upcoming album \"Labrinth, Sia & Diplo Present... LSD\"",
+        "tags": [
+            536871081,
+            536872408,
+            536873153,
+            536873554,
+            536873944,
+            536874398,
+            536874745,
+            536875077,
+            536879148
+        ],
+        "updated_at": 1554595200,
+        "url": "https://www.igdb.com/games/lsd-the-game",
+        "websites": [
+            104050
+        ]
+    },
+    {
+        "id": 21642,
+        "age_ratings": [
+            11346,
+            11347
+        ],
+        "category": 0,
+        "cover": 19242,
+        "created_at": 1469664000,
+        "external_games": [
+            3770,
+            186513,
+            248210
+        ],
+        "game_engines": [
+            13
+        ],
+        "game_modes": [
+            1
+        ],
+        "genres": [
+            13,
+            15,
+            32
+        ],
+        "hypes": 279,
+        "involved_companies": [
+            37993
+        ],
+        "keywords": [
+            701,
+            864,
+            2560,
+            2561
+        ],
+        "name": "Totally Accurate Battle Simulator",
+        "player_perspectives": [
+            3
+        ],
+        "popularity": 190.1832619234125,
+        "pulse_count": 12,
+        "rating": 80,
+        "rating_count": 0,
+        "screenshots": [
+            34542,
+            34543,
+            34544,
+            34545,
+            38684
+        ],
+        "similar_games": [
+            18623,
+            31515,
+            33603,
+            36553,
+            55888,
+            65827,
+            78550,
+            102163,
+            103065,
+            109339
+        ],
+        "slug": "totally-accurate-battle-simulator",
+        "status": 4,
+        "summary": "A physics based medieval battle simulator which lets you pit wacky waving armies against each other. In Totally Accurate Battle Simulator you pit waving arm men against each other and watch them fight it out.",
+        "tags": [
+            39,
+            268435469,
+            268435471,
+            268435488,
+            536871613,
+            536871776,
+            536873472,
+            536873473
+        ],
+        "themes": [
+            39
+        ],
+        "total_rating": 80,
+        "total_rating_count": 0,
+        "updated_at": 1555718400,
+        "url": "https://www.igdb.com/games/totally-accurate-battle-simulator",
+        "videos": [
+            9165
+        ],
+        "websites": [
+            17469,
+            65903
+        ]
+    },
+    {
+        "id": 68049,
+        "category": 0,
+        "cover": 49727,
+        "created_at": 1505433600,
+        "external_games": [
+            132646
+        ],
+        "genres": [
+            13
+        ],
+        "hypes": 1,
+        "keywords": [
+            78,
+            343,
+            1148,
+            1961,
+            3586,
+            7296
+        ],
+        "name": "The Maiden Rape Assault: Violent Semen Inferno",
+        "popularity": 186.3656624675589,
+        "similar_games": [
+            17906,
+            19075,
+            22406,
+            22426,
+            22471,
+            22472,
+            22482,
+            28465,
+            41895,
+            43130
+        ],
+        "slug": "the-maiden-rape-assault-violent-semen-inferno",
+        "summary": "A rape-themed pornographic game in which the player character performs actions such as forcing himself sexually on a stranger on her wedding day.",
+        "tags": [
+            42,
+            268435469,
+            536870990,
+            536871255,
+            536872060,
+            536872873,
+            536874498,
+            536878208
+        ],
+        "themes": [
+            42
+        ],
+        "updated_at": 1542326400,
+        "url": "https://www.igdb.com/games/the-maiden-rape-assault-violent-semen-inferno"
+    },
+    {
+        "id": 22778,
+        "aggregated_rating": 72.25,
+        "aggregated_rating_count": 6,
+        "artworks": [
+            6753
+        ],
+        "category": 0,
+        "cover": 71082,
+        "created_at": 1471651200,
+        "external_games": [
+            111673,
+            1592690
+        ],
+        "first_release_date": 1553558400,
+        "game_engines": [
+            13
+        ],
+        "game_modes": [
+            1,
+            3,
+            4
+        ],
+        "genres": [
+            12
+        ],
+        "hypes": 7,
+        "involved_companies": [
+            68697,
+            68698,
+            68699,
+            73437
+        ],
+        "keywords": [
+            64,
+            226,
+            4882
+        ],
+        "name": "Outward",
+        "platforms": [
+            6,
+            48,
+            49
+        ],
+        "player_perspectives": [
+            2
+        ],
+        "popularity": 183.6817270280925,
+        "pulse_count": 34,
+        "rating": 76,
+        "rating_count": 7,
+        "release_dates": [
+            166982,
+            166983,
+            166984
+        ],
+        "screenshots": [
+            30559,
+            30560,
+            30561,
+            30562,
+            30563
+        ],
+        "similar_games": [
+            26163,
+            37382,
+            54775,
+            81249,
+            99118,
+            102584,
+            103303,
+            106987,
+            113636,
+            113910
+        ],
+        "slug": "outward",
+        "summary": "Outward is an open world RPG that you play alone or with friends, either online or in splitscreen. It's more than just an open world RPG you can play coop though: it is an adventurer life simulator. You live the life of an adventurer, from his or her humble beginnings up until retirement. Your life isn't only about killing monsters and looting: you need to eat, drink and sleep; preparing accordingly before jumping into danger. Everything is meant to feel more real and consequential, while still taking place in a high fantasy universe with magic and exotic creatures.",
+        "tags": [
+            17,
+            21,
+            38,
+            268435468,
+            536870976,
+            536871138,
+            536875794
+        ],
+        "themes": [
+            17,
+            21,
+            38
+        ],
+        "total_rating": 74.125,
+        "total_rating_count": 13,
+        "updated_at": 1555372800,
+        "url": "https://www.igdb.com/games/outward",
+        "videos": [
+            9481,
+            21617,
+            24362,
+            25814
+        ],
+        "websites": [
+            86769,
+            91046,
+            98692
+        ]
+    }
+]
