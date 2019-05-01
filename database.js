@@ -1,12 +1,14 @@
 const Parse = require('parse/node')
 
 module.exports = {
-    save:function(entity, callback) {
-        entity.save().then((release) => { 
-            callback()
-        }, (error) => { 
-            console.log(error)
-            callback()
+    save:function(entity) {
+        return new Promise(function(resolve, reject) {
+            entity.save().then((release) => { 
+                resolve()
+            }, (error) => { 
+                console.log(error)
+                reject()
+            })
         })
     },
     getByExternalId:function(id, type) {
