@@ -1,6 +1,6 @@
 const Parse = require('parse/node')
-const Application = require('./app')
+const Sync = require('./sync')
 
 Parse.Cloud.job("syncData", function (request, status) {
-    Application.start()
+    Sync.start()
 });

@@ -67,13 +67,21 @@ function loadMoviesFromUrl(url) {
 }
 
 function handleMovieFromDto(dto) {
-    const page = dto.page
-    const pageCount = dto.total_pages
-    const results = dto.results
-    handleMovieFromDtoList(results, 0).then(function(result) {
-        console.log("Successfully loaded movies")
+    return new Promise(function(resolve, reject) {
+        const page = dto.page
+        const pageCount = dto.total_pages
+        const results = dto.results
+        handleMovieFromDtoList(results, 0).then(function(result) {
+            console.log("Successfully loaded movies")
+            resolve()
+        }, function(error) {
+            console.log(`Failed to load movies: ${error}`)
+            console.log(error)
+            reject(error)
+        })
     }, function(error) {
-        console.log(`Failed to load movies: ${error}`)
+        console.log(error)
+        reject(error)
     })
 }
 
