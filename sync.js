@@ -26,7 +26,17 @@ function loadGamesFromNetwork() {
     request.setRequestHeader("user-key", IGDB_API_KEY)
     request.addEventListener('load', function(event) {
         if (request.status >= 200 && request.status < 300) {
-            JsonParser.parseJsonFromIgdb(request.responseText)
+            JSON.parse(request.responseText).forEach(dto => {
+                const release = new Release()
+                release.set("externalId", dto.id.toString())
+                release.set("title", dto.name)
+                release.set("description", dto.summary)
+                release.set("releasedAt", new Date(dto.first_release_date))
+                release.set("popularity", dto.popularity)
+                release.set("imageUrlForThumbnail", "https:" + dto.cover.replace("/t_thumb/", "/t_cover_big/"))
+                release.set("imageUrlForCover", "https:" + dto.cover.replace("/t_thumb/", "/t_1080p/"))
+                Database.save(release, {})
+            })
         } else {
             console.log(request.responseText)
         }
