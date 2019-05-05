@@ -11,6 +11,7 @@ module.exports = {
             Database.getByExternalId(externalId, Release).then(function(release) {
                 release = release != null ? release : new Release()
                 release.set("externalId", externalId)
+                release.set("type", "movie")
                 release.set("title", dto.title)
                 release.set("description", dto.overview)
                 release.set("releasedAt", new Date(Date.parse(dto.release_date)))

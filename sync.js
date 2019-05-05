@@ -13,7 +13,7 @@ const currentYear = new Date().getFullYear()
 
 module.exports = {
     start:function() {
-        loadMoviesFromJsonFile()
+        loadMoviesFromNetwork(1, "en")
     }
 }
 
@@ -49,31 +49,43 @@ function loadMoviesFromJsonFile() {
     handleMovieFromDto(dto)
 }
 
-function loadMoviesFromNetwork() {
-    // TODO: Make dynamic
-    const page = 1
-    const language = "en"
-
-    const host = MOVIE_DB_HOST
-    const endpoint = "/discover/movie"
-    const params = `?primary_release_year=${currentYear}&sort_by=popularity.desc&language=${language}&page=${page}&api_key=${MOVIE_DB_API_KEY}`
-    const url = host + endpoint + params
-
-    loadMoviesFromUrl(url)
+function loadMoviesFromNetwork(page, language) {
+    return new Promise(function(resolve, reject) {
+        const host = MOVIE_DB_HOST
+        const endpoint = "/discover/movie"
+        const params = `?primary_release_year=${currentYear}&sort_by=popularity.desc&language=${language}&page=${page}&api_key=${MOVIE_DB_API_KEY}`
+        const url = host + endpoint + params
+        loadMoviesFromUrl(url).then(function(page, pageCount) {
+            if (page < pageCount) {
+                loadMoviesFromNetwork(page + 1, language)
+            } else {
+                resolve()
+            }
+        }, function(error) {
+            reject(error)
+        })
+    })
 }
 
 function loadMoviesFromUrl(url) {
-    const request = new XMLHttpRequest()
-    request.open("GET", url)
-    request.addEventListener('load', function(event) {
-        if (request.status >= 200 && request.status < 300) {
-            const dto = JsonParser.parseDtoFromJson(request.responseText)
-            handleMovieFromDto(dto)
-        } else {
-            console.log(request.responseText)
-        }
+    return new Promise(function(resolve, reject) {
+        const request = new XMLHttpRequest()
+        request.open("GET", url)
+        request.addEventListener('load', function(event) {
+            if (request.status >= 200 && request.status < 300) {
+                const dto = JsonParser.parseDtoFromJson(request.responseText)
+                handleMovieFromDto(dto).then(function(page, pageCount) {
+                    resolve(page, pageCount)
+                }, function(error) {
+                    reject(error)
+                })
+            } else {
+                console.log(request.responseText)
+                reject()
+            }
+        })
+        request.send()
     })
-    request.send()
 }
 
 function handleMovieFromDto(dto) {
@@ -82,10 +94,8 @@ function handleMovieFromDto(dto) {
         const pageCount = dto.total_pages
         const results = dto.results
         handleMovieFromDtoList(results, 0).then(function(result) {
-            console.log("Successfully loaded movies")
-            resolve()
+            resolve(page, pageCount)
         }, function(error) {
-            console.log(`Failed to load movies: ${error}`)
             console.log(error)
             reject(error)
         })
@@ -103,6 +113,7 @@ function handleMovieFromDtoList(dtos, page) {
             if (hasMore) {
                 handleMovieFromDtoList(dtos, page + 1)
             } else {
+                // TODO: Fulfill original promise
                 if (error == null) {
                     resolve()
                 } else {
