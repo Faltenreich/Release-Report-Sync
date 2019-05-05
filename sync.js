@@ -16,7 +16,7 @@ module.exports = {
     start:function() {
         loadMoviesFromNetwork(1, "en").then(() => {
             console.log("Movies completed")
-        }).catch((error) => {
+        }).catch(error => {
             console.log("Movies failed")
         })
     }
@@ -69,7 +69,7 @@ function loadMoviesFromNetwork(page, language) {
             } else {
                 resolve()
             }
-        }).catch((error) => {
+        }).catch(error => {
             reject(error)
         })
     })
@@ -83,7 +83,7 @@ function loadMoviesFromUrl(url) {
     return new Promise(function(resolve, reject) {
         const request = new XMLHttpRequest()
         request.open("GET", url)
-        request.addEventListener('load', function(event) {
+        request.addEventListener('load', () => {
             if (request.status >= 200 && request.status < 300) {
                 const dto = JsonParser.parseDtoFromJson(request.responseText)
                 const page = dto.page
@@ -93,7 +93,7 @@ function loadMoviesFromUrl(url) {
                     const loadMore = page < pageCount
                     const nextPage = loadMore ? page + 1 : null
                     resolve(nextPage)
-                }).catch((error) => {
+                }).catch(error => {
                     console.log(error)
                     reject(error)
                 })
@@ -117,9 +117,9 @@ function handleMoviePage(dto) {
 
 function handleMovie(dto) {
     return new Promise(function(resolve, reject) {
-        ParseParser.parseMovieFromDto(dto).then((movie) => {
+        ParseParser.parseMovieFromDto(dto).then(movie => {
             resolve(movie)
-        }).catch((error) => {
+        }).catch(error => {
             reject(error)
         })
     })

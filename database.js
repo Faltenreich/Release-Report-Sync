@@ -9,9 +9,9 @@ module.exports = {
     },
     saveConfirmed:function(entity) {
         return new Promise(function(resolve, reject) {
-            entity.save().then((entity) => { 
+            entity.save().then(entity => { 
                 resolve(entity)
-            }).catch((error) => {
+            }).catch(error => {
                 console.log(error)
                 reject()
             })
@@ -21,7 +21,7 @@ module.exports = {
         return new Promise(function(resolve, reject) {
             Parse.Object.saveAll(entities).then(() => { 
                 resolve()
-            }).catch((error) => {
+            }).catch(error => {
                 console.log(error)
                 reject()
             })
@@ -31,14 +31,14 @@ module.exports = {
         return new Promise(function(resolve, reject) {
             const query = new Parse.Query(type)
             query.equalTo("externalId", id)
-            query.find().then((results) => {
+            query.find().then(results => {
                 if (results.length > 0) {
                     const result = results[0]
                     resolve(result)
                 } else {
                     resolve(null)
                 }
-            }).catch((error) => {
+            }).catch(error => {
                 console.log(error)
                 reject(error)
             })
