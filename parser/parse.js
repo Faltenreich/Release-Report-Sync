@@ -21,7 +21,6 @@ module.exports = {
                 release.set("imageUrlForWallpaper", IMAGE_HOST_MOVIE_DB + "/w1280/" + dto.backdrop_path)
                 resolve(release)
             }, function(error) {
-                console.log(error)
                 reject(error)
             })
         })

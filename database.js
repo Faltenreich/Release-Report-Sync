@@ -3,7 +3,17 @@ const Parse = require('parse/node')
 module.exports = {
     save:function(entity) {
         return new Promise(function(resolve, reject) {
-            entity.save().then((release) => { 
+            entity.save().then(() => { 
+                resolve()
+            }, (error) => { 
+                console.log(error)
+                reject()
+            })
+        })
+    },
+    saveAll:function(entities) {
+        return new Promise(function(resolve, reject) {
+            Parse.Object.saveAll(entities).then(() => { 
                 resolve()
             }, (error) => { 
                 console.log(error)
@@ -23,6 +33,7 @@ module.exports = {
                     resolve(null)
                 }
             }, function(error) {
+                console.log(error)
                 reject(error)
             })
         })

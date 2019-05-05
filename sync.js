@@ -13,7 +13,11 @@ const currentYear = new Date().getFullYear()
 
 module.exports = {
     start:function() {
-        loadMoviesFromNetwork(1, "en")
+        loadMoviesFromNetwork(1, "en").then(function() {
+            console.log("Movies completed")
+        }, function(error) {
+            console.log("Movies failed")
+        })
     }
 }
 
@@ -46,7 +50,7 @@ function loadGamesFromNetwork() {
 
 function loadMoviesFromJsonFile() {
     var dto = require('./assets/moviedb.json');
-    handleMovieFromDto(dto)
+    handleMovieFromDto(1, 1, dto)
 }
 
 function loadMoviesFromNetwork(page, language) {
@@ -76,12 +80,12 @@ function loadMoviesFromUrl(url) {
                 const dto = JsonParser.parseDtoFromJson(request.responseText)
                 const page = dto.page
                 const pageCount = dto.total_pages
-                handleMovieFromDto(dto).then(function() {
-                    console.log(`Handled movies: page ${page} of ${pageCount}`)
+                handleMovieFromDto(page, pageCount, dto).then(function() {
                     const loadMore = page < pageCount
                     const nextPage = loadMore ? page + 1 : null
                     resolve(nextPage)
                 }, function(error) {
+                    console.log(error)
                     reject(error)
                 })
             } else {
@@ -93,22 +97,21 @@ function loadMoviesFromUrl(url) {
     })
 }
 
-function handleMovieFromDto(dto) {
+function handleMovieFromDto(page, pageCount, dto) {
     return new Promise(function(resolve, reject) {
         const results = dto.results
-        handleMovieFromDtoList(results, 0, resolve)
+        handleMovieFromDtoList(page, pageCount, results, 0, resolve)
     }, function(error) {
-        console.log(error)
         reject(error)
     })
 }
 
-function handleMovieFromDtoList(dtos, index, resolve) {
+function handleMovieFromDtoList(page, pageCount, dtos, index, resolve) {
     const dto = dtos[index]
     const onNext = function(error) {
         const hasMore = index < (dtos.length - 1)
         if (hasMore) {
-            handleMovieFromDtoList(dtos, index + 1, resolve)
+            handleMovieFromDtoList(page, pageCount, dtos, index + 1, resolve)
         } else {
             if (error == null) {
                 resolve()
@@ -119,14 +122,12 @@ function handleMovieFromDtoList(dtos, index, resolve) {
     }
     ParseParser.parseMovieFromDto(dto).then(function(movie) {
         Database.save(movie).then(function() {
-            console.log(`Handled movie: index ${index + 1} of ${dtos.length}`)
+            console.log(`Movie page ${page} of ${pageCount}: Movie ${index + 1} of ${dtos.length}`)
             onNext()
         }, function(error) {
-            console.log(error)
             onNext()
         })
     }, function(error) {
-        console.log(error)
         onNext(error)
     })
 }
