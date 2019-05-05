@@ -55,9 +55,9 @@ function loadMoviesFromNetwork(page, language) {
         const endpoint = "/discover/movie"
         const params = `?primary_release_year=${currentYear}&sort_by=popularity.desc&language=${language}&page=${page}&api_key=${MOVIE_DB_API_KEY}`
         const url = host + endpoint + params
-        loadMoviesFromUrl(url).then(function(page, pageCount) {
-            if (page < pageCount) {
-                loadMoviesFromNetwork(page + 1, language)
+        loadMoviesFromUrl(url).then(function(page) {
+            if (page != null) {
+                loadMoviesFromNetwork(page, language)
             } else {
                 resolve()
             }
@@ -74,8 +74,13 @@ function loadMoviesFromUrl(url) {
         request.addEventListener('load', function(event) {
             if (request.status >= 200 && request.status < 300) {
                 const dto = JsonParser.parseDtoFromJson(request.responseText)
-                handleMovieFromDto(dto).then(function(page, pageCount) {
-                    resolve(page, pageCount)
+                const page = dto.page
+                const pageCount = dto.total_pages
+                handleMovieFromDto(dto).then(function() {
+                    console.log(`Handled movies: page ${page} of ${pageCount}`)
+                    const loadMore = page < pageCount
+                    const nextPage = loadMore ? page + 1 : null
+                    resolve(nextPage)
                 }, function(error) {
                     reject(error)
                 })
@@ -90,47 +95,38 @@ function loadMoviesFromUrl(url) {
 
 function handleMovieFromDto(dto) {
     return new Promise(function(resolve, reject) {
-        const page = dto.page
-        const pageCount = dto.total_pages
         const results = dto.results
-        handleMovieFromDtoList(results, 0).then(function(result) {
-            resolve(page, pageCount)
-        }, function(error) {
-            console.log(error)
-            reject(error)
-        })
+        handleMovieFromDtoList(results, 0, resolve)
     }, function(error) {
         console.log(error)
         reject(error)
     })
 }
 
-function handleMovieFromDtoList(dtos, page) {
-    return new Promise(function(resolve, reject) {
-        const dto = dtos[page]
-        const onNext = function(error) {
-            const hasMore = page < (dtos.length - 1)
-            if (hasMore) {
-                handleMovieFromDtoList(dtos, page + 1)
+function handleMovieFromDtoList(dtos, index, resolve) {
+    const dto = dtos[index]
+    const onNext = function(error) {
+        const hasMore = index < (dtos.length - 1)
+        if (hasMore) {
+            handleMovieFromDtoList(dtos, index + 1, resolve)
+        } else {
+            if (error == null) {
+                resolve()
             } else {
-                // TODO: Fulfill original promise
-                if (error == null) {
-                    resolve()
-                } else {
-                    reject()
-                }
+                reject()
             }
         }
-        ParseParser.parseMovieFromDto(dto).then(function(movie) {
-            Database.save(movie).then(function(result) {
-                onNext()
-            }, function(error) {
-                console.log(error)
-                onNext()
-            })
+    }
+    ParseParser.parseMovieFromDto(dto).then(function(movie) {
+        Database.save(movie).then(function() {
+            console.log(`Handled movie: index ${index + 1} of ${dtos.length}`)
+            onNext()
         }, function(error) {
             console.log(error)
-            onNext(error)
+            onNext()
         })
+    }, function(error) {
+        console.log(error)
+        onNext(error)
     })
 }
