@@ -107,18 +107,18 @@ function loadMoviesFromUrl(url) {
 }
 
 function handleMoviePage(dto) {
-    const promises = dto.results.map((result) => { handleMovie(result) })
-    return Promise.all(promises)
+    const promises = dto.results.map(result => { return handleMovie(result) })
+    return Promise.all(promises).then(movies => {
+        Database.saveAll(movies)
+    }).catch(error => {
+        console(error)
+    })
 }
 
 function handleMovie(dto) {
     return new Promise(function(resolve, reject) {
         ParseParser.parseMovieFromDto(dto).then((movie) => {
-            Database.save(movie).then(() => {
-                resolve()
-            }).catch((error) => {
-                reject(error)
-            })
+            resolve(movie)
         }).catch((error) => {
             reject(error)
         })
