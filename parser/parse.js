@@ -8,7 +8,7 @@ module.exports = {
     parseMovieFromDto:function(dto) {
         return new Promise(function(resolve, reject) {
             const externalId = dto.id.toString()
-            Database.getByExternalId(externalId, Release).then(function(release) {
+            Database.getByExternalId(externalId, Release).then((release) => {
                 release = release != null ? release : new Release()
                 release.set("externalId", externalId)
                 release.set("type", "movie")
@@ -20,7 +20,7 @@ module.exports = {
                 release.set("imageUrlForCover", IMAGE_HOST_MOVIE_DB + "/w780/" + dto.poster_path)
                 release.set("imageUrlForWallpaper", IMAGE_HOST_MOVIE_DB + "/w1280/" + dto.backdrop_path)
                 resolve(release)
-            }, function(error) {
+            }).catch((error) => {
                 reject(error)
             })
         })

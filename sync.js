@@ -8,14 +8,15 @@ const IGDB_HOST = "https://api-endpoint.igdb.com"
 const IGDB_API_KEY = "f3bf94eebc26b08c15b707c5d89d2ce3"
 const MOVIE_DB_HOST = "https://api.themoviedb.org/3"
 const MOVIE_DB_API_KEY = "3f49b57b1f30fc4de49d48e7d4a92d6f"
+const MOVIE_DB_RATE_INTERVAL = 250
 
 const currentYear = new Date().getFullYear()
 
 module.exports = {
     start:function() {
-        loadMoviesFromNetwork(1, "en").then(function() {
+        loadMoviesFromNetwork(1, "en").then(() => {
             console.log("Movies completed")
-        }, function(error) {
+        }).catch((error) => {
             console.log("Movies failed")
         })
     }
@@ -28,7 +29,7 @@ function loadGamesFromNetwork() {
     const request = new XMLHttpRequest()
     request.open("GET", url)
     request.setRequestHeader("user-key", IGDB_API_KEY)
-    request.addEventListener('load', function(event) {
+    request.addEventListener('load', () => {
         if (request.status >= 200 && request.status < 300) {
             JSON.parse(request.responseText).forEach(dto => {
                 const release = new Release()
@@ -59,13 +60,13 @@ function loadMoviesFromNetwork(page, language) {
         const endpoint = "/discover/movie"
         const params = `?primary_release_year=${currentYear}&sort_by=popularity.desc&language=${language}&page=${page}&api_key=${MOVIE_DB_API_KEY}`
         const url = host + endpoint + params
-        loadMoviesFromUrl(url).then(function(page) {
+        loadMoviesFromUrl(url).then((page) => {
             if (page != null) {
                 loadMoviesFromNetwork(page, language)
             } else {
                 resolve()
             }
-        }, function(error) {
+        }).catch((error) => {
             reject(error)
         })
     })
@@ -80,12 +81,12 @@ function loadMoviesFromUrl(url) {
                 const dto = JsonParser.parseDtoFromJson(request.responseText)
                 const page = dto.page
                 const pageCount = dto.total_pages
-                handleMoviePage(dto).then(function() {
+                handleMoviePage(dto).then(() => {
                     console.log(`Movie page ${page} of ${pageCount}`)
                     const loadMore = page < pageCount
                     const nextPage = loadMore ? page + 1 : null
                     resolve(nextPage)
-                }, function(error) {
+                }).catch((error) => {
                     console.log(error)
                     reject(error)
                 })
@@ -105,13 +106,13 @@ function handleMoviePage(dto) {
 
 function handleMovie(dto) {
     return new Promise(function(resolve, reject) {
-        ParseParser.parseMovieFromDto(dto).then(function(movie) {
-            Database.save(movie).then(function() {
+        ParseParser.parseMovieFromDto(dto).then((movie) => {
+            Database.save(movie).then(() => {
                 resolve()
-            }, function(error) {
-                reject()
+            }).catch((error) => {
+                reject(error)
             })
-        }, function(error) {
+        }).catch((error) => {
             reject(error)
         })
     })
