@@ -54,15 +54,18 @@ function loadMoviesFromJsonFile() {
     handleMovieFromDto(1, 1, dto)
 }
 
+// FIXME: UnhandledPromiseRejectionWarning somewhere deep down
 function loadMoviesFromNetwork(page, language) {
     return new Promise(function(resolve, reject) {
         const host = MOVIE_DB_HOST
         const endpoint = "/discover/movie"
         const params = `?primary_release_year=${currentYear}&sort_by=popularity.desc&language=${language}&page=${page}&api_key=${MOVIE_DB_API_KEY}`
         const url = host + endpoint + params
-        loadMoviesFromUrl(url).then((page) => {
+        loadMoviesFromUrl(url).then(async function(page) {
             if (page != null) {
-                loadMoviesFromNetwork(page, language)
+                await sleep(MOVIE_DB_RATE_INTERVAL).then(() => {
+                    loadMoviesFromNetwork(page, language)
+                })
             } else {
                 resolve()
             }
@@ -70,6 +73,10 @@ function loadMoviesFromNetwork(page, language) {
             reject(error)
         })
     })
+}
+
+function sleep(milliseconds) {
+    return new Promise(resolve => setTimeout(resolve, milliseconds))
 }
 
 function loadMoviesFromUrl(url) {
