@@ -80,7 +80,8 @@ function loadMoviesFromUrl(url) {
                 const dto = JsonParser.parseDtoFromJson(request.responseText)
                 const page = dto.page
                 const pageCount = dto.total_pages
-                handleMovieFromDto(page, pageCount, dto).then(function() {
+                handleMoviePage(dto).then(function() {
+                    console.log(`Movie page ${page} of ${pageCount}`)
                     const loadMore = page < pageCount
                     const nextPage = loadMore ? page + 1 : null
                     resolve(nextPage)
@@ -97,37 +98,21 @@ function loadMoviesFromUrl(url) {
     })
 }
 
-function handleMovieFromDto(page, pageCount, dto) {
-    return new Promise(function(resolve, reject) {
-        const results = dto.results
-        handleMovieFromDtoList(page, pageCount, results, 0, resolve)
-    }, function(error) {
-        reject(error)
-    })
+function handleMoviePage(dto) {
+    const promises = dto.results.map((result) => { handleMovie(result) })
+    return Promise.all(promises)
 }
 
-function handleMovieFromDtoList(page, pageCount, dtos, index, resolve) {
-    const dto = dtos[index]
-    const onNext = function(error) {
-        const hasMore = index < (dtos.length - 1)
-        if (hasMore) {
-            handleMovieFromDtoList(page, pageCount, dtos, index + 1, resolve)
-        } else {
-            if (error == null) {
+function handleMovie(dto) {
+    return new Promise(function(resolve, reject) {
+        ParseParser.parseMovieFromDto(dto).then(function(movie) {
+            Database.save(movie).then(function() {
                 resolve()
-            } else {
+            }, function(error) {
                 reject()
-            }
-        }
-    }
-    ParseParser.parseMovieFromDto(dto).then(function(movie) {
-        Database.save(movie).then(function() {
-            console.log(`Movie page ${page} of ${pageCount}: Movie ${index + 1} of ${dtos.length}`)
-            onNext()
+            })
         }, function(error) {
-            onNext()
+            reject(error)
         })
-    }, function(error) {
-        onNext(error)
     })
 }

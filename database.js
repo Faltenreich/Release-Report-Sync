@@ -2,9 +2,15 @@ const Parse = require('parse/node')
 
 module.exports = {
     save:function(entity) {
+        return new Promise(function(resolve, _) {
+            entity.save()
+            resolve()
+        })
+    },
+    saveConfirmed:function(entity) {
         return new Promise(function(resolve, reject) {
-            entity.save().then(() => { 
-                resolve()
+            entity.save().then((entity) => { 
+                resolve(entity)
             }, (error) => { 
                 console.log(error)
                 reject()
