@@ -13,50 +13,74 @@ const currentYear = new Date().getFullYear()
 module.exports = {
     start:function() {
         const language = "en"
-
-        const loadMovieReleases = function() {
-            loadMovieReleasesFromNetwork(1, language).then(() => {
-                console.log("Movie releases completed")
-            }).catch(error => {
-                console.log("Movie releases failed")
-            })
-        }
-
-        loadMovieGenresFromNetwork(language).then(() => {
-            console.log("Movie genres completed")
-            loadMovieReleases()
-        }).catch(error => {
-            console.log("Movie genres failed: " + error)
-            loadMovieReleases()
-        })
+        loadGames(language)
     }
 }
 
-function loadGamesFromNetwork() {
-    const endpoint = `/games/?fields=*&filter[first_release_date][gt]=${currentYear}-01-01&order=release_dates.date%3Aasc&limit=20&offset=0`
-    const url = IGDB_HOST + endpoint
+function loadGames(language) {
+    loadGamesFromNetwork(0, language)
+}
 
-    const request = new XMLHttpRequest()
-    request.open("GET", url)
-    request.setRequestHeader("user-key", IGDB_API_KEY)
-    request.addEventListener('load', () => {
-        if (request.status >= 200 && request.status < 300) {
-            JSON.parse(request.responseText).forEach(dto => {
-                const release = new Release()
-                release.set("externalId", dto.id.toString())
-                release.set("title", dto.name)
-                release.set("description", dto.summary)
-                release.set("releasedAt", new Date(dto.first_release_date))
-                release.set("popularity", dto.popularity)
-                release.set("imageUrlForThumbnail", "https:" + dto.cover.replace("/t_thumb/", "/t_cover_big/"))
-                release.set("imageUrlForCover", "https:" + dto.cover.replace("/t_thumb/", "/t_1080p/"))
-                Database.save(release, {})
-            })
-        } else {
-            console.log(request.responseText)
-        }
+function loadGamesFromNetwork(page, language) {
+    const limit = 20
+    const offset = page * limit
+    const endpoint = "/games/"
+    const params = `?fields=*&filter[first_release_date][gt]=${currentYear}-01-01&order=release_dates.date%3Aasc&limit=${limit}&offset=${offset}`
+    const url = IGDB_HOST + endpoint + params
+    const headers = { "user-key": IGDB_API_KEY }
+    Networking.request(url, headers).then(dto => {
+        handleGameReleases(dto).then(() => {
+            console.log(`Game releases page ${page}`)
+            const loadMore = dto.length > 0
+            if (loadMore) {
+                loadGamesFromNetwork(page + 1, language)
+            } else {
+                resolve()
+            }
+        }).catch(error => {
+            console.log(error)
+            reject(error)
+        })
+    }).catch(error => {
+        reject(error)
     })
-    request.send()
+}
+
+function handleGameReleases(dto) {
+    const promises = dto.map(result => { return handleGameRelease(result) })
+    return Promise.all(promises).then(releases => {
+        Database.saveAll(releases)
+    }).catch(error => {
+        console.log(error)
+    })
+}
+
+function handleGameRelease(dto) {
+    return new Promise(function(resolve, reject) {
+        ParseParser.parseGameReleaseFromDto(dto).then(game => {
+            resolve(game)
+        }).catch(error => {
+            reject(error)
+        })
+    })
+}
+
+function loadMovies(language) {
+    const loadMovieReleases = function() {
+        loadMovieReleasesFromNetwork(1, language).then(() => {
+            console.log("Movie releases completed")
+        }).catch(error => {
+            console.log("Movie releases failed")
+        })
+    }
+
+    loadMovieGenresFromNetwork(language).then(() => {
+        console.log("Movie genres completed")
+        loadMovieReleases()
+    }).catch(error => {
+        console.log("Movie genres failed: " + error)
+        loadMovieReleases()
+    })
 }
 
 function loadMovieGenresFromNetwork(language) {

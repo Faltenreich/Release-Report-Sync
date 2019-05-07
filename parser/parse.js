@@ -6,6 +6,33 @@ const Database = require('../database')
 const IMAGE_HOST_MOVIE_DB = "https://image.tmdb.org/t/p"
 
 module.exports = {
+    parseGameReleaseFromDto:function(dto) {
+        return new Promise(function(resolve, reject) {
+            const externalId = "igdb_" + dto.id.toString()
+            Database.getByExternalId(externalId, Release).then(release => {
+                release = release != null ? release : new Release()
+                release.set("title", dto.name)
+                release.set("type", "game")
+                release.set("description", dto.summary)
+                release.set("releasedAt", new Date(dto.first_release_date))
+                release.set("popularity", dto.popularity)
+                if (dto.cover != null && dto.cover.url != null) {
+                    const url = "https:" + dto.cover.url
+                    release.set("imageUrlForThumbnail", url.replace("/t_thumb/", "/t_cover_big/"))
+                    release.set("imageUrlForCover", url.replace("/t_thumb/", "/t_1080p/"))
+                }
+                if (dto.genres != null) {
+                    dto.genres.forEach(genreId => {
+                        const externalId = "igdb_" + genreId.toString()
+                        release.addUnique("genres", externalId)
+                    })
+                }
+                resolve(release)
+            }).catch(error => {
+                reject(error)
+            })
+        })
+    },
     parseMovieReleaseFromDto:function(dto) {
         return new Promise(function(resolve, reject) {
             const externalId = "moviedb_" + dto.id.toString()
