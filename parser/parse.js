@@ -11,8 +11,9 @@ module.exports = {
             const externalId = "igdb_" + dto.id.toString()
             Database.getByExternalId(externalId, Release).then(release => {
                 release = release != null ? release : new Release()
-                release.set("title", dto.name)
+                release.set("externalId", externalId)
                 release.set("type", "game")
+                release.set("title", dto.name)
                 release.set("description", dto.summary)
                 release.set("releasedAt", new Date(dto.first_release_date))
                 release.set("popularity", dto.popularity)
