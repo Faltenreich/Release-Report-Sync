@@ -1,7 +1,5 @@
-const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest
-const uuid = require('uuid')
 const Database = require('./database')
-const JsonParser = require('./parser/json')
+const Networking = require('./networking')
 const ParseParser = require('./parser/parse')
 
 const IGDB_HOST = "https://api-endpoint.igdb.com"
@@ -67,34 +65,17 @@ function loadMovieGenresFromNetwork(language) {
         const endpoint = "/genre/movie/list"
         const params = `?language=${language}&api_key=${MOVIE_DB_API_KEY}`
         const url = host + endpoint + params
-        loadMovieGenresFromUrl(url).then(async function() {
-            resolve()
+        Networking.request(url).then(async function(dto) {
+            handleMovieGenres(dto).then(() => {
+                console.log(`Movie genres page 1 of 1`)
+                resolve()
+            }).catch(error => {
+                console.log(error)
+                reject(error)
+            })
         }).catch(error => {
             reject(error)
         })
-    })
-}
-
-function loadMovieGenresFromUrl(url) {
-    return new Promise(function(resolve, reject) {
-        const request = new XMLHttpRequest()
-        request.open("GET", url)
-        request.addEventListener('load', () => {
-            if (request.status >= 200 && request.status < 300) {
-                const dto = JsonParser.parseDtoFromJson(request.responseText)
-                handleMovieGenres(dto).then(() => {
-                    console.log(`Movie genres page 1 of 1`)
-                    resolve()
-                }).catch(error => {
-                    console.log(error)
-                    reject(error)
-                })
-            } else {
-                console.log(request.responseText)
-                reject()
-            }
-        })
-        request.send()
     })
 }
 
@@ -129,14 +110,21 @@ function loadMovieReleasesFromNetwork(page, language) {
         const endpoint = "/discover/movie"
         const params = `?primary_release_year=${currentYear}&sort_by=popularity.desc&language=${language}&page=${page}&api_key=${MOVIE_DB_API_KEY}`
         const url = host + endpoint + params
-        loadMoviesFromUrl(url).then(async function(page) {
-            if (page != null) {
-                await sleep(MOVIE_DB_RATE_INTERVAL).then(() => {
-                    loadMovieReleasesFromNetwork(page, language)
-                })
-            } else {
-                resolve()
-            }
+        Networking.request(url).then(async function(dto) {
+            const page = dto.page
+            const pageCount = dto.total_pages
+            handleMoviePage(dto).then(() => {
+                console.log(`Movie releases page ${page} of ${pageCount}`)
+                const loadMore = page < pageCount
+                if (loadMore) {
+                    loadMovieReleasesFromNetwork(page + 1, language)
+                } else {
+                    resolve()
+                }
+            }).catch(error => {
+                console.log(error)
+                reject(error)
+            })
         }).catch(error => {
             reject(error)
         })
@@ -145,33 +133,6 @@ function loadMovieReleasesFromNetwork(page, language) {
 
 function sleep(milliseconds) {
     return new Promise(resolve => setTimeout(resolve, milliseconds))
-}
-
-function loadMoviesFromUrl(url) {
-    return new Promise(function(resolve, reject) {
-        const request = new XMLHttpRequest()
-        request.open("GET", url)
-        request.addEventListener('load', () => {
-            if (request.status >= 200 && request.status < 300) {
-                const dto = JsonParser.parseDtoFromJson(request.responseText)
-                const page = dto.page
-                const pageCount = dto.total_pages
-                handleMoviePage(dto).then(() => {
-                    console.log(`Movie releases page ${page} of ${pageCount}`)
-                    const loadMore = page < pageCount
-                    const nextPage = loadMore ? page + 1 : null
-                    resolve(nextPage)
-                }).catch(error => {
-                    console.log(error)
-                    reject(error)
-                })
-            } else {
-                console.log(request.responseText)
-                reject()
-            }
-        })
-        request.send()
-    })
 }
 
 function handleMoviePage(dto) {
