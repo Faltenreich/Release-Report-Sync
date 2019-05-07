@@ -20,6 +20,10 @@ module.exports = {
                 release.set("imageUrlForThumbnail", IMAGE_HOST_MOVIE_DB + "/w342/" + dto.poster_path)
                 release.set("imageUrlForCover", IMAGE_HOST_MOVIE_DB + "/w780/" + dto.poster_path)
                 release.set("imageUrlForWallpaper", IMAGE_HOST_MOVIE_DB + "/w1280/" + dto.backdrop_path)
+                dto.genre_ids.forEach(genreId => {
+                    const externalId = "moviedb_" + genreId.toString()
+                    release.addUnique("genres", externalId)
+                })
                 resolve(release)
             }).catch(error => {
                 reject(error)

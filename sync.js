@@ -99,7 +99,7 @@ function handleMovieGenre(dto) {
 }
 
 function loadMovieReleasesFromJsonFile() {
-    var dto = require('./assets/moviedb.json');
+    const dto = require('./assets/moviedb/discover.json');
     handleMovieFromDto(1, 1, dto)
 }
 
