@@ -1,13 +1,14 @@
 const Parse = require('parse/node')
 const Release = Parse.Object.extend("Release")
+const Genre = Parse.Object.extend("Genre")
 const Database = require('../database')
 
 const IMAGE_HOST_MOVIE_DB = "https://image.tmdb.org/t/p"
 
 module.exports = {
-    parseMovieFromDto:function(dto) {
+    parseMovieReleaseFromDto:function(dto) {
         return new Promise(function(resolve, reject) {
-            const externalId = dto.id.toString()
+            const externalId = "moviedb_" + dto.id.toString()
             Database.getByExternalId(externalId, Release).then(release => {
                 release = release != null ? release : new Release()
                 release.set("externalId", externalId)
@@ -20,6 +21,19 @@ module.exports = {
                 release.set("imageUrlForCover", IMAGE_HOST_MOVIE_DB + "/w780/" + dto.poster_path)
                 release.set("imageUrlForWallpaper", IMAGE_HOST_MOVIE_DB + "/w1280/" + dto.backdrop_path)
                 resolve(release)
+            }).catch(error => {
+                reject(error)
+            })
+        })
+    },
+    parseMovieGenreFromDto:function(dto) {
+        return new Promise(function(resolve, reject) {
+            const externalId = "moviedb_" + dto.id.toString()
+            Database.getByExternalId(externalId, Genre).then(genre => {
+                genre = genre != null ? genre : new Genre()
+                genre.set("externalId", externalId)
+                genre.set("title", dto.name)
+                resolve(genre)
             }).catch(error => {
                 reject(error)
             })

@@ -14,10 +14,22 @@ const currentYear = new Date().getFullYear()
 
 module.exports = {
     start:function() {
-        loadMoviesFromNetwork(1, "en").then(() => {
-            console.log("Movies completed")
+        const language = "en"
+
+        const loadMovieReleases = function() {
+            loadMovieReleasesFromNetwork(1, language).then(() => {
+                console.log("Movie releases completed")
+            }).catch(error => {
+                console.log("Movie releases failed")
+            })
+        }
+
+        loadMovieGenresFromNetwork(language).then(() => {
+            console.log("Movie genres completed")
+            loadMovieReleases()
         }).catch(error => {
-            console.log("Movies failed")
+            console.log("Movie genres failed: " + error)
+            loadMovieReleases()
         })
     }
 }
@@ -49,13 +61,69 @@ function loadGamesFromNetwork() {
     request.send()
 }
 
-function loadMoviesFromJsonFile() {
+function loadMovieGenresFromNetwork(language) {
+    return new Promise(function(resolve, reject) {
+        const host = MOVIE_DB_HOST
+        const endpoint = "/genre/movie/list"
+        const params = `?language=${language}&api_key=${MOVIE_DB_API_KEY}`
+        const url = host + endpoint + params
+        loadMovieGenresFromUrl(url).then(async function() {
+            resolve()
+        }).catch(error => {
+            reject(error)
+        })
+    })
+}
+
+function loadMovieGenresFromUrl(url) {
+    return new Promise(function(resolve, reject) {
+        const request = new XMLHttpRequest()
+        request.open("GET", url)
+        request.addEventListener('load', () => {
+            if (request.status >= 200 && request.status < 300) {
+                const dto = JsonParser.parseDtoFromJson(request.responseText)
+                handleMovieGenres(dto).then(() => {
+                    console.log(`Movie genres page 1 of 1`)
+                    resolve()
+                }).catch(error => {
+                    console.log(error)
+                    reject(error)
+                })
+            } else {
+                console.log(request.responseText)
+                reject()
+            }
+        })
+        request.send()
+    })
+}
+
+function handleMovieGenres(dto) {
+    const promises = dto.genres.map(result => { return handleMovieGenre(result) })
+    return Promise.all(promises).then(genres => {
+        Database.saveAll(genres)
+    }).catch(error => {
+        console(error)
+    })
+}
+
+function handleMovieGenre(dto) {
+    return new Promise(function(resolve, reject) {
+        ParseParser.parseMovieGenreFromDto(dto).then(genre => {
+            resolve(genre)
+        }).catch(error => {
+            reject(error)
+        })
+    })
+}
+
+function loadMovieReleasesFromJsonFile() {
     var dto = require('./assets/moviedb.json');
     handleMovieFromDto(1, 1, dto)
 }
 
 // FIXME: UnhandledPromiseRejectionWarning somewhere deep down
-function loadMoviesFromNetwork(page, language) {
+function loadMovieReleasesFromNetwork(page, language) {
     return new Promise(function(resolve, reject) {
         const host = MOVIE_DB_HOST
         const endpoint = "/discover/movie"
@@ -64,7 +132,7 @@ function loadMoviesFromNetwork(page, language) {
         loadMoviesFromUrl(url).then(async function(page) {
             if (page != null) {
                 await sleep(MOVIE_DB_RATE_INTERVAL).then(() => {
-                    loadMoviesFromNetwork(page, language)
+                    loadMovieReleasesFromNetwork(page, language)
                 })
             } else {
                 resolve()
@@ -89,7 +157,7 @@ function loadMoviesFromUrl(url) {
                 const page = dto.page
                 const pageCount = dto.total_pages
                 handleMoviePage(dto).then(() => {
-                    console.log(`Movie page ${page} of ${pageCount}`)
+                    console.log(`Movie releases page ${page} of ${pageCount}`)
                     const loadMore = page < pageCount
                     const nextPage = loadMore ? page + 1 : null
                     resolve(nextPage)
@@ -117,7 +185,7 @@ function handleMoviePage(dto) {
 
 function handleMovie(dto) {
     return new Promise(function(resolve, reject) {
-        ParseParser.parseMovieFromDto(dto).then(movie => {
+        ParseParser.parseMovieReleaseFromDto(dto).then(movie => {
             resolve(movie)
         }).catch(error => {
             reject(error)
