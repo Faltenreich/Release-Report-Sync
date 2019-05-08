@@ -9,7 +9,7 @@ module.exports = {
             "language": language
         })
     },
-    discover:function(year, page, language) {
+    discover:function(language, year, page) {
         return getRequest({
             "endpoint": "/discover/movie",
             "params": `?primary_release_year=${year}&sort_by=popularity.desc&page=${page}&`,
