@@ -4,12 +4,17 @@ const MAX_PAGE_SIZE = 20
 
 module.exports = {
     games:function(year, page, language) {
-        const endpoint = "/games/"
-        const params = `?fields=*&filter[first_release_date][gt]=${year}-01-01&order=release_dates.date%3Aasc&limit=${MAX_PAGE_SIZE}&offset=${page * MAX_PAGE_SIZE}`
-        const url = HOST + endpoint + params
-        return {
-            "url": url,
-            "headers": { "user-key": API_KEY }
-        }
+        return getRequest({
+            "endpoint": "/games/",
+            "params": `?fields=*&filter[first_release_date][gt]=${year}-01-01&order=release_dates.date%3Aasc&limit=${MAX_PAGE_SIZE}&offset=${page * MAX_PAGE_SIZE}`,
+            "language": language
+        })
+    }
+}
+
+function getRequest(params) {
+    return {
+        "url": HOST + params.endpoint + params.params,
+        "headers": { "user-key": API_KEY }
     }
 }

@@ -3,15 +3,23 @@ const API_KEY = "3f49b57b1f30fc4de49d48e7d4a92d6f"
 
 module.exports = {
     genres:function(language) {
-        const endpoint = "/genre/movie/list"
-        const params = `?language=${language}&api_key=${API_KEY}`
-        const url = HOST + endpoint + params
-        return { "url": url }
+        return getRequest({
+            "endpoint": "/genre/movie/list",
+            "params": "?",
+            "language": language
+        })
     },
     discover:function(year, page, language) {
-        const endpoint = "/discover/movie"
-        const params = `?primary_release_year=${year}&sort_by=popularity.desc&language=${language}&page=${page}&api_key=${API_KEY}`
-        const url = HOST + endpoint + params
-        return { "url": url }
+        return getRequest({
+            "endpoint": "/discover/movie",
+            "params": `?primary_release_year=${year}&sort_by=popularity.desc&page=${page}&`,
+            "language": language
+        })
+    }
+}
+
+function getRequest(params) {
+    return { 
+        "url": HOST + params.endpoint + params.params + `language=${params.language}&api_key=${API_KEY}`
     }
 }
