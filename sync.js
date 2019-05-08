@@ -1,22 +1,18 @@
 const Database = require('./database')
 const Networking = require('./networking')
 const IgdbApi = require('./api/igdb')
+const MovieDbApi = require('./api/moviedb')
 const ParseParser = require('./parser/parse')
 
 const Parse = require('parse/node')
 const Release = Parse.Object.extend("Release")
-
-
-const MOVIE_DB_HOST = "https://api.themoviedb.org/3"
-const MOVIE_DB_API_KEY = "3f49b57b1f30fc4de49d48e7d4a92d6f"
-const MOVIE_DB_RATE_INTERVAL = 250
 
 const currentYear = new Date().getFullYear()
 
 module.exports = {
     start:function() {
         const language = "en"
-        loadGames(language)
+        loadMovies(language)
     }
 }
 
@@ -99,11 +95,7 @@ function loadMovies(language) {
 
 function loadMovieGenresFromNetwork(language) {
     return new Promise(function(resolve, reject) {
-        const host = MOVIE_DB_HOST
-        const endpoint = "/genre/movie/list"
-        const params = `?language=${language}&api_key=${MOVIE_DB_API_KEY}`
-        const url = host + endpoint + params
-        const request = { "url": url }
+        const request = MovieDbApi.genres(language)
         Networking.sendRequest(request).then(async function(dto) {
             handleMovieGenres(dto).then(() => {
                 console.log(`Movie genres page 1 of 1`)
@@ -145,11 +137,7 @@ function loadMovieReleasesFromJsonFile() {
 // FIXME: UnhandledPromiseRejectionWarning somewhere deep down
 function loadMovieReleasesFromNetwork(page, language) {
     return new Promise(function(resolve, reject) {
-        const host = MOVIE_DB_HOST
-        const endpoint = "/discover/movie"
-        const params = `?primary_release_year=${currentYear}&sort_by=popularity.desc&language=${language}&page=${page}&api_key=${MOVIE_DB_API_KEY}`
-        const url = host + endpoint + params
-        const request = { "url": url }
+        const request = MovieDbApi.discover(currentYear, page, language)
         Networking.sendRequest(request).then(async function(dto) {
             const page = dto.page
             const pageCount = dto.total_pages
