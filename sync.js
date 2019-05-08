@@ -1,12 +1,12 @@
 const Database = require('./database')
 const Networking = require('./networking')
+const IgdbApi = require('./api/igdb')
 const ParseParser = require('./parser/parse')
 
 const Parse = require('parse/node')
 const Release = Parse.Object.extend("Release")
 
-const IGDB_HOST = "https://api-endpoint.igdb.com"
-const IGDB_API_KEY = "f3bf94eebc26b08c15b707c5d89d2ce3"
+
 const MOVIE_DB_HOST = "https://api.themoviedb.org/3"
 const MOVIE_DB_API_KEY = "3f49b57b1f30fc4de49d48e7d4a92d6f"
 const MOVIE_DB_RATE_INTERVAL = 250
@@ -25,15 +25,10 @@ function loadGames(language) {
 }
 
 function loadGamesFromNetwork(page, language) {
-    const limit = 20
-    const offset = page * limit
-    const endpoint = "/games/"
-    const params = `?fields=*&filter[first_release_date][gt]=${currentYear}-01-01&order=release_dates.date%3Aasc&limit=${limit}&offset=${offset}`
-    const url = IGDB_HOST + endpoint + params
-    const headers = { "user-key": IGDB_API_KEY }
-    Networking.request(url, headers).then(dto => {
+    const request = IgdbApi.games(currentYear, page, language)
+    sendRequest(request).then(dto => {
         handleGameReleases(dto).then(() => {
-            console.log(`Game releases page ${page}`)
+            console.log(`Game releases page ${page + 1}`)
             const loadMore = dto.length > 0
             if (loadMore) {
                 loadGamesFromNetwork(page + 1, language)
@@ -46,6 +41,16 @@ function loadGamesFromNetwork(page, language) {
         })
     }).catch(error => {
         reject(error)
+    })
+}
+
+function sendRequest(request) {
+    return new Promise(function(resolve, reject) {
+        Networking.sendRequest(request).then(dto => {
+            resolve(dto)
+        }).catch(error => {
+            reject(error)
+        })
     })
 }
 
@@ -98,7 +103,8 @@ function loadMovieGenresFromNetwork(language) {
         const endpoint = "/genre/movie/list"
         const params = `?language=${language}&api_key=${MOVIE_DB_API_KEY}`
         const url = host + endpoint + params
-        Networking.request(url).then(async function(dto) {
+        const request = { "url": url }
+        Networking.sendRequest(request).then(async function(dto) {
             handleMovieGenres(dto).then(() => {
                 console.log(`Movie genres page 1 of 1`)
                 resolve()
@@ -143,7 +149,8 @@ function loadMovieReleasesFromNetwork(page, language) {
         const endpoint = "/discover/movie"
         const params = `?primary_release_year=${currentYear}&sort_by=popularity.desc&language=${language}&page=${page}&api_key=${MOVIE_DB_API_KEY}`
         const url = host + endpoint + params
-        Networking.request(url).then(async function(dto) {
+        const request = { "url": url }
+        Networking.sendRequest(request).then(async function(dto) {
             const page = dto.page
             const pageCount = dto.total_pages
             handleMoviePage(dto).then(() => {
