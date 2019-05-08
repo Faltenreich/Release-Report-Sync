@@ -2,6 +2,9 @@ const Database = require('./database')
 const Networking = require('./networking')
 const ParseParser = require('./parser/parse')
 
+const Parse = require('parse/node')
+const Release = Parse.Object.extend("Release")
+
 const IGDB_HOST = "https://api-endpoint.igdb.com"
 const IGDB_API_KEY = "f3bf94eebc26b08c15b707c5d89d2ce3"
 const MOVIE_DB_HOST = "https://api.themoviedb.org/3"
@@ -47,19 +50,25 @@ function loadGamesFromNetwork(page, language) {
 }
 
 function handleGameReleases(dto) {
-    const promises = dto.map(result => { return handleGameRelease(result) })
-    return Promise.all(promises).then(releases => {
-        Database.saveAll(releases)
-    }).catch(error => {
-        console.log(error)
-    })
-}
-
-function handleGameRelease(dto) {
     return new Promise(function(resolve, reject) {
-        ParseParser.parseGameReleaseFromDto(dto).then(game => {
-            resolve(game)
+        const externalIds = dto.map(it => "game_" + it.id)
+        Database.getByExternalIds(externalIds, Release).then(releases => {
+            const promises = dto.map(result => {
+                resultExternalId = "game_" + result.id
+                const existing = releases.find(release => { return release.externalId == resultExternalId })
+                const release = existing != null ? existing : new Release()
+                ParseParser.mergeGame(result, release)
+                return release
+            })
+            Promise.all(promises).then(releases => {
+                Database.saveAll(releases)
+                resolve()
+            }).catch(error => {
+                console.log(error)
+                reject(error)
+            })
         }).catch(error => {
+            console.log(error)
             reject(error)
         })
     })
