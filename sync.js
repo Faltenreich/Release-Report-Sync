@@ -1,5 +1,5 @@
-const GameSync = require('./sync/game')
-const MovieSync = require('./sync/movie')
+const GameSync = include('sync/game')
+const MovieSync = include('sync/movie')
 
 module.exports = {
     start:function() {

@@ -1,7 +1,7 @@
-const Database = require('../database')
-const ParseParser = require('../parser/parse')
-const Networking = require('../networking')
-const MovieDbApi = require('../api/moviedb')
+const Database = include('database')
+const ParseParser = include('parser/parse')
+const Networking = include('networking')
+const MovieDbApi = include('api/moviedb')
 
 module.exports = {
     start:function(language, year) {
