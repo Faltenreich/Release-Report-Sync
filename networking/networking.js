@@ -1,5 +1,5 @@
 const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest
-const JsonParser = include('parser/json')
+const JsonParser = include('data/parser/json')
 
 module.exports = {
     sendRequest:function(params) {

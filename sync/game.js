@@ -1,7 +1,7 @@
-const Database = include('database')
-const ParseParser = include('parser/parse')
-const Networking = include('networking')
-const IgdbApi = include('api/igdb')
+const Database = include('data/database')
+const ParseParser = include('data/parser/parse')
+const Networking = include('networking/networking')
+const IgdbApi = include('networking/api/igdb')
 
 // TODO: Encapsulate dependencies
 const Parse = require('parse/node')

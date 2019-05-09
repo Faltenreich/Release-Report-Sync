@@ -1,7 +1,7 @@
 const Parse = require('parse/node')
 const Release = Parse.Object.extend("Release")
 const Genre = Parse.Object.extend("Genre")
-const Database = include('database')
+const Database = include('data/database')
 
 const IMAGE_HOST_MOVIE_DB = "https://image.tmdb.org/t/p"
 
