@@ -1,8 +1,3 @@
-const Parse = require('parse/node')
-const Release = Parse.Object.extend("Release")
-const Genre = Parse.Object.extend("Genre")
-const Database = include('data/database')
-
 const IMAGE_HOST_MOVIE_DB = "https://image.tmdb.org/t/p"
 
 module.exports = {
@@ -46,32 +41,5 @@ module.exports = {
             const externalId = ID_PREFIX_MOVIEDB + genreId.toString()
             entity.addUnique("genres", externalId)
         })
-    },
-    parseMovieGenreFromDto:async function(dto) {
-        const externalId = ID_PREFIX_MOVIEDB + dto.id.toString()
-        let genre = await Database.getByExternalId(externalId, Genre)
-        genre = genre != null ? genre : new Genre()
-        genre.set("externalId", externalId)
-        genre.set("title", dto.name)
-        return genre
-    },
-    parseMovieReleaseFromDto:async function(dto) {
-        const externalId = ID_PREFIX_MOVIEDB + dto.id.toString()
-        let release = await Database.getByExternalId(externalId, Release)
-        release = release != null ? release : new Release()
-        release.set("externalId", externalId)
-        release.set("type", "movie")
-        release.set("title", dto.title)
-        release.set("description", dto.overview)
-        release.set("releasedAt", new Date(Date.parse(dto.release_date)))
-        release.set("popularity", dto.popularity)
-        release.set("imageUrlForThumbnail", IMAGE_HOST_MOVIE_DB + "/w342/" + dto.poster_path)
-        release.set("imageUrlForCover", IMAGE_HOST_MOVIE_DB + "/w780/" + dto.poster_path)
-        release.set("imageUrlForWallpaper", IMAGE_HOST_MOVIE_DB + "/w1280/" + dto.backdrop_path)
-        dto.genre_ids.forEach(genreId => {
-            const externalId = ID_PREFIX_MOVIEDB + genreId.toString()
-            release.addUnique("genres", externalId)
-        })
-        return release
     }
 }

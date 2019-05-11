@@ -26,16 +26,15 @@ async function loadGamesFromNetwork(language, year, page) {
 
 async function handleGameReleases(dto) {
     const externalIds = dto.map(it => ID_PREFIX_IGDB + it.id)
-    const releases = await Database.getByExternalIds(externalIds, Release)
+    const entities = await Database.getByExternalIds(externalIds, Release)
     const promises = dto.map(result => {
-        resultExternalId = ID_PREFIX_IGDB + result.id
-        const existing = releases.find(release => { return release.externalId == resultExternalId })
-        const release = existing != null ? existing : new Release()
-        ParseParser.mergeGameRelease(result, release)
-        return release
+        const existing = entities.find(entity => { return entity.externalId == ID_PREFIX_IGDB + result.id })
+        const entity = existing != null ? existing : new Release()
+        ParseParser.mergeGameRelease(result, entity)
+        return entity
     })
-    return await Promise.all(promises).then(async releases => {
-        await Database.saveAll(releases)
+    return await Promise.all(promises).then(async entities => {
+        await Database.saveAll(entities)
     }).catch(error => {
         throw(error)
     })
