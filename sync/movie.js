@@ -4,58 +4,32 @@ const Networking = include('networking/networking')
 const MovieDbApi = include('networking/api/moviedb')
 
 module.exports = {
-    start:function(language, year) {
-        const loadMovieReleases = function() {
-            loadMovieReleasesFromNetwork(language, year, 1).then(() => {
-                console.log("Movie releases completed")
-            }).catch(error => {
-                console.log("Movie releases failed")
-            })
-        }
-        loadMovieGenresFromNetwork(language).then(() => {
-            console.log("Movie genres completed")
-            loadMovieReleases()
-        }).catch(error => {
-            console.log("Movie genres failed: " + error)
-            loadMovieReleases()
-        })
+    start:async function(language, year) {
+        await loadMovieGenresFromNetwork(language)
+        console.log("Movie genres completed")
+        await loadMovieReleasesFromNetwork(language, year, 1)
+        console.log("Movie releases completed")
     }
 }
 
-function loadMovieGenresFromNetwork(language) {
-    return new Promise(function(resolve, reject) {
-        const request = MovieDbApi.genres(language)
-        Networking.sendRequest(request).then(async function(dto) {
-            handleMovieGenres(dto).then(() => {
-                console.log(`Movie genres page 1 of 1`)
-                resolve()
-            }).catch(error => {
-                console.log(error)
-                reject(error)
-            })
-        }).catch(error => {
-            reject(error)
-        })
-    })
+async function loadMovieGenresFromNetwork(language) {
+    const request = MovieDbApi.genres(language)
+    const dto = await Networking.sendRequest(request)
+    await handleMovieGenres(dto)
+    console.log(`Movie genres page 1 of 1`)
 }
 
-function handleMovieGenres(dto) {
-    const promises = dto.genres.map(result => { return handleMovieGenre(result) })
-    return Promise.all(promises).then(genres => {
-        Database.saveAll(genres)
+async function handleMovieGenres(dto) {
+    const promises = dto.genres.map(async result => { return await handleMovieGenre(result) })
+    return await Promise.all(promises).then(async genres => {
+        await Database.saveAll(genres)
     }).catch(error => {
-        console(error)
+        throw(error)
     })
 }
 
-function handleMovieGenre(dto) {
-    return new Promise(function(resolve, reject) {
-        ParseParser.parseMovieGenreFromDto(dto).then(genre => {
-            resolve(genre)
-        }).catch(error => {
-            reject(error)
-        })
-    })
+async function handleMovieGenre(dto) {
+    return await ParseParser.parseMovieGenreFromDto(dto)
 }
 
 function loadMovieReleasesFromJsonFile() {
@@ -63,46 +37,25 @@ function loadMovieReleasesFromJsonFile() {
     handleMovieFromDto(1, 1, dto)
 }
 
-// FIXME: UnhandledPromiseRejectionWarning somewhere deep down
-function loadMovieReleasesFromNetwork(language, year, page) {
-    return new Promise(function(resolve, reject) {
-        const request = MovieDbApi.discover(language, year, page)
-        Networking.sendRequest(request).then(async function(dto) {
-            const page = dto.page
-            const pageCount = dto.total_pages
-            handleMoviePage(dto).then(() => {
-                console.log(`Movie releases page ${page} of ${pageCount}`)
-                const loadMore = page < pageCount
-                if (loadMore) {
-                    loadMovieReleasesFromNetwork(language, year, page + 1)
-                } else {
-                    resolve()
-                }
-            }).catch(error => {
-                console.log(error)
-                reject(error)
-            })
-        }).catch(error => {
-            reject(error)
-        })
-    })
+async function loadMovieReleasesFromNetwork(language, year, page) {
+    const request = MovieDbApi.discover(language, year, page)
+    const dto = await Networking.sendRequest(request)
+    const pageCount = dto.total_pages
+    await handleMoviePage(dto)
+    console.log(`Movie releases page ${page} of ${pageCount}`)
+    const loadMore = page < pageCount
+    if (loadMore) {
+        await loadMovieReleasesFromNetwork(language, year, page + 1)
+    } else {
+        return
+    }
 }
 
-function handleMoviePage(dto) {
-    const promises = dto.results.map(result => { return handleMovie(result) })
-    return Promise.all(promises).then(movies => {
-        Database.saveAll(movies)
+async function handleMoviePage(dto) {
+    const promises = dto.results.map(async result => { return await ParseParser.parseMovieReleaseFromDto(result) })
+    return await Promise.all(promises).then(async movies => {
+        await Database.saveAll(movies)
     }).catch(error => {
-        console(error)
-    })
-}
-
-function handleMovie(dto) {
-    return new Promise(function(resolve, reject) {
-        ParseParser.parseMovieReleaseFromDto(dto).then(movie => {
-            resolve(movie)
-        }).catch(error => {
-            reject(error)
-        })
+        throw(error)
     })
 }

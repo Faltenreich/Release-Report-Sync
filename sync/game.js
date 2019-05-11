@@ -13,49 +13,30 @@ module.exports = {
     }
 }
 
-function loadGamesFromNetwork(language, year, page) {
-    return new Promise(function(resolve, reject) {
-        const request = IgdbApi.games(language, year, page)
-        Networking.sendRequest(request).then(dto => {
-            handleGameReleases(dto).then(() => {
-                console.log(`Game releases page ${page + 1}`)
-                const loadMore = dto.length > 0
-                if (loadMore) {
-                    loadGamesFromNetwork(language, year, page + 1)
-                } else {
-                    resolve()
-                }
-            }).catch(error => {
-                console.log(error)
-                reject(error)
-            })
-        }).catch(error => {
-            reject(error)
-        })
-    })
+async function loadGamesFromNetwork(language, year, page) {
+    const request = IgdbApi.games(language, year, page)
+    const dto = await Networking.sendRequest(request)
+    await handleGameReleases(dto)
+    console.log(`Game releases page ${page + 1}`)
+    const loadMore = dto.length > 0
+    if (loadMore) {
+        await loadGamesFromNetwork(language, year, page + 1)
+    }
 }
 
-function handleGameReleases(dto) {
-    return new Promise(function(resolve, reject) {
-        const externalIds = dto.map(it => "game_" + it.id)
-        Database.getByExternalIds(externalIds, Release).then(releases => {
-            const promises = dto.map(result => {
-                resultExternalId = "game_" + result.id
-                const existing = releases.find(release => { return release.externalId == resultExternalId })
-                const release = existing != null ? existing : new Release()
-                ParseParser.mergeGame(result, release)
-                return release
-            })
-            Promise.all(promises).then(releases => {
-                Database.saveAll(releases)
-                resolve()
-            }).catch(error => {
-                console.log(error)
-                reject(error)
-            })
-        }).catch(error => {
-            console.log(error)
-            reject(error)
-        })
+async function handleGameReleases(dto) {
+    const externalIds = dto.map(it => ID_PREFIX_IGDB + it.id)
+    const releases = await Database.getByExternalIds(externalIds, Release)
+    const promises = dto.map(result => {
+        resultExternalId = ID_PREFIX_IGDB + result.id
+        const existing = releases.find(release => { return release.externalId == resultExternalId })
+        const release = existing != null ? existing : new Release()
+        ParseParser.mergeGame(result, release)
+        return release
+    })
+    return await Promise.all(promises).then(async releases => {
+        await Database.saveAll(releases)
+    }).catch(error => {
+        throw(error)
     })
 }

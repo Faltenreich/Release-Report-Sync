@@ -7,7 +7,7 @@ const IMAGE_HOST_MOVIE_DB = "https://image.tmdb.org/t/p"
 
 module.exports = {
     mergeGame:function(dto, release) {
-        const externalId = "igdb_" + dto.id.toString()
+        const externalId = ID_PREFIX_IGDB + dto.id.toString()
         release.set("externalId", externalId)
         release.set("type", "game")
         release.set("title", dto.name)
@@ -21,46 +21,36 @@ module.exports = {
         }
         if (dto.genres != null) {
             dto.genres.forEach(genreId => {
-                const externalId = "igdb_" + genreId.toString()
+                const externalId = ID_PREFIX_IGDB + genreId.toString()
                 release.addUnique("genres", externalId)
             })
         }
     },
-    parseMovieReleaseFromDto:function(dto) {
-        return new Promise(function(resolve, reject) {
-            const externalId = "moviedb_" + dto.id.toString()
-            Database.getByExternalId(externalId, Release).then(release => {
-                release = release != null ? release : new Release()
-                release.set("externalId", externalId)
-                release.set("type", "movie")
-                release.set("title", dto.title)
-                release.set("description", dto.overview)
-                release.set("releasedAt", new Date(Date.parse(dto.release_date)))
-                release.set("popularity", dto.popularity)
-                release.set("imageUrlForThumbnail", IMAGE_HOST_MOVIE_DB + "/w342/" + dto.poster_path)
-                release.set("imageUrlForCover", IMAGE_HOST_MOVIE_DB + "/w780/" + dto.poster_path)
-                release.set("imageUrlForWallpaper", IMAGE_HOST_MOVIE_DB + "/w1280/" + dto.backdrop_path)
-                dto.genre_ids.forEach(genreId => {
-                    const externalId = "moviedb_" + genreId.toString()
-                    release.addUnique("genres", externalId)
-                })
-                resolve(release)
-            }).catch(error => {
-                reject(error)
-            })
-        })
+    parseMovieGenreFromDto:async function(dto) {
+        const externalId = ID_PREFIX_MOVIEDB + dto.id.toString()
+        let genre = await Database.getByExternalId(externalId, Genre)
+        genre = genre != null ? genre : new Genre()
+        genre.set("externalId", externalId)
+        genre.set("title", dto.name)
+        return genre
     },
-    parseMovieGenreFromDto:function(dto) {
-        return new Promise(function(resolve, reject) {
-            const externalId = "moviedb_" + dto.id.toString()
-            Database.getByExternalId(externalId, Genre).then(genre => {
-                genre = genre != null ? genre : new Genre()
-                genre.set("externalId", externalId)
-                genre.set("title", dto.name)
-                resolve(genre)
-            }).catch(error => {
-                reject(error)
-            })
+    parseMovieReleaseFromDto:async function(dto) {
+        const externalId = ID_PREFIX_MOVIEDB + dto.id.toString()
+        let release = await Database.getByExternalId(externalId, Release)
+        release = release != null ? release : new Release()
+        release.set("externalId", externalId)
+        release.set("type", "movie")
+        release.set("title", dto.title)
+        release.set("description", dto.overview)
+        release.set("releasedAt", new Date(Date.parse(dto.release_date)))
+        release.set("popularity", dto.popularity)
+        release.set("imageUrlForThumbnail", IMAGE_HOST_MOVIE_DB + "/w342/" + dto.poster_path)
+        release.set("imageUrlForCover", IMAGE_HOST_MOVIE_DB + "/w780/" + dto.poster_path)
+        release.set("imageUrlForWallpaper", IMAGE_HOST_MOVIE_DB + "/w1280/" + dto.backdrop_path)
+        dto.genre_ids.forEach(genreId => {
+            const externalId = ID_PREFIX_MOVIEDB + genreId.toString()
+            release.addUnique("genres", externalId)
         })
+        return release
     }
 }

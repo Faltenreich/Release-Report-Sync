@@ -2,8 +2,8 @@ const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest
 const JsonParser = include('data/parser/json')
 
 module.exports = {
-    sendRequest:function(params) {
-        return new Promise(function(resolve, reject) {
+    sendRequest:async function(params) {
+        const promise = new Promise(function(resolve, reject) {
             const url = params.url
             const headers = params.headers
             
@@ -28,5 +28,6 @@ module.exports = {
             })
             request.send()
         })
+        return await promise
     }
 }

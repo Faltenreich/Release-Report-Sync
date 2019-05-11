@@ -1,43 +1,37 @@
 const Parse = require('parse/node')
 
 module.exports = {
-    getByExternalId:function(id, type) {
-        return new Promise(function(resolve, reject) {
-            const query = new Parse.Query(type)
-            query.equalTo("externalId", id)
-            query.find().then(results => {
-                if (results.length > 0) {
-                    const result = results[0]
-                    resolve(result)
-                } else {
-                    resolve(null)
-                }
-            }).catch(error => {
-                console.log(error)
-                reject(error)
-            })
+    getByExternalId:async function(id, type) {
+        const query = new Parse.Query(type)
+        query.equalTo("externalId", id)
+        return await query.find().then(results => {
+            if (results.length > 0) {
+                const result = results[0]
+                return result
+            } else {
+                return null
+            }
+        }).catch(error => {
+            console.log(error)
+            throw(error)
         })
     },
-    getByExternalIds:function(ids, type) {
-        return new Promise(function(resolve, reject) {
-            const query = new Parse.Query(type)
-            query.containedIn("externalId", ids)
-            query.find().then(results => {
-                resolve(results)
-            }).catch(error => {
-                console.log(error)
-                reject(error)
-            })
+    getByExternalIds:async function(ids, type) {
+        const query = new Parse.Query(type)
+        query.containedIn("externalId", ids)
+        return await query.find().then(results => {
+            return results
+        }).catch(error => {
+            console.log(error)
+            throw(error)
         })
     },
-    saveAll:function(entities) {
-        return new Promise(function(resolve, reject) {
-            Parse.Object.saveAll(entities).then(() => { 
-                resolve()
-            }).catch(error => {
-                console.log(error)
-                reject()
-            })
+    saveAll:async function(entities) {
+        return await Parse.Object.saveAll(entities).then(() => { 
+            return
+        }).catch(error => {
+            console.log(error)
+            throw(error)
         })
     }
 }

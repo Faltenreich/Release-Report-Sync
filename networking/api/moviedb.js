@@ -1,6 +1,8 @@
 const HOST = "https://api.themoviedb.org/3"
 const API_KEY = "3f49b57b1f30fc4de49d48e7d4a92d6f"
 
+global.ID_PREFIX_MOVIEDB = "moviedb_"
+
 module.exports = {
     genres:function(language) {
         return getRequest({
