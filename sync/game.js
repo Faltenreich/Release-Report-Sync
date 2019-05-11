@@ -31,7 +31,7 @@ async function handleGameReleases(dto) {
         resultExternalId = ID_PREFIX_IGDB + result.id
         const existing = releases.find(release => { return release.externalId == resultExternalId })
         const release = existing != null ? existing : new Release()
-        ParseParser.mergeGame(result, release)
+        ParseParser.mergeGameRelease(result, release)
         return release
     })
     return await Promise.all(promises).then(async releases => {
