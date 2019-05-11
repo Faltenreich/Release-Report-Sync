@@ -7,7 +7,7 @@ global.ID_PREFIX_IGDB = "igdb_"
 module.exports = {
     games:function(language, year, page) {
         return getRequest({
-            "endpoint": "/games/",
+            "endpoint": "/games",
             "params": `?fields=*&filter[first_release_date][gt]=${year}-01-01&order=release_dates.date%3Aasc&limit=${MAX_PAGE_SIZE}&offset=${page * MAX_PAGE_SIZE}`,
             "language": language
         })
@@ -16,7 +16,7 @@ module.exports = {
 
 function getRequest(params) {
     return {
-        "url": HOST + params.endpoint + params.params,
+        "url": HOST + params.endpoint + "/" + params.params,
         "headers": { "user-key": API_KEY }
     }
 }

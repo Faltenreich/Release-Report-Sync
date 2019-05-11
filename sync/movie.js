@@ -1,77 +1,48 @@
-const Database = include('data/database')
-const DtoParser = include('data/parser/dto')
-const Networking = include('networking/networking')
-const MovieDbApi = include('networking/api/moviedb')
-
 const Parse = require('parse/node')
 const Genre = Parse.Object.extend("Genre")
 const Release = Parse.Object.extend("Release")
 
+const Database = include('data/database')
+const DtoParser = include('data/parser/dto')
+const Merger = include('data/parser/merge')
+
+const Networking = include('networking/networking')
+const MovieDbApi = include('networking/api/moviedb')
+
 module.exports = {
     start:async function(language, year) {
-        await loadMovieGenresFromNetwork(language)
+        await syncGenres(language)
         console.log("Movie genres completed")
-        await loadMovieReleasesFromNetwork(language, year, 1)
+        await syncReleases(language, year, 1)
         console.log("Movie releases completed")
     }
 }
 
-async function loadMovieGenresFromNetwork(language) {
+async function syncGenres(language) {
     const request = MovieDbApi.genres(language)
     const dto = await Networking.sendRequest(request)
-    await handleMovieGenres(dto)
+    const entities = await DtoParser.parseEntitiesFromDto(dto.genres, ID_PREFIX_MOVIEDB, Genre, function() { return new Genre() }, function(dto, entity) { Merger.mergeMovieGenre(dto, entity) })
+    await Database.saveAll(entities)
     console.log(`Movie genres page 1 of 1`)
 }
 
-async function handleMovieGenres(dto) {
-    const dtos = dto.genres
-    const externalIds = dtos.map(it => ID_PREFIX_MOVIEDB + it.id)
-    const entities = await Database.getByExternalIds(externalIds, Genre)
-    const promises = dtos.map(result => {
-        const existing = entities.find(release => { return release.externalId == ID_PREFIX_MOVIEDB + result.id })
-        const entity = existing != null ? existing : new Genre()
-        DtoParser.mergeMovieGenre(result, entity)
-        return entity
-    })
-    return await Promise.all(promises).then(async entities => {
-        await Database.saveAll(entities)
-    }).catch(error => {
-        throw(error)
-    })
-}
-
-function loadMovieReleasesFromJsonFile() {
+function loadReleases() {
     const dto = require('./assets/moviedb/discover.json');
     handleMovieFromDto(1, 1, dto)
 }
 
-async function loadMovieReleasesFromNetwork(language, year, page) {
+async function syncReleases(language, year, page) {
     const request = MovieDbApi.discover(language, year, page)
     const dto = await Networking.sendRequest(request)
     const pageCount = dto.total_pages
-    await handleMovieReleases(dto)
+    const entities = await DtoParser.parseEntitiesFromDto(dto.results, ID_PREFIX_MOVIEDB, Release, function() { return new Release() }, function(dto, entity) { Merger.mergeMovieRelease(dto, entity) })
+    await Database.saveAll(entities)
     console.log(`Movie releases page ${page} of ${pageCount}`)
+    
     const loadMore = page < pageCount
     if (loadMore) {
         await loadMovieReleasesFromNetwork(language, year, page + 1)
     } else {
         return
     }
-}
-
-async function handleMovieReleases(dto) {
-    const dtos = dto.results
-    const externalIds = dtos.map(it => ID_PREFIX_MOVIEDB + it.id)
-    const entities = await Database.getByExternalIds(externalIds, Release)
-    const promises = dtos.map(result => {
-        const existing = entities.find(release => { return release.externalId == ID_PREFIX_MOVIEDB + result.id })
-        const entity = existing != null ? existing : new Release()
-        DtoParser.mergeMovieRelease(result, entity)
-        return entity
-    })
-    return await Promise.all(promises).then(async entities => {
-        await Database.saveAll(entities)
-    }).catch(error => {
-        throw(error)
-    })
 }
