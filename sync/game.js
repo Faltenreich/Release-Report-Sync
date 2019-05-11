@@ -1,9 +1,7 @@
 const Database = include('data/database')
-const ParseParser = include('data/parser/parse')
+const DtoParser = include('data/parser/dto')
 const Networking = include('networking/networking')
 const IgdbApi = include('networking/api/igdb')
-
-// TODO: Encapsulate dependencies
 const Parse = require('parse/node')
 const Release = Parse.Object.extend("Release")
 
@@ -30,7 +28,7 @@ async function handleGameReleases(dto) {
     const promises = dto.map(result => {
         const existing = entities.find(entity => { return entity.externalId == ID_PREFIX_IGDB + result.id })
         const entity = existing != null ? existing : new Release()
-        ParseParser.mergeGameRelease(result, entity)
+        DtoParser.mergeGameRelease(result, entity)
         return entity
     })
     return await Promise.all(promises).then(async entities => {

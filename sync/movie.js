@@ -1,5 +1,5 @@
 const Database = include('data/database')
-const ParseParser = include('data/parser/parse')
+const DtoParser = include('data/parser/dto')
 const Networking = include('networking/networking')
 const MovieDbApi = include('networking/api/moviedb')
 
@@ -30,7 +30,7 @@ async function handleMovieGenres(dto) {
     const promises = dtos.map(result => {
         const existing = entities.find(release => { return release.externalId == ID_PREFIX_MOVIEDB + result.id })
         const entity = existing != null ? existing : new Genre()
-        ParseParser.mergeMovieGenre(result, entity)
+        DtoParser.mergeMovieGenre(result, entity)
         return entity
     })
     return await Promise.all(promises).then(async entities => {
@@ -66,7 +66,7 @@ async function handleMovieReleases(dto) {
     const promises = dtos.map(result => {
         const existing = entities.find(release => { return release.externalId == ID_PREFIX_MOVIEDB + result.id })
         const entity = existing != null ? existing : new Release()
-        ParseParser.mergeMovieRelease(result, entity)
+        DtoParser.mergeMovieRelease(result, entity)
         return entity
     })
     return await Promise.all(promises).then(async entities => {
