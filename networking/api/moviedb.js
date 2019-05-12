@@ -5,6 +5,7 @@ global.ID_PREFIX_MOVIEDB = "moviedb_"
 
 module.exports = {
     genres:function(language) {
+        // TODO: Specify required fields
         return getRequest({
             "endpoint": "/genre/movie/list",
             "params": "?",
@@ -12,6 +13,7 @@ module.exports = {
         })
     },
     discover:function(language, year, page) {
+        // TODO: Specify required fields
         return getRequest({
             "endpoint": "/discover/movie",
             "params": `?primary_release_year=${year}&sort_by=popularity.desc&page=${page}&`,

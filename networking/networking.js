@@ -3,12 +3,13 @@ const JsonParser = include('data/parser/json')
 
 module.exports = {
     sendRequest:async function(params) {
-        const promise = new Promise(function(resolve, reject) {
+        return await new Promise(function(resolve, reject) {
             const url = params.url
             const headers = params.headers
+            const body = params.body
             
             const request = new XMLHttpRequest()
-            request.open("GET", url)
+            request.open("POST", url)
 
             if (headers) {
                 for (let key in headers) {
@@ -26,8 +27,12 @@ module.exports = {
                     reject()
                 }
             })
-            request.send()
+
+            if (body) {
+                request.send(body)
+            } else {
+                request.send()
+            }
         })
-        return await promise
     }
 }
