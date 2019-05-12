@@ -12,11 +12,11 @@ module.exports = {
             "language": language
         })
     },
-    discover:function(language, year, page) {
+    discover:function(language, date, page) {
         // TODO: Specify required fields
         return getRequest({
             "endpoint": "/discover/movie",
-            "params": `?primary_release_year=${year}&sort_by=popularity.desc&page=${page}&`,
+            "params": `?primary_release_year=${date.getFullYear()}&sort_by=popularity.desc&page=${page}&`,
             "language": language
         })
     }

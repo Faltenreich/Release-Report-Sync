@@ -5,10 +5,9 @@ const MAX_PAGE_SIZE = 50
 global.ID_PREFIX_IGDB = "igdb_"
 
 module.exports = {
-    games:function(language, year, page) {
-        // TODO: Get millis from year
+    games:function(language, date, page) {
         // TODO: Specify required fields
-        const millis = 1546297200000
+        const millis = Math.floor(date.getTime() / 1000)
         return getRequest({
             "endpoint": "/games",
             "params": `fields *, cover.*, screenshots.*, platforms.*, genres.*; where first_release_date > ${millis}; sort popularity desc; limit ${MAX_PAGE_SIZE}; offset ${page * MAX_PAGE_SIZE};`,
@@ -17,8 +16,8 @@ module.exports = {
     }
 }
 
-function getRequest(params) {
-    // TODO: Set language
+function getRequest(params) {s
+    // IGDB is currently not localized
     return {
         "url": HOST + params.endpoint,
         "headers": { "user-key": API_KEY, "content-type": "application/raw" },

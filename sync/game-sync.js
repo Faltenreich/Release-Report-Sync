@@ -9,14 +9,14 @@ const Networking = include('networking/networking')
 const IgdbApi = include('networking/api/igdb')
 
 module.exports = {
-    start:async function(language, year) {
-        await syncReleases(language, year, 0)
+    start:async function(language, date) {
+        await syncReleases(language, date, 0)
         console.log("Synced game releases completely")
     }
 }
 
-async function syncReleases(language, year, page) {
-    const request = IgdbApi.games(language, year, page)
+async function syncReleases(language, date, page) {
+    const request = IgdbApi.games(language, date, page)
     const dto = await Networking.sendRequest(request)
     const entities = await DtoParser.parseEntitiesFromDto(dto, ID_PREFIX_IGDB, Release, function() { return new Release() }, function(dto, entity) { Merger.mergeGameRelease(dto, entity) })
     await Database.saveAll(entities)
@@ -24,6 +24,6 @@ async function syncReleases(language, year, page) {
 
     const loadMore = dto.length > 0
     if (loadMore) {
-        await syncReleases(language, year, page + 1)
+        await syncReleases(language, date, page + 1)
     }
 }
