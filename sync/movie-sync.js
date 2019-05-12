@@ -10,10 +10,10 @@ const Networking = include('networking/networking')
 const MovieDbApi = include('networking/api/moviedb')
 
 module.exports = {
-    start:async function(language, year) {
+    start:async function(language, date) {
         await syncGenres(language)
         console.log("Synced movie genres completely")
-        await syncReleases(language, year, 1)
+        await syncReleases(language, date, 1)
         console.log("Synced movie releases completely")
     }
 }
@@ -31,8 +31,8 @@ function loadReleases() {
     handleMovieFromDto(1, 1, dto)
 }
 
-async function syncReleases(language, year, page) {
-    const request = MovieDbApi.discover(language, year, page)
+async function syncReleases(language, date, page) {
+    const request = MovieDbApi.discover(language, date, page)
     const dto = await Networking.sendRequest(request)
     const pageCount = dto.total_pages
     const entities = await DtoParser.parseEntitiesFromDto(dto.results, ID_PREFIX_MOVIEDB, Release, function() { return new Release() }, function(dto, entity) { Merger.mergeMovieRelease(dto, entity) })
@@ -41,7 +41,7 @@ async function syncReleases(language, year, page) {
     
     const loadMore = page < pageCount
     if (loadMore) {
-        await syncReleases(language, year, page + 1)
+        await syncReleases(language, date, page + 1)
     } else {
         return
     }
