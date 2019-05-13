@@ -21,7 +21,6 @@ module.exports = {
         entity.set("releasedAt", dto.first_release_date != null? new Date(dto.first_release_date * 1000) : null)
         entity.set("popularity", dto.popularity)
         if (dto.cover != null && dto.cover.url != null) {
-            const url = "https:" + dto.cover.url
             entity.set("imageUrlForThumbnail", IMAGE_HOST_IGDB + `/t_cover_small/${dto.cover.image_id}.jpg`)
             entity.set("imageUrlForCover", IMAGE_HOST_IGDB + `/t_cover_big_2x/${dto.cover.image_id}.jpg`)
         }
@@ -30,8 +29,14 @@ module.exports = {
         }
         if (dto.genres != null) {
             dto.genres.forEach(genre => {
-                const externalId = ID_PREFIX_IGDB + genre.id.toString()
+                const externalId = ID_PREFIX_IGDB + genre.toString()
                 entity.addUnique("genres", externalId)
+            })
+        }
+        if (dto.platforms != null) {
+            dto.platforms.forEach(platform => {
+                const externalId = ID_PREFIX_IGDB + platform.toString()
+                entity.addUnique("platforms", externalId)
             })
         }
     },

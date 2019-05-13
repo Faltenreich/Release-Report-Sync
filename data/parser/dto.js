@@ -5,7 +5,7 @@ module.exports = {
         const externalIds = dto.map(it => prefix + it.id)
         const entities = await Database.getByExternalIds(externalIds, type)
         const promises = dto.map(dto => {
-            const existing = entities.find(entity => { return entity.attributes.externalId == prefix + dto.id })
+            const existing = entities.find(entity => { return entity.externalId == prefix + dto.id })
             const entity = existing != null ? existing : onInstantiate()
             onMerge(dto, entity)
             return entity
