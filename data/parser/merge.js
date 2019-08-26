@@ -27,8 +27,6 @@ module.exports = {
             entity.set("imageUrlForThumbnail", IMAGE_HOST_IGDB + `/t_cover_small/${dto.cover.image_id}.jpg`)
             entity.set("imageUrlForCover", IMAGE_HOST_IGDB + `/t_cover_big_2x/${dto.cover.image_id}.jpg`)
         }
-        if (dto.screenshots != null && dto.screenshots.length > 0) {
-        }
         if (dto.genres != null) {
             dto.genres.forEach(genre => {
                 const externalId = ID_PREFIX_IGDB + genre.toString()
@@ -42,7 +40,7 @@ module.exports = {
             })
         }
         if (dto.screenshots != null) {
-            dto.screenshots.forEach(screenshot, index => {
+            dto.screenshots.forEach((screenshot, index) => {
                 const url = IMAGE_HOST_IGDB + `/t_1080p/${screenshot.image_id}.jpg`
                 const isWallpaper = index == 0
                 if (isWallpaper) {
