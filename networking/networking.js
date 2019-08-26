@@ -9,7 +9,7 @@ module.exports = {
             const body = params.body
             
             const request = new XMLHttpRequest()
-            request.open("POST", url)
+            request.open("GET", url)
 
             if (headers) {
                 for (let key in headers) {

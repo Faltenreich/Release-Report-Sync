@@ -11,7 +11,7 @@ const Networking = include('networking/networking')
 const IgdbApi = include('networking/api/igdb')
 
 // Free tier has an offset limit of 150 (see https://api-docs.igdb.com/#pagination)
-const MAX_PAGE_COUNT = 3
+const MAX_PAGE_COUNT = 4
 
 module.exports = {
     // IGDB is currently not localized
