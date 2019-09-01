@@ -1,3 +1,5 @@
+const Utils = include('utils')
+
 const HOST = "https://api.themoviedb.org/3"
 const API_KEY = "3f49b57b1f30fc4de49d48e7d4a92d6f"
 
@@ -12,11 +14,10 @@ module.exports = {
             "language": language
         })
     },
-    discover:function(language, date, page) {
-        // TODO: Specify required fields
+    discover:function(language, minDate, maxDate, page) {
         return getRequest({
             "endpoint": "/discover/movie",
-            "params": `?primary_release_year=${date.getFullYear()}&sort_by=popularity.desc&page=${page}&`,
+            "params": `?primary_release_date.gte=${Utils.formatDate(minDate)}&primary_release_date.lte=${Utils.formatDate(maxDate)}&sort_by=popularity.desc&vote_count.gte=1&page=${page}&`,
             "language": language
         })
     }

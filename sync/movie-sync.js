@@ -2,12 +2,15 @@ const Parse = require('parse/node')
 const Genre = Parse.Object.extend("Genre")
 const Release = Parse.Object.extend("Release")
 
+const Utils = include('utils')
 const Database = include('data/database')
 const DtoParser = include('data/parser/dto')
 const Merger = include('data/parser/merge')
 
 const Networking = include('networking/networking')
 const MovieDbApi = include('networking/api/moviedb')
+
+const REQUEST_DELAY_IN_MILLIS = 250
 
 module.exports = {
     start:async function(language, date) {
@@ -32,13 +35,18 @@ function loadReleases() {
 }
 
 async function syncReleases(language, date, page) {
-    const request = MovieDbApi.discover(language, date, page)
+    const minDate = date
+    const maxDate = new Date()
+    maxDate.setFullYear(minDate.getFullYear() + 2)
+    const request = MovieDbApi.discover(language, minDate, maxDate, page)
     const dto = await Networking.sendRequest(request)
     const pageCount = dto.total_pages
     const entities = await DtoParser.parseEntitiesFromDto(dto.results, ID_PREFIX_MOVIEDB, Release, function() { return new Release() }, function(dto, entity) { Merger.mergeMovieRelease(dto, entity) })
     await Database.saveAll(entities)
     console.log(`Synced movie releases: page ${page} of ${pageCount}`)
     
+    await Utils.sleep(REQUEST_DELAY_IN_MILLIS)
+
     const loadMore = page < pageCount
     if (loadMore) {
         await syncReleases(language, date, page + 1)
