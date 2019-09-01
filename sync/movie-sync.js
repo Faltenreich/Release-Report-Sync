@@ -2,7 +2,7 @@ const Parse = require('parse/node')
 const Genre = Parse.Object.extend("Genre")
 const Release = Parse.Object.extend("Release")
 
-const Utils = include('utils')
+const BaseUtils = include('util/base')
 const Database = include('data/database')
 const DtoParser = include('data/parser/dto')
 const Merger = include('data/parser/merge')
@@ -16,7 +16,11 @@ module.exports = {
     start:async function(language, date) {
         await syncGenres(language)
         console.log("Synced movie genres completely")
-        await syncReleases(language, date, 1)
+
+        const minDate = date
+        const maxDate = new Date()
+        maxDate.setFullYear(minDate.getFullYear() + 2)
+        await syncReleases(language, minDate, maxDate, 1)
         console.log("Synced movie releases completely")
     }
 }
@@ -34,10 +38,7 @@ function loadReleases() {
     handleMovieFromDto(1, 1, dto)
 }
 
-async function syncReleases(language, date, page) {
-    const minDate = date
-    const maxDate = new Date()
-    maxDate.setFullYear(minDate.getFullYear() + 2)
+async function syncReleases(language, minDate, maxDate, page) {
     const request = MovieDbApi.discover(language, minDate, maxDate, page)
     const dto = await Networking.sendRequest(request)
     const pageCount = dto.total_pages
@@ -45,11 +46,11 @@ async function syncReleases(language, date, page) {
     await Database.saveAll(entities)
     console.log(`Synced movie releases: page ${page} of ${pageCount}`)
     
-    await Utils.sleep(REQUEST_DELAY_IN_MILLIS)
+    await BaseUtils.sleep(REQUEST_DELAY_IN_MILLIS)
 
     const loadMore = page < pageCount
     if (loadMore) {
-        await syncReleases(language, date, page + 1)
+        await syncReleases(language, minDate, maxDate, page + 1)
     } else {
         return
     }

@@ -1,7 +1,8 @@
 module.exports = {
-    sleep:async function(milliseconds) {
-        return new Promise(resolve => setTimeout(resolve, milliseconds))
+    convertToMillis:function(date) {
+        return Math.floor(date.getTime() / 1000)
     },
+    // Formats date as yyyy-MM-dd
     formatDate:function(date) {
         const parts = [
             date.getFullYear(),
