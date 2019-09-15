@@ -8,9 +8,10 @@ global.ID_PREFIX_IGDB = "igdb_"
 
 module.exports = {
     games:function(date, page) {
+        const millis = DateUtils.convertToMillis(date)
         return getRequest({
             "endpoint": "/games",
-            "params": `fields *, cover.*, screenshots.*; where first_release_date > ${DateUtils.convertToMillis(date)}; sort popularity desc; limit ${MAX_PAGE_SIZE}; offset ${page * MAX_PAGE_SIZE};`
+            "params": `fields *, cover.*, screenshots.*; where first_release_date > ${millis}; sort popularity desc; limit ${MAX_PAGE_SIZE}; offset ${page * MAX_PAGE_SIZE};`
         })
     },
     genres:function(page) {
@@ -29,8 +30,13 @@ module.exports = {
 
 function getRequest(params) {
     return {
+        "method": "POST",
         "url": HOST + params.endpoint,
-        "headers": { "user-key": API_KEY, "content-type": "application/raw" },
+        "headers": { 
+            "user-key": API_KEY, 
+            "content-type": "application/raw",
+            "Access-Control-Allow-Origin": "*"
+         },
         "body": params.params
     }
 }

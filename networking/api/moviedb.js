@@ -24,6 +24,7 @@ module.exports = {
 
 function getRequest(params) {
     return { 
+        "method": "GET",
         "url": HOST + params.endpoint + params.params + `language=${params.language}&api_key=${API_KEY}`
     }
 }

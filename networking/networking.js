@@ -4,12 +4,13 @@ const JsonParser = include('data/parser/json')
 module.exports = {
     sendRequest:async function(params) {
         return await new Promise(function(resolve, reject) {
+            const method = params.method
             const url = params.url
             const headers = params.headers
             const body = params.body
             
             const request = new XMLHttpRequest()
-            request.open("GET", url)
+            request.open(method, url)
 
             if (headers) {
                 for (let key in headers) {
@@ -19,11 +20,12 @@ module.exports = {
             }
 
             request.addEventListener('load', () => {
+                const json = request.responseText
                 if (request.status >= 200 && request.status < 300) {
-                    const dto = JsonParser.parseDtoFromJson(request.responseText)
+                    const dto = JsonParser.parseDtoFromJson(json)
                     resolve(dto)
                 } else {
-                    console.log(request.responseText)
+                    console.log(json)
                     reject()
                 }
             })
