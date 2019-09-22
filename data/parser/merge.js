@@ -77,5 +77,10 @@ module.exports = {
             const externalId = ID_PREFIX_MOVIEDB + genreId.toString()
             entity.addUnique("genres", externalId)
         })
+    },
+    mergeMusicRelease:function(dto, entity) {
+        const externalId = ID_PREFIX_SPOTIFY + dto.id.toString()
+        entity.set("externalId", externalId)
+        // TODO
     }
 }
