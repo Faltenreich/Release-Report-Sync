@@ -24,27 +24,38 @@ async function getToken() {
 }
 
 async function syncReleases(page, token) {
-    const ids = getUpcomingReleaseIds(page, token)
+    const ids = await getUpcomingReleaseIds(page, null, token)
+    await syncReleasesForIds(ids, 0, token)
 }
 
-async function getUpcomingReleaseIds(page, token) {
-    const request = SpotifyApi.browse(page, token)
+async function getUpcomingReleaseIds(page, ids, token) {
+    const pageSize = 50
+    const request = SpotifyApi.browse(page, pageSize, token)
     const dto = await Networking.sendRequest(request)
-    const ids = dto.albums.items.filter(item => item.album_type == "album").map(item => item.id)
-    return ids
-}
-
-async function syncReleasesForIds(page, ids, token) {
-    const request = SpotifyApi.albums(ids, token)
-    const dto = await Networking.sendRequest(request)
-    const entities = await DtoParser.parseEntitiesFromDto(dto.albums.items, ID_PREFIX_SPOTIFY, Release, function() { return new Release() }, function(dto, entity) { Merger.mergeMusicRelease(dto, entity) })
-    await Database.saveAll(entities)
-    console.log(`Synced music releases: page ${page + 1} of 1`)
-
-    const loadMore = false
+    const newIds = dto.albums.items.filter(item => item.album_type == "album").map(item => item.id)
+    const loadMore = dto.albums.offset + pageSize < dto.albums.total
+    const totalIds = ids != null ? ids.concat(newIds) : newIds
     if (loadMore) {
-        await syncReleases(page + 1, token)
+        return getUpcomingReleaseIds(page + 1, totalIds, token)
     } else {
-        return
+        return totalIds
+    }
+}
+
+async function syncReleasesForIds(ids, index, token) {
+    const pageSize = 20
+    const page = index / pageSize
+    const pageCount = ids.length / pageSize
+    const idsOfPage = ids.slice(index, index + pageSize)
+
+    const request = SpotifyApi.albums(idsOfPage, token)
+    const dto = await Networking.sendRequest(request)
+    const entities = await DtoParser.parseEntitiesFromDto(dto.albums, ID_PREFIX_SPOTIFY, Release, function() { return new Release() }, function(dto, entity) { Merger.mergeMusicRelease(dto, entity) })
+    await Database.saveAll(entities)
+    console.log(`Synced music releases: page ${page + 1} of ${pageCount}`)
+
+    const loadMore = page < pageCount - 1
+    if (loadMore) {
+        await syncReleasesForIds(ids, index + pageSize, token)
     }
 }

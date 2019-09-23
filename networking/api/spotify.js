@@ -1,8 +1,6 @@
 const HOST = "https://api.spotify.com/v1"
 const API_KEY = "MGM0NjM5NWZlYmIxNGQ3MTlhMTYxOWU2ZDFiM2RjZWM6Njg3ODBhYzAwYzU2NGU5MGI3Y2Q4OWY1YWNiOWUwNDU="
 
-const SPOTIFY_PAGE_SIZE = 20
-
 global.ID_PREFIX_SPOTIFY = "spotify_"
 
 module.exports = {
@@ -18,10 +16,10 @@ module.exports = {
             "body": "grant_type=client_credentials"
         }
     },
-    browse:function(page, token) {
+    browse:function(page, pageSize, token) {
         return getRequest({
             "endpoint": "/browse/new-releases",
-            "params": `?offset=${page * SPOTIFY_PAGE_SIZE}&limit=${SPOTIFY_PAGE_SIZE}`,
+            "params": `?offset=${page * pageSize}&limit=${pageSize}`,
             "token": token
         })
     },
