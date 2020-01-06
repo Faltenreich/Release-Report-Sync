@@ -45,7 +45,7 @@ async function getUpcomingReleaseIds(page, ids, token) {
 async function syncReleasesForIds(ids, index, token) {
     const pageSize = 20
     const page = index / pageSize
-    const pageCount = ids.length / pageSize
+    const pageCount = Math.ceil(ids.length / pageSize)
     const idsOfPage = ids.slice(index, index + pageSize)
 
     const request = SpotifyApi.albums(idsOfPage, token)

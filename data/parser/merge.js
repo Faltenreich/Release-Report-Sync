@@ -11,13 +11,15 @@ module.exports = {
     },
     mergeGamePlatform:function(dto, entity) {
         const externalId = ID_PREFIX_IGDB + dto.id.toString()
+        const title = dto.name.replace("PC (Microsoft Windows)", "Windows")
         entity.set("externalId", externalId)
-        entity.set("title", dto.name)
+        entity.set("title", title)
     },
     mergeGameRelease:function(dto, entity) {
         const externalId = ID_PREFIX_IGDB + dto.id.toString()
         entity.set("externalId", externalId)
         entity.set("type", "game")
+        entity.set("artist", null) // TODO
         entity.set("title", dto.name)
         entity.set("description", dto.summary)
         entity.set("releasedAt", dto.first_release_date != null? new Date(dto.first_release_date * 1000) : null)
@@ -66,6 +68,7 @@ module.exports = {
         const externalId = ID_PREFIX_MOVIEDB + dto.id.toString()
         entity.set("externalId", externalId)
         entity.set("type", "movie")
+        entity.set("artist", null) // TODO
         entity.set("title", dto.title)
         entity.set("description", dto.overview)
         entity.set("releasedAt", new Date(Date.parse(dto.release_date)))
@@ -84,7 +87,8 @@ module.exports = {
         const tracklist = dto.tracks.items.map(track => `${track.track_number}. ${track.name}`).join("\n")
         entity.set("externalId", externalId)
         entity.set("type", "music")
-        entity.set("title", `${artist} - ${dto.name}`)
+        entity.set("artist", artist)
+        entity.set("title", dto.name)
         entity.set("description", tracklist)
         entity.set("releasedAt", new Date(Date.parse(dto.release_date)))
         entity.set("popularity", dto.popularity)
