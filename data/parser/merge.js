@@ -23,7 +23,7 @@ module.exports = {
         entity.set("title", dto.name)
         entity.set("description", dto.summary)
         entity.set("releasedAt", dto.first_release_date != null? new Date(dto.first_release_date * 1000) : null)
-        entity.set("popularity", dto.popularity)
+        entity.set("popularity", dto.popularity) // is open ended, mostly capped at 1000
         entity.set("externalUrl", dto.url)
         if (dto.cover != null && dto.cover.url != null) {
             entity.set("imageUrlForThumbnail", IMAGE_HOST_IGDB + `/t_cover_small/${dto.cover.image_id}.jpg`)
@@ -72,7 +72,7 @@ module.exports = {
         entity.set("title", dto.title)
         entity.set("description", dto.overview)
         entity.set("releasedAt", new Date(Date.parse(dto.release_date)))
-        entity.set("popularity", dto.popularity)
+        entity.set("popularity", dto.popularity) // is open ended, mostly capped at 1000
         entity.set("imageUrlForThumbnail", IMAGE_HOST_MOVIEDB + "/w342/" + dto.poster_path)
         entity.set("imageUrlForCover", IMAGE_HOST_MOVIEDB + "/w780/" + dto.poster_path)
         entity.set("imageUrlForWallpaper", IMAGE_HOST_MOVIEDB + "/w1280/" + dto.backdrop_path)
@@ -91,7 +91,7 @@ module.exports = {
         entity.set("title", dto.name)
         entity.set("description", tracklist)
         entity.set("releasedAt", new Date(Date.parse(dto.release_date)))
-        entity.set("popularity", dto.popularity)
+        entity.set("popularity", dto.popularity * 10) // is closed ended, capped at 100
         if (dto.images != null && dto.images.length > 0) {
             entity.set("imageUrlForCover", dto.images[0].url)
             if (dto.images.length > 1) {
