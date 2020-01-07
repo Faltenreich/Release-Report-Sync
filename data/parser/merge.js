@@ -26,7 +26,7 @@ module.exports = {
         entity.set("popularity", dto.popularity) // is open ended, mostly capped at 1000
         entity.set("externalUrl", dto.url)
         if (dto.cover != null && dto.cover.url != null) {
-            entity.set("imageUrlForThumbnail", IMAGE_HOST_IGDB + `/t_cover_small/${dto.cover.image_id}.jpg`)
+            entity.set("imageUrlForThumbnail", IMAGE_HOST_IGDB + `/t_cover_big/${dto.cover.image_id}.jpg`)
             entity.set("imageUrlForCover", IMAGE_HOST_IGDB + `/t_cover_big_2x/${dto.cover.image_id}.jpg`)
         }
         if (dto.genres != null) {

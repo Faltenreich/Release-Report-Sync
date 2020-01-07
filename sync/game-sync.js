@@ -11,7 +11,7 @@ const Networking = include('networking/networking')
 const IgdbApi = include('networking/api/igdb')
 
 // Free tier has an offset limit of 150 (see https://api-docs.igdb.com/#pagination)
-const MAX_PAGE_COUNT = 4
+const MAX_PAGE_COUNT = 150
 
 module.exports = {
     // IGDB is currently not localized
@@ -31,7 +31,7 @@ async function syncReleases(date, page) {
     const entities = await DtoParser.parseEntitiesFromDto(dto, ID_PREFIX_IGDB, Release, function() { return new Release() }, function(dto, entity) { Merger.mergeGameRelease(dto, entity) })
     await Database.saveAll(entities)
     const nextPage = page + 1
-    console.log(`Synced game releases: page ${nextPage}`)
+    console.log(`Synced game releases: page ${nextPage} of ${MAX_PAGE_COUNT}`)
 
     const loadMore = dto.length > 0 && nextPage < MAX_PAGE_COUNT
     if (loadMore) {
