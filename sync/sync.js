@@ -7,7 +7,7 @@ module.exports = {
         const language = "en"
         const date = new Date()
         //await GameSync.start(language, date)
-        //await MovieSync.start(language, date)
-        await MusicSync.start()
+        await MovieSync.start(language, date)
+        //await MusicSync.start()
     }
 }

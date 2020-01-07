@@ -3,6 +3,8 @@ const VIDEO_HOST_IGDB = "https://www.youtube.com"
 
 const IMAGE_HOST_MOVIEDB = "https://image.tmdb.org/t/p"
 
+// Target max popularity is 1000, so we approach it
+
 module.exports = {
     mergeGameGenre:function(dto, entity) {
         const externalId = ID_PREFIX_IGDB + dto.id.toString()
@@ -23,7 +25,7 @@ module.exports = {
         entity.set("title", dto.name)
         entity.set("description", dto.summary)
         entity.set("releasedAt", dto.first_release_date != null? new Date(dto.first_release_date * 1000) : null)
-        entity.set("popularity", dto.popularity) // is open ended, mostly capped at 1000
+        entity.set("popularity", dto.popularity * 1.667) // is open ended, mostly capped at 600
         entity.set("externalUrl", dto.url)
         if (dto.cover != null && dto.cover.url != null) {
             entity.set("imageUrlForThumbnail", IMAGE_HOST_IGDB + `/t_cover_big/${dto.cover.image_id}.jpg`)
@@ -72,7 +74,7 @@ module.exports = {
         entity.set("title", dto.title)
         entity.set("description", dto.overview)
         entity.set("releasedAt", new Date(Date.parse(dto.release_date)))
-        entity.set("popularity", dto.popularity) // is open ended, mostly capped at 1000
+        entity.set("popularity", dto.popularity * 1.667) // is open ended, mostly capped at 600
         entity.set("imageUrlForThumbnail", IMAGE_HOST_MOVIEDB + "/w342/" + dto.poster_path)
         entity.set("imageUrlForCover", IMAGE_HOST_MOVIEDB + "/w780/" + dto.poster_path)
         entity.set("imageUrlForWallpaper", IMAGE_HOST_MOVIEDB + "/w1280/" + dto.backdrop_path)
