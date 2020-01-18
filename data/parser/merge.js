@@ -27,7 +27,7 @@ module.exports = {
         entity.set("releasedAt", dto.first_release_date != null? new Date(dto.first_release_date * 1000) : null)
         entity.set("popularity", dto.popularity * 1.667) // is open ended, mostly capped at 600
         entity.set("externalUrl", dto.url)
-        if (dto.cover != null && dto.cover.url != null) {
+        if (dto.cover != null && dto.cover.url != null && dto.cover.image_id) {
             entity.set("imageUrlForThumbnail", IMAGE_HOST_IGDB + `/t_cover_big/${dto.cover.image_id}.jpg`)
             entity.set("imageUrlForCover", IMAGE_HOST_IGDB + `/t_cover_big_2x/${dto.cover.image_id}.jpg`)
         }
@@ -45,19 +45,25 @@ module.exports = {
         }
         if (dto.screenshots != null) {
             dto.screenshots.forEach((screenshot, index) => {
-                const url = IMAGE_HOST_IGDB + `/t_1080p/${screenshot.image_id}.jpg`
-                const isWallpaper = index == 0
-                if (isWallpaper) {
-                    entity.set("imageUrlForWallpaper", url)
-                } else {
-                    entity.addUnique("images", url)
+                const imageId = screenshot.image_id
+                if (imageId) {
+                    const url = IMAGE_HOST_IGDB + `/t_1080p/${screenshot.image_id}.jpg`
+                    const isWallpaper = index == 0
+                    if (isWallpaper) {
+                        entity.set("imageUrlForWallpaper", url)
+                    } else {
+                        entity.addUnique("imageUrls", url)
+                    }
                 }
             })
         }
         if (dto.videos != null) {
             dto.videos.forEach(video => {
-                const url = VIDEO_HOST_IGDB + "/watch?v=" + video.video_id
-                entity.addUnique("videos", url)
+                const videoId = video.video_id
+                if (videoId) {
+                    const url = VIDEO_HOST_IGDB + "/watch?v=" + videoId
+                    entity.addUnique("videoUrls", url)
+                }
             })
         }
     },
@@ -75,9 +81,13 @@ module.exports = {
         entity.set("description", dto.overview)
         entity.set("releasedAt", new Date(Date.parse(dto.release_date)))
         entity.set("popularity", dto.popularity * 1.667) // is open ended, mostly capped at 600
-        entity.set("imageUrlForThumbnail", IMAGE_HOST_MOVIEDB + "/w342/" + dto.poster_path)
-        entity.set("imageUrlForCover", IMAGE_HOST_MOVIEDB + "/w780/" + dto.poster_path)
-        entity.set("imageUrlForWallpaper", IMAGE_HOST_MOVIEDB + "/w1280/" + dto.backdrop_path)
+        if (dto.poster_path) {
+            entity.set("imageUrlForThumbnail", IMAGE_HOST_MOVIEDB + "/w342/" + dto.poster_path)
+            entity.set("imageUrlForCover", IMAGE_HOST_MOVIEDB + "/w780/" + dto.poster_path)
+        }
+        if (dto.backdrop_path) {
+            entity.set("imageUrlForWallpaper", IMAGE_HOST_MOVIEDB + "/w1280/" + dto.backdrop_path)
+        }
         dto.genre_ids.forEach(genreId => {
             const externalId = ID_PREFIX_MOVIEDB + genreId.toString()
             entity.addUnique("genres", externalId)
@@ -97,7 +107,7 @@ module.exports = {
         if (dto.images != null && dto.images.length > 0) {
             entity.set("imageUrlForCover", dto.images[0].url)
             if (dto.images.length > 1) {
-                entity.set("imageUrlForThumbnail", dto.images[0].url)
+                entity.set("imageUrlForThumbnail", dto.images[1].url)
             }
         }
     }
