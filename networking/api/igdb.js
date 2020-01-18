@@ -11,7 +11,7 @@ module.exports = {
         const millis = DateUtils.convertToMillis(date)
         return getRequest({
             "endpoint": "/games",
-            "params": `fields *, cover.*, screenshots.*; ` +
+            "params": `fields *, cover.*, screenshots.*; videos.*; ` +
                 `where first_release_date > ${millis}; ` +
                 `sort popularity desc; ` +
                 `limit ${MAX_PAGE_SIZE}; offset ${page * MAX_PAGE_SIZE};`
