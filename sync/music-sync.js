@@ -3,7 +3,7 @@ const Release = Parse.Object.extend("Release")
 
 const Database = include('data/database')
 const DtoParser = include('data/parser/dto')
-const Merger = include('data/parser/merge')
+const Mapper = include('networking/mapper/music')
 
 const Networking = include('networking/networking')
 const SpotifyApi = include('networking/api/spotify')
@@ -50,7 +50,7 @@ async function syncReleasesForIds(ids, index, token) {
 
     const request = SpotifyApi.albums(idsOfPage, token)
     const dto = await Networking.sendRequest(request)
-    const entities = await DtoParser.parseEntitiesFromDto(dto.albums, ID_PREFIX_SPOTIFY, Release, function() { return new Release() }, function(dto, entity) { Merger.mergeMusicRelease(dto, entity) })
+    const entities = await DtoParser.parseEntitiesFromDto(dto.albums, ID_PREFIX_SPOTIFY, Release, function() { return new Release() }, function(dto, entity) { Mapper.mapRelease(dto, entity) })
     await Database.saveAll(entities)
     console.log(`Synced music releases: page ${page + 1} of ${pageCount}`)
 

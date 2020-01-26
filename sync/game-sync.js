@@ -5,7 +5,7 @@ const Platform = Parse.Object.extend("Platform")
 
 const Database = include('data/database')
 const DtoParser = include('data/parser/dto')
-const Merger = include('data/parser/merge')
+const Mapper = include('networking/mapper/game')
 
 const Networking = include('networking/networking')
 const IgdbApi = include('networking/api/igdb')
@@ -28,7 +28,7 @@ module.exports = {
 async function syncReleases(date, page) {
     const request = IgdbApi.games(date, page)
     const dto = await Networking.sendRequest(request)
-    const entities = await DtoParser.parseEntitiesFromDto(dto, ID_PREFIX_IGDB, Release, function() { return new Release() }, function(dto, entity) { Merger.mergeGameRelease(dto, entity) })
+    const entities = await DtoParser.parseEntitiesFromDto(dto, ID_PREFIX_IGDB, Release, function() { return new Release() }, function(dto, entity) { Mapper.mapRelease(dto, entity) })
     await Database.saveAll(entities)
     const nextPage = page + 1
     console.log(`Synced game releases: page ${nextPage} of ${MAX_PAGE_COUNT}`)
@@ -42,13 +42,13 @@ async function syncReleases(date, page) {
 async function syncGenres() {
     const request = IgdbApi.genres(0)
     const dto = await Networking.sendRequest(request)
-    const entities = await DtoParser.parseEntitiesFromDto(dto, ID_PREFIX_IGDB, Genre, function() { return new Genre() }, function(dto, entity) { Merger.mergeGameGenre(dto, entity) })
+    const entities = await DtoParser.parseEntitiesFromDto(dto, ID_PREFIX_IGDB, Genre, function() { return new Genre() }, function(dto, entity) { Mapper.mapGenre(dto, entity) })
     await Database.saveAll(entities)
 }
 
 async function syncPlatforms() {
     const request = IgdbApi.platforms(0)
     const dto = await Networking.sendRequest(request)
-    const entities = await DtoParser.parseEntitiesFromDto(dto, ID_PREFIX_IGDB, Platform, function() { return new Platform() }, function(dto, entity) { Merger.mergeGamePlatform(dto, entity) })
+    const entities = await DtoParser.parseEntitiesFromDto(dto, ID_PREFIX_IGDB, Platform, function() { return new Platform() }, function(dto, entity) { Mapper.mapPlatform(dto, entity) })
     await Database.saveAll(entities)
 }
