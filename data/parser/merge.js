@@ -21,7 +21,12 @@ module.exports = {
         const externalId = ID_PREFIX_IGDB + dto.id.toString()
         entity.set("externalId", externalId)
         entity.set("type", "game")
-        entity.set("artist", null) // TODO
+        if (dto.involved_companies != null) {
+            const developer = dto.involved_companies.find(company => { return company.developer })
+            if (developer != null && developer.company != null) {
+                entity.set("artist", developer.company.name)
+            }
+        }
         entity.set("title", dto.name)
         entity.set("description", dto.summary)
         entity.set("releasedAt", dto.first_release_date != null? new Date(dto.first_release_date * 1000) : null)
