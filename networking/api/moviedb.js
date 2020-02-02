@@ -19,7 +19,6 @@ module.exports = {
             "params": `?primary_release_date.gte=${DateUtils.formatDate(minDate)}` +
                 `&primary_release_date.lte=${DateUtils.formatDate(maxDate)}` +
                 `&sort_by=popularity.desc&page=${page}` +
-                `&vote_count.gte=1` +
                 `&`,
             "language": language
         })

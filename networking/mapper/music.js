@@ -9,7 +9,7 @@ module.exports = {
         entity.set("title", dto.name)
         entity.set("description", tracklist)
         entity.set("releasedAt", new Date(Date.parse(dto.release_date)))
-        entity.set("popularity", dto.popularity * 10) // is closed ended, capped at 100
+        entity.set("popularity", dto.popularity)
         if (dto.images != null && dto.images.length > 0) {
             entity.set("imageUrlForCover", dto.images[0].url)
             if (dto.images.length > 1) {

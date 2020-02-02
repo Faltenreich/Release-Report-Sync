@@ -38,19 +38,25 @@ function loadReleases() {
     handleMovieFromDto(1, 1, dto)
 }
 
-async function syncReleases(language, minDate, maxDate, page) {
+async function syncReleases(language, minDate, maxDate, page, popularityFactor) {
     const request = MovieDbApi.discover(language, minDate, maxDate, page)
     const dto = await Networking.sendRequest(request)
+
+    if (popularityFactor == null && dto.results.length > 0) {
+        popularityFactor = 100/ dto.results[0].popularity
+    }
+
     const pageCount = dto.total_pages
-    const entities = await DtoParser.parseEntitiesFromDto(dto.results, ID_PREFIX_MOVIEDB, Release, function() { return new Release() }, function(dto, entity) { Mapper.mapRelease(dto, entity) })
+    const entities = await DtoParser.parseEntitiesFromDto(dto.results, ID_PREFIX_MOVIEDB, Release, function() { return new Release() }, function(dto, entity) { Mapper.mapRelease(dto, entity, popularityFactor) })
     await Database.saveAll(entities)
     console.log(`Synced movie releases: page ${page} of ${pageCount}`)
     
     await BaseUtils.sleep(REQUEST_DELAY_IN_MILLIS)
 
+    const popularityMin = dto.results.reduce((min, p) => p.popularity < min ? p.popularity : min, dto.results[0].popularity);
     const loadMore = page < pageCount
-    if (loadMore) {
-        await syncReleases(language, minDate, maxDate, page + 1)
+    if (loadMore && popularityMin >= 2) {
+        await syncReleases(language, minDate, maxDate, page + 1, popularityFactor)
     } else {
         return
     }

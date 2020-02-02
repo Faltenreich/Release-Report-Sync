@@ -1,8 +1,6 @@
 const IMAGE_HOST_IGDB = "https://images.igdb.com/igdb/image/upload"
 const VIDEO_HOST_IGDB = "https://www.youtube.com"
 
-// Target max popularity is 1000, so we approach it
-
 module.exports = {
     mapGenre:function(dto, entity) {
         const externalId = ID_PREFIX_IGDB + dto.id.toString()
@@ -28,7 +26,7 @@ module.exports = {
         entity.set("title", dto.name)
         entity.set("description", dto.summary)
         entity.set("releasedAt", dto.first_release_date != null? new Date(dto.first_release_date * 1000) : null)
-        entity.set("popularity", dto.popularity * 1.667) // is open ended, mostly capped at 600
+        entity.set("popularity", dto.popularity)
         entity.set("externalUrl", dto.url)
         if (dto.cover != null && dto.cover.url != null && dto.cover.image_id) {
             entity.set("imageUrlForThumbnail", IMAGE_HOST_IGDB + `/t_cover_big/${dto.cover.image_id}.jpg`)
