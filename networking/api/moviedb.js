@@ -13,12 +13,13 @@ module.exports = {
             "language": language
         })
     },
-    discover:function(language, minDate, maxDate, page) {
+    discover:function(language, region, minDate, maxDate, page) {
         return getRequest({
             "endpoint": "/discover/movie",
             "params": `?primary_release_date.gte=${DateUtils.formatDate(minDate)}` +
                 `&primary_release_date.lte=${DateUtils.formatDate(maxDate)}` +
                 `&sort_by=popularity.desc&page=${page}` +
+                `&region=${region}` +
                 `&`,
             "language": language
         })

@@ -13,14 +13,14 @@ const MovieDbApi = include('networking/api/moviedb')
 const REQUEST_DELAY_IN_MILLIS = 250
 
 module.exports = {
-    start:async function(language, date) {
+    start:async function(language, region, date) {
         await syncGenres(language)
         console.log("Synced movie genres completely")
 
         const minDate = date
         const maxDate = new Date()
         maxDate.setFullYear(minDate.getFullYear() + 2)
-        await syncReleases(language, minDate, maxDate, 1)
+        await syncReleases(language, region, minDate, maxDate, 1)
         console.log("Synced movie releases completely")
     }
 }
@@ -38,8 +38,8 @@ function loadReleases() {
     handleMovieFromDto(1, 1, dto)
 }
 
-async function syncReleases(language, minDate, maxDate, page, popularityFactor) {
-    const request = MovieDbApi.discover(language, minDate, maxDate, page)
+async function syncReleases(language, region, minDate, maxDate, page, popularityFactor) {
+    const request = MovieDbApi.discover(language, region, minDate, maxDate, page)
     const dto = await Networking.sendRequest(request)
 
     if (popularityFactor == null && dto.results.length > 0) {
@@ -53,10 +53,9 @@ async function syncReleases(language, minDate, maxDate, page, popularityFactor) 
     
     await BaseUtils.sleep(REQUEST_DELAY_IN_MILLIS)
 
-    const popularityMin = dto.results.reduce((min, p) => p.popularity < min ? p.popularity : min, dto.results[0].popularity);
     const loadMore = page < pageCount
-    if (loadMore && popularityMin >= 2) {
-        await syncReleases(language, minDate, maxDate, page + 1, popularityFactor)
+    if (loadMore) {
+        await syncReleases(language, region, minDate, maxDate, page + 1, popularityFactor)
     } else {
         return
     }
