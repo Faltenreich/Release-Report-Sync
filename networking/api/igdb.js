@@ -7,12 +7,15 @@ const MAX_PAGE_SIZE = 50
 global.ID_PREFIX_IGDB = "igdb_"
 
 module.exports = {
-    games:function(date, page) {
-        const millis = DateUtils.convertToMillis(date)
+    games:function(minDate, maxDate, page) {
+        const minDateInMillis = DateUtils.convertToMillis(minDate)
+        const maxDateInMillis = DateUtils.convertToMillis(maxDate)
         return getRequest({
             "endpoint": "/games",
             "params": `fields *, cover.*, screenshots.*, videos.*, involved_companies.*, involved_companies.company.name; ` +
-                `where first_release_date > ${millis}; ` +
+                `where first_release_date > ${minDateInMillis} &` +
+                `first_release_date < ${maxDateInMillis} &` +
+                `popularity > 1; ` +
                 `sort popularity desc; ` +
                 `limit ${MAX_PAGE_SIZE}; offset ${page * MAX_PAGE_SIZE};`
         })

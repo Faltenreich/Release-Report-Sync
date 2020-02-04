@@ -15,27 +15,13 @@ const MAX_PAGE_COUNT = 150
 
 module.exports = {
     // IGDB is currently not localized
-    start:async function(language, date) {
+    start:async function(language, minDate, maxDate) {
         await syncGenres()
         console.log(`Synced game genres completely`)
         await syncPlatforms()
         console.log(`Synced game platforms completely`)
-        await syncReleases(date, 0)
+        await syncReleases(minDate, maxDate, 0)
         console.log("Synced game releases completely")
-    }
-}
-
-async function syncReleases(date, page) {
-    const request = IgdbApi.games(date, page)
-    const dto = await Networking.sendRequest(request)
-    const entities = await DtoParser.parseEntitiesFromDto(dto, ID_PREFIX_IGDB, Release, function() { return new Release() }, function(dto, entity) { Mapper.mapRelease(dto, entity) })
-    await Database.saveAll(entities)
-    const nextPage = page + 1
-    console.log(`Synced game releases: page ${nextPage} of ${MAX_PAGE_COUNT}`)
-
-    const loadMore = dto.length > 0 && nextPage < MAX_PAGE_COUNT
-    if (loadMore) {
-        await syncReleases(date, nextPage)
     }
 }
 
@@ -51,4 +37,18 @@ async function syncPlatforms() {
     const dto = await Networking.sendRequest(request)
     const entities = await DtoParser.parseEntitiesFromDto(dto, ID_PREFIX_IGDB, Platform, function() { return new Platform() }, function(dto, entity) { Mapper.mapPlatform(dto, entity) })
     await Database.saveAll(entities)
+}
+
+async function syncReleases(minDate, maxDate, page) {
+    const request = IgdbApi.games(minDate, maxDate, page)
+    const dto = await Networking.sendRequest(request)
+    const entities = await DtoParser.parseEntitiesFromDto(dto, ID_PREFIX_IGDB, Release, function() { return new Release() }, function(dto, entity) { Mapper.mapRelease(dto, entity) })
+    await Database.saveAll(entities)
+    const nextPage = page + 1
+    console.log(`Synced game releases: page ${nextPage} of maximum ${MAX_PAGE_COUNT}`)
+
+    const loadMore = dto.length > 0 && nextPage < MAX_PAGE_COUNT
+    if (loadMore) {
+        await syncReleases(minDate, maxDate, nextPage)
+    }
 }

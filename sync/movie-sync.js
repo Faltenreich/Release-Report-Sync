@@ -13,13 +13,9 @@ const MovieDbApi = include('networking/api/moviedb')
 const REQUEST_DELAY_IN_MILLIS = 250
 
 module.exports = {
-    start:async function(language, region, date) {
+    start:async function(language, region, minDate, maxDate) {
         await syncGenres(language)
         console.log("Synced movie genres completely")
-
-        const minDate = date
-        const maxDate = new Date()
-        maxDate.setFullYear(minDate.getFullYear() + 2)
         await syncReleases(language, region, minDate, maxDate, 1)
         console.log("Synced movie releases completely")
     }

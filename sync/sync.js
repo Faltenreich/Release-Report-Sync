@@ -7,9 +7,12 @@ module.exports = {
     start:async function() {
         const language = "en"
         const region = "de"
-        const date = new Date()
-        await MovieSync.start(language, region, date)
+        const minDate = new Date()
+        const maxDate = new Date()
+        maxDate.setFullYear(minDate.getFullYear() + 2)
+
+        await MovieSync.start(language, region, minDate, maxDate)
         await MusicSync.start()
-        await GameSync.start(language, date)
+        await GameSync.start(language, minDate, maxDate)
     }
 }
