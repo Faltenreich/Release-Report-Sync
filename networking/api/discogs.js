@@ -7,13 +7,13 @@ module.exports = {
     search:function(year, page) {
         return getRequest({
             "endpoint": "/database/search",
-            "params": `?year=${year}&format=album&type=master&token=${API_KEY}`
+            "params": `?year=${year}&format=album&type=release&`
         })
     },
     getRelease:function(id) {
         return getRequest({
-            "endpoint": `/masters/${id}`,
-            "params": ""
+            "endpoint": `/releases/${id}`,
+            "params": "?"
         })
     }
 }
@@ -21,6 +21,6 @@ module.exports = {
 function getRequest(params) {
     return { 
         "method": "GET",
-        "url": HOST + params.endpoint + params.params
+        "url": HOST + params.endpoint + params.params + `token=${API_KEY}`
     }
 }
