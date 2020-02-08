@@ -11,6 +11,7 @@ module.exports = {
             
             const request = new XMLHttpRequest()
             request.open(method, url)
+            request.setRequestHeader('User-Agent','ReleaseReport/0.1')
 
             if (headers) {
                 for (let key in headers) {
