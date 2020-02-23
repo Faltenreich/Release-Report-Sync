@@ -4,7 +4,7 @@ const Release = Parse.Object.extend("Release")
 const BaseUtils = include('util/base')
 const Database = include('data/database')
 const DtoParser = include('data/parser/dto')
-const Mapper = include('networking/mapper/music')
+const Mapper = include('networking/mapper/discogs')
 
 const Networking = include('networking/networking')
 const DiscogsApi = include('networking/api/discogs')

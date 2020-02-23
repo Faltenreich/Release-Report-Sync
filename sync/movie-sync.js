@@ -5,7 +5,7 @@ const Release = Parse.Object.extend("Release")
 const BaseUtils = include('util/base')
 const Database = include('data/database')
 const DtoParser = include('data/parser/dto')
-const Mapper = include('networking/mapper/movie')
+const Mapper = include('networking/mapper/moviedb')
 
 const Networking = include('networking/networking')
 const MovieDbApi = include('networking/api/moviedb')

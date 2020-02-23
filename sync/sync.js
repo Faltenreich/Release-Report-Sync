@@ -10,8 +10,9 @@ module.exports = {
         const maxDate = new Date()
         maxDate.setFullYear(minDate.getFullYear() + 2)
 
-        //await MovieSync.start(language, region, minDate, maxDate)
-        await MusicSync.start(minDate.getFullYear(), maxDate.getFullYear())
-        //await GameSync.start(language, minDate, maxDate)
+        await GameSync.start(language, minDate, maxDate)
+        await MovieSync.start(language, region, minDate, maxDate)
+        // TODO: Find music api that supports popularity
+        // await MusicSync.start(minDate.getFullYear(), maxDate.getFullYear())
     }
 }

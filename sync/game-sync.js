@@ -5,7 +5,7 @@ const Platform = Parse.Object.extend("Platform")
 
 const Database = include('data/database')
 const DtoParser = include('data/parser/dto')
-const Mapper = include('networking/mapper/game')
+const Mapper = include('networking/mapper/igdb')
 
 const Networking = include('networking/networking')
 const IgdbApi = include('networking/api/igdb')
