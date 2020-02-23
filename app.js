@@ -3,7 +3,7 @@ global.include = function(file) {
     return require(path);
 }
 
-const Sync = include('sync/sync')
+const Sync = include('api/sync')
 
 module.exports = {
     start:function() {

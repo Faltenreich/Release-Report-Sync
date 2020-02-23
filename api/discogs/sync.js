@@ -6,7 +6,7 @@ const Database = include('data/database')
 const DtoParser = include('data/parser/dto')
 const Mapper = include('api/discogs/mapper')
 
-const Networking = include('networking/networking')
+const Networking = include('util/networking')
 const DiscogsApi = include('api/discogs/api')
 
 const REQUEST_DELAY_IN_MILLIS = 1000

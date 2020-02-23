@@ -7,7 +7,7 @@ const Database = include('data/database')
 const DtoParser = include('data/parser/dto')
 const Mapper = include('api/moviedb/mapper')
 
-const Networking = include('networking/networking')
+const Networking = include('util/networking')
 const MovieDbApi = include('api/moviedb/api')
 
 const REQUEST_DELAY_IN_MILLIS = 250

@@ -7,7 +7,7 @@ const Database = include('data/database')
 const DtoParser = include('data/parser/dto')
 const Mapper = include('api/igdb/mapper')
 
-const Networking = include('networking/networking')
+const Networking = include('util/networking')
 const IgdbApi = include('api/igdb/api')
 
 // Free tier has an offset limit of 150 (see https://api-docs.igdb.com/#pagination)
