@@ -5,10 +5,10 @@ const Release = Parse.Object.extend("Release")
 const BaseUtils = include('util/base')
 const Database = include('data/database')
 const DtoParser = include('data/parser/dto')
-const Mapper = include('networking/mapper/moviedb')
+const Mapper = include('api/moviedb/mapper')
 
 const Networking = include('networking/networking')
-const MovieDbApi = include('networking/api/moviedb')
+const MovieDbApi = include('api/moviedb/api')
 
 const REQUEST_DELAY_IN_MILLIS = 250
 
