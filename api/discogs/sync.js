@@ -4,10 +4,10 @@ const Release = Parse.Object.extend("Release")
 const BaseUtils = include('util/base')
 const Database = include('data/database')
 const DtoParser = include('data/parser/dto')
-const Mapper = include('networking/mapper/discogs')
+const Mapper = include('api/discogs/mapper')
 
 const Networking = include('networking/networking')
-const DiscogsApi = include('networking/api/discogs')
+const DiscogsApi = include('api/discogs/api')
 
 const REQUEST_DELAY_IN_MILLIS = 1000
 const REGEX_DATE = /^\d{4}\-\d{1,2}\-\d{1,2}$/
