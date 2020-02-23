@@ -1,4 +1,4 @@
-const GameSync = include('sync/game-sync')
+const GameSync = include('igdb/sync')
 const MovieSync = include('sync/movie-sync')
 const MusicSync = include('sync/music-sync')
 
