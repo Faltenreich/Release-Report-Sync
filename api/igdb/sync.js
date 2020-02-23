@@ -5,10 +5,10 @@ const Platform = Parse.Object.extend("Platform")
 
 const Database = include('data/database')
 const DtoParser = include('data/parser/dto')
-const Mapper = include('igdb/mapper')
+const Mapper = include('api/igdb/mapper')
 
 const Networking = include('networking/networking')
-const IgdbApi = include('igdb/api')
+const IgdbApi = include('api/igdb/api')
 
 // Free tier has an offset limit of 150 (see https://api-docs.igdb.com/#pagination)
 const MAX_PAGE_COUNT = 150
