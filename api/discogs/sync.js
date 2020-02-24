@@ -14,8 +14,9 @@ const REGEX_DATE = /^\d{4}\-\d{1,2}\-\d{1,2}$/
 
 module.exports = {
     start:async function(minYear, maxYear) {
+        console.log(`Starting synchronization of music releases`)
         await syncReleases(minYear, 0) // TODO: Iterate until maxYear
-        console.log("Synced music releases completely")
+        console.log(`Completed synchronization of music releases`)
     }
 }
 
@@ -28,7 +29,7 @@ async function syncReleases(year, page) {
     const entities = await DtoParser.parseEntitiesFromDto(releaseDtos, ID_PREFIX_DISCOGS, Release, function() { return new Release() }, function(dto, entity) { Mapper.mapRelease(dto, entity) })
     await Database.saveAll(entities)
 
-    console.log(`Synced music releases: page ${page + 1} of ${pageCount}`)
+    console.log(`Synchronizing music releases: page ${page + 1} of ${pageCount}`)
 
     const loadMore = page < pageCount
     if (loadMore) {
@@ -43,7 +44,7 @@ async function getReleaseDtos(serverIds, page, pageCount) {
         const request = DiscogsApi.getRelease(serverId)
         try {
             const dto = await Networking.sendRequest(request)
-            console.log(`Requested music release: ${releaseIndex + 1} of ${serverIds.length} in page ${page + 1} of ${pageCount}`)
+            console.log(`Synchronizing music release: ${releaseIndex + 1} of ${serverIds.length} in page ${page + 1} of ${pageCount}`)
             await BaseUtils.sleep(REQUEST_DELAY_IN_MILLIS)
             const isValid = dto.id != null && dto.released != null && REGEX_DATE.test(dto.released)
             if (isValid) {

@@ -14,10 +14,12 @@ const REQUEST_DELAY_IN_MILLIS = 250
 
 module.exports = {
     start:async function(language, region, minDate, maxDate) {
+        console.log(`Starting synchronization of movie genres`)
         await syncGenres(language)
-        console.log("Synced movie genres completely")
+        console.log(`Completed synchronization of movie genres`)
+        console.log(`Starting synchronization of movie releases`)
         await syncReleases(language, region, minDate, maxDate, 1)
-        console.log("Synced movie releases completely")
+        console.log(`Completed synchronization of movie releases`)
     }
 }
 
@@ -26,7 +28,7 @@ async function syncGenres(language) {
     const dto = await Networking.sendRequest(request)
     const entities = await DtoParser.parseEntitiesFromDto(dto.genres, ID_PREFIX_MOVIEDB, Genre, function() { return new Genre() }, function(dto, entity) { Mapper.mapGenre(dto, entity) })
     await Database.saveAll(entities)
-    console.log(`Synced movie genres: page 1 of 1`)
+    console.log(`Synchronizing movie genres: page 1 of 1`)
 }
 
 function loadReleases() {
@@ -45,7 +47,7 @@ async function syncReleases(language, region, minDate, maxDate, page, popularity
     const pageCount = dto.total_pages
     const entities = await DtoParser.parseEntitiesFromDto(dto.results, ID_PREFIX_MOVIEDB, Release, function() { return new Release() }, function(dto, entity) { Mapper.mapRelease(dto, entity, popularityFactor) })
     await Database.saveAll(entities)
-    console.log(`Synced movie releases: page ${page} of ${pageCount}`)
+    console.log(`Synchronizing movie releases: page ${page} of ${pageCount}`)
     
     await BaseUtils.sleep(REQUEST_DELAY_IN_MILLIS)
 

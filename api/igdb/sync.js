@@ -16,12 +16,15 @@ const MAX_PAGE_COUNT = 150
 module.exports = {
     // IGDB is currently not localized
     start:async function(language, minDate, maxDate) {
+        console.log(`Starting synchronization of game genres`)
         await syncGenres()
-        console.log(`Synced game genres completely`)
+        console.log(`Completed synchronization of game genres`)
+        console.log(`Starting synchronization of game platforms`)
         await syncPlatforms()
-        console.log(`Synced game platforms completely`)
+        console.log(`Completed synchronization of game platforms`)
+        console.log(`Starting synchronization of game releases`)
         await syncReleases(minDate, maxDate, 0)
-        console.log("Synced game releases completely")
+        console.log(`Completed synchronization of game releases`)
     }
 }
 
@@ -45,7 +48,7 @@ async function syncReleases(minDate, maxDate, page) {
     const entities = await DtoParser.parseEntitiesFromDto(dto, ID_PREFIX_IGDB, Release, function() { return new Release() }, function(dto, entity) { Mapper.mapRelease(dto, entity) })
     await Database.saveAll(entities)
     const nextPage = page + 1
-    console.log(`Synced game releases: page ${nextPage} of maximum ${MAX_PAGE_COUNT}`)
+    console.log(`Synchronizing game releases: page ${nextPage}`)
 
     const loadMore = dto.length > 0 && nextPage < MAX_PAGE_COUNT
     if (loadMore) {
