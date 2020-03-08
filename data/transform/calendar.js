@@ -13,16 +13,20 @@ module.exports = {
         for (var date = minDate; date <= maxDate; date.setDate(date.getDate() + 1)) {
             let releaseForDate = releasesByDate.find(release => {
                 const releaseDate = release.get("releasedAt")
-                return releaseDate.getDate() == date.getDate()
+                const isSameDay = releaseDate.getDate() == date.getDate()
                     && releaseDate.getMonth() == date.getMonth()
                     && releaseDate.getFullYear() == date.getFullYear()
+                return isSameDay
             })
             if (releaseForDate) {
-                calendarItems.push(releaseForDate)
+                const calendarItem = new Calendar()
+                calendarItem.set("date", releaseForDate.get("releasedAt"))
+                calendarItem.set("releaseId", releaseForDate.get("externalId"))
+                calendarItems.push(calendarItem)
             }
         }
-        
-        // TODO: Create and update calendar items
+
+        Database.saveAll(calendarItems)
 
         console.log(`Completed calendar update`)
     }
