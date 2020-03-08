@@ -54,7 +54,5 @@ async function syncReleases(language, region, minDate, maxDate, page, popularity
     const loadMore = page < pageCount
     if (loadMore) {
         await syncReleases(language, region, minDate, maxDate, page + 1, popularityFactor)
-    } else {
-        return
     }
 }

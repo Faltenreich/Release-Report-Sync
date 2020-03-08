@@ -20,31 +20,21 @@ module.exports = {
 }
 
 async function updateCalendarBetween(minDate, maxDate, page, pageCount) {
-    console.log(`Updating calendar: page ${page + 1} of ${pageCount}`)
-
-    const minDateForPage = new Date()
-    minDateForPage.setDate(minDate.getDate())
+    const minDateForPage = new Date(minDate)
     minDateForPage.setMonth(minDate.getMonth() + page * CALENDAR_PAGE_SIZE)
-    minDateForPage.setFullYear(minDate.getFullYear())
 
-    const maxDateForPage = new Date()
-    maxDateForPage.setDate(minDateForPage.getDate())
+    const maxDateForPage = new Date(minDateForPage)
     maxDateForPage.setMonth(minDateForPage.getMonth() + CALENDAR_PAGE_SIZE)
-    maxDateForPage.setFullYear(minDateForPage.getFullYear())
 
     const releasesByDate = await ReleaseDao.getByDate(minDateForPage, maxDateForPage)
 
     var calendarItems = []
-    var currentDate = new Date()
-    currentDate.setDate(minDateForPage.getDate())
-    currentDate.setMonth(minDateForPage.getMonth())
-    currentDate.setFullYear(minDateForPage.getFullYear())
-    for (currentDate = minDateForPage; currentDate <= maxDateForPage; currentDate.setDate(currentDate.getDate() + 1)) {
+    for (var date = new Date(minDateForPage); date <= maxDateForPage; date.setDate(date.getDate() + 1)) {
         let releaseForDate = releasesByDate.find(release => {
             const releaseDate = release.get("releasedAt")
-            const isSameDay = releaseDate.getDate() == currentDate.getDate()
-                && releaseDate.getMonth() == currentDate.getMonth()
-                && releaseDate.getFullYear() == currentDate.getFullYear()
+            const isSameDay = releaseDate.getDate() == date.getDate()
+                && releaseDate.getMonth() == date.getMonth()
+                && releaseDate.getFullYear() == date.getFullYear()
             return isSameDay
         })
         if (releaseForDate) {
@@ -55,9 +45,13 @@ async function updateCalendarBetween(minDate, maxDate, page, pageCount) {
         }
     }
 
-    Database.saveAll(calendarItems)
+    await Database.saveAll(calendarItems)
     
-    if (page < pageCount) {
+    const nextPage = page + 1
+    console.log(`Updated calendar: page ${nextPage} of ${pageCount}`)
+    
+    const loadMore = nextPage < pageCount
+    if (loadMore) {
         await updateCalendarBetween(minDate, maxDate, page + 1, pageCount)
     }
 }
