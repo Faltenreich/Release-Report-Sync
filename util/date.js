@@ -11,5 +11,8 @@ module.exports = {
         ]
         const format = parts.join('-')
         return format
+    },
+    monthsBetween:function(from, to) {
+        return to.getMonth() - from.getMonth() + (12 * (to.getFullYear() - from.getFullYear()))
     }
 }
