@@ -18,5 +18,15 @@ module.exports = {
             console.log(error)
             throw(error)
         })
+    },
+    getDistinct:async function(type, distinctBy) {
+        const query = new Parse.Query(type)
+        query.distinct(distinctBy)
+        return await query.find().then(results => {
+            return results
+        }).catch(error => {
+            console.log(error)
+            throw(error)
+        })
     }
 }
