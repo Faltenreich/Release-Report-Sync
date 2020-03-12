@@ -2,6 +2,7 @@ const Parse = require('parse/node')
 
 const Database = include('data/database')
 const ReleaseDao = include('data/dao/release')
+const CalendarDao = include('data/dao/calendar')
 const Calendar = Parse.Object.extend("Calendar")
 
 const DateUtils = include('util/date')
@@ -22,9 +23,10 @@ module.exports = {
 async function updateCalendarBetween(minDate, maxDate, page, pageCount) {
     const minDateForPage = new Date(minDate)
     minDateForPage.setMonth(minDate.getMonth() + page * CALENDAR_PAGE_SIZE)
-
     const maxDateForPage = new Date(minDateForPage)
     maxDateForPage.setMonth(minDateForPage.getMonth() + CALENDAR_PAGE_SIZE)
+    
+    await CalendarDao.deleteBetween(minDateForPage, maxDateForPage)
 
     const releasesByDate = await ReleaseDao.getByDate(minDateForPage, maxDateForPage)
 
