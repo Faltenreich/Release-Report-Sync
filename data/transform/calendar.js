@@ -3,7 +3,7 @@ const Parse = require('parse/node')
 const Database = include('data/database')
 const ReleaseDao = include('data/dao/release')
 const CalendarDao = include('data/dao/calendar')
-const Calendar = Parse.Object.extend("Calendar")
+const CalendarEvent = Parse.Object.extend("CalendarEvent")
 
 const DateUtils = include('util/date')
 
@@ -30,7 +30,7 @@ async function updateCalendarBetween(minDate, maxDate, page, pageCount) {
 
     const releasesByDate = await ReleaseDao.getByDate(minDateForPage, maxDateForPage)
 
-    var calendarItems = []
+    var calendarEvents = []
     for (var date = new Date(minDateForPage); date <= maxDateForPage; date.setDate(date.getDate() + 1)) {
         let releaseForDate = releasesByDate.find(release => {
             const releaseDate = release.get("releasedAt")
@@ -40,17 +40,21 @@ async function updateCalendarBetween(minDate, maxDate, page, pageCount) {
             return isSameDay
         })
         if (releaseForDate) {
-            const calendarItem = new Calendar()
-            calendarItem.set("date", releaseForDate.get("releasedAt"))
-            calendarItem.set("imageUrl", releaseForDate.get("imageUrlForThumbnail"))
-            calendarItems.push(calendarItem)
+            const calendarEvent = new CalendarEvent()
+            const date = releaseForDate.get("releasedAt")
+            const imageUrl = releaseForDate.get("imageUrlForThumbnail")
+            if (date && imageUrl) {
+                calendarEvent.set("date", releaseForDate.get("releasedAt"))
+                calendarEvent.set("imageUrl", releaseForDate.get("imageUrlForThumbnail"))
+                calendarEvents.push(calendarEvent)
+            }
         }
     }
 
-    await Database.saveAll(calendarItems)
+    await Database.saveAll(calendarEvents)
     
     const nextPage = page + 1
-    console.log(`Updated calendar: page ${nextPage} of ${pageCount}`)
+    console.log(`Updated calendar events: page ${nextPage} of ${pageCount}`)
     
     const loadMore = nextPage < pageCount
     if (loadMore) {
