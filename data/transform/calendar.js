@@ -42,7 +42,7 @@ async function updateCalendarBetween(minDate, maxDate, page, pageCount) {
         if (releaseForDate) {
             const calendarItem = new Calendar()
             calendarItem.set("date", releaseForDate.get("releasedAt"))
-            calendarItem.set("releaseId", releaseForDate.get("externalId"))
+            calendarItem.set("imageUrl", releaseForDate.get("imageUrlForThumbnail"))
             calendarItems.push(calendarItem)
         }
     }
