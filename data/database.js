@@ -7,7 +7,6 @@ module.exports = {
         return await query.find().then(results => {
             return results
         }).catch(error => {
-            console.log(error)
             throw(error)
         })
     },
@@ -15,7 +14,6 @@ module.exports = {
         return await Parse.Object.saveAll(entities).then(() => { 
             return
         }).catch(error => {
-            console.log(error)
             throw(error)
         })
     }
