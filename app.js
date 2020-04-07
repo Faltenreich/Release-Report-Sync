@@ -6,12 +6,15 @@ global.include = function(file) {
 const Parse = require('parse/node')
 const Sync = include('api/sync')
 const Transformer = include('data/transform/transformer')
-const Config = require('./config.json')
+const Config = include('config')
 
 module.exports = {
     start:async function() {
         try {
-            config()
+            const config = Config.parseServer        
+            Parse.initialize(config.applicationId, config.javascriptKey)
+            Parse.serverURL = config.serverUrl
+            Parse.masterKey = config.masterKey
 
             const language = "en"
             const region = "de"
@@ -25,16 +28,4 @@ module.exports = {
             console.error(error)
         }
     }
-}
-
-function config() {
-    const parseServerSettings = Config.parseServer
-    const serverUrl = parseServerSettings.serverUrl
-    const applicationId = parseServerSettings.applicationId
-    const javascriptKey = parseServerSettings.javascriptKey
-    const masterKey = parseServerSettings.masterKey
-
-    Parse.initialize(applicationId, javascriptKey)
-    Parse.serverURL = serverUrl
-    Parse.masterKey = masterKey
 }

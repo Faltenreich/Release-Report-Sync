@@ -1,5 +1,7 @@
-const HOST = "https://api.discogs.com"
-const API_KEY = "oBXMVXDFZTwJxMdWXLqOajkMZsGYBvtMBHxvtpbd"
+const Config = include('config').discogs
+
+const HOST = Config.serverUrl
+const API_KEY = Config.apiKey
 
 global.ID_PREFIX_DISCOGS = "discogs_"
 
