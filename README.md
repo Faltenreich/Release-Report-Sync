@@ -41,7 +41,7 @@ This data is then merged at the backend into one single database. Parse Server i
             "apiKey": "<API Key for TMDb>"
         }
     }
-```
+    ```
 
 3. Deploy repository as Cloud Code
 
