@@ -9,19 +9,16 @@ Release Report Sync synchronizes metadata for [Release Report](https://github.co
 Parse Sync requests data from multiple endpoints. Every endpoint requires an API Key for authentication purposes which must be request in advance. Currently following APIs are used:
 
 * [The Movie Database (TMDb) API](https://developers.themoviedb.org): Offers metadata for upcoming movies
-* TBD: Offers metadata for upcoming music albums
+* <i>TBD: Offers metadata for upcoming music albums</i>
 * [IGDB: Video Game Database API](https://www.igdb.com/api): Offers metadata for upcoming video games
 
 This data is then merged at the backend into one single database. Parse Server is used as Mobile Backend as a Service and therefor MongoDB as database. Therefor either a self-hosted or third party instance of Parse Server is crucial in order to continue.
 
-###### Database
+#### Setup
 
 1. Create a database with following classes: <TODO: Scheme migration possible?>
-
-###### Cloud Code
-
-1. Clone or fork this repository
-2. Create config.json in the root directory with following content:
+2. Clone or fork this repository
+3. Create config.json in the root directory with following content:
 
     ```json
     {
@@ -43,11 +40,8 @@ This data is then merged at the backend into one single database. Parse Server i
     }
     ```
 
-3. Deploy repository as Cloud Code
-
-###### Job
-
-1. Schedule Background Job which executes script regularly
+4. Deploy repository as Cloud Code
+5. Schedule Background Job which executes script regularly
 
 #### Third-party licenses
 
