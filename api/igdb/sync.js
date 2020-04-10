@@ -16,15 +16,19 @@ const MAX_PAGE_COUNT = 150
 module.exports = {
     // IGDB is currently not localized
     start:async function(language, minDate, maxDate) {
-        console.log(`Starting synchronization of game genres`)
-        await syncGenres()
-        console.log(`Completed synchronization of game genres`)
-        console.log(`Starting synchronization of game platforms`)
-        await syncPlatforms()
-        console.log(`Completed synchronization of game platforms`)
-        console.log(`Starting synchronization of game releases`)
-        await syncReleases(minDate, maxDate, 0)
-        console.log(`Completed synchronization of game releases`)
+        try {
+            console.log(`Starting synchronization of game genres`)
+            await syncGenres()
+            console.log(`Completed synchronization of game genres`)
+            console.log(`Starting synchronization of game platforms`)
+            await syncPlatforms()
+            console.log(`Completed synchronization of game platforms`)
+            console.log(`Starting synchronization of game releases`)
+            await syncReleases(minDate, maxDate, 0)
+            console.log(`Completed synchronization of game releases`)
+        } catch (error) {
+            console.error(error)
+        }
     }
 }
 

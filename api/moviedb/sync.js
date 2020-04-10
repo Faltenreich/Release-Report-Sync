@@ -14,12 +14,16 @@ const REQUEST_DELAY_IN_MILLIS = 250
 
 module.exports = {
     start:async function(language, region, minDate, maxDate) {
-        console.log(`Starting synchronization of movie genres`)
-        await syncGenres(language)
-        console.log(`Completed synchronization of movie genres`)
-        console.log(`Starting synchronization of movie releases`)
-        await syncReleases(language, region, minDate, maxDate, 1)
-        console.log(`Completed synchronization of movie releases`)
+        try {
+            console.log(`Starting synchronization of movie genres`)
+            await syncGenres(language)
+            console.log(`Completed synchronization of movie genres`)
+            console.log(`Starting synchronization of movie releases`)
+            await syncReleases(language, region, minDate, maxDate, 1)
+            console.log(`Completed synchronization of movie releases`)
+        } catch (error) {
+            console.error(error)
+        }
     }
 }
 

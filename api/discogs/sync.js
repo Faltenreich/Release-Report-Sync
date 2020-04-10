@@ -14,9 +14,13 @@ const REGEX_DATE = /^\d{4}\-\d{1,2}\-\d{1,2}$/
 
 module.exports = {
     start:async function(minYear, maxYear) {
-        console.log(`Starting synchronization of music releases`)
-        await syncReleases(minYear, 0) // TODO: Iterate until maxYear
-        console.log(`Completed synchronization of music releases`)
+        try {
+            console.log(`Starting synchronization of music releases`)
+            await syncReleases(minYear, 0) // TODO: Iterate until maxYear
+            console.log(`Completed synchronization of music releases`)
+        } catch (error) {
+            console.error(error)
+        }
     }
 }
 
