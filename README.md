@@ -6,9 +6,13 @@ Release Report Sync synchronizes metadata for [Release Report](https://github.co
 
 ## Development
 
-#### Setup
+Parse Sync requests data from multiple endpoints. Every endpoint requires an API Key for authentication purposes which must be request in advance. Currently following APIs are used:
 
-Release Report uses Parse Server as Mobile Backend as a Service (MBaaS). Therefor either a self-hosted or third party instance of Parse Server is crucial in order to continue.
+* [The Movie Database (TMDb) API](https://developers.themoviedb.org): Offers metadata for upcoming movies
+* TBD: Offers metadata for upcoming music albums
+* [IGDB: Video Game Database API](https://www.igdb.com/api): Offers metadata for upcoming video games
+
+This data is then merged at the backend into one single database. Parse Server is used as Mobile Backend as a Service and therefor MongoDB as database. Therefor either a self-hosted or third party instance of Parse Server is crucial in order to continue.
 
 ###### Database
 
@@ -17,7 +21,7 @@ Release Report uses Parse Server as Mobile Backend as a Service (MBaaS). Therefo
 ###### Cloud Code
 
 1. Clone or fork this repository
-2. Create config.json in the root directory with following content from the Parse Server Core Settings:
+2. Create config.json in the root directory with following content:
 
     ```json
     {
@@ -26,9 +30,18 @@ Release Report uses Parse Server as Mobile Backend as a Service (MBaaS). Therefo
             "applicationId": "<App Id>",
             "javascriptKey": "<Javascript Key>",
             "masterKey": "<Master Key>"
+        },
+        "igdb": {
+            "serverUrl": "https://api-v3.igdb.com",
+            "apiKey": "<API Key for IGDB>",
+            "pageSize": 50
+        },
+        "movieDb": {
+            "serverUrl": "https://api.themoviedb.org/3",
+            "apiKey": "<API Key for TMDb>"
         }
     }
-    ```
+```
 
 3. Deploy repository as Cloud Code
 
@@ -40,9 +53,9 @@ Release Report uses Parse Server as Mobile Backend as a Service (MBaaS). Therefo
 
 This software uses following technologies with great appreciation:
 
-* [IGDB: Video Game Database API](https://www.igdb.com/api): Offers metadata for upcoming video games
-* [The Movie Database (TMDb) API](https://developers.themoviedb.org): Offers metadata for upcoming movies
-* [TBD]: Offers metadata for upcoming music
+* [IGDB: Video Game Database API](https://www.igdb.com/api)
+* [The Movie Database (TMDb) API](https://developers.themoviedb.org)
+* [Parse SDK for JavaScript](https://github.com/parse-community/Parse-SDK-JS)
 
 These dependencies are bundled under the terms of their respective license.
 
