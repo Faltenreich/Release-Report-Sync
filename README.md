@@ -43,6 +43,12 @@ This data is then merged at the backend into one single database. Parse Server i
 4. Deploy repository as Cloud Code
 5. Schedule Background Job which executes script regularly
 
+#### Deployment
+
+1. Deploy via command-line (e.g. to Back4App.com)
+2. Setup project: b4a new
+3. Push code: b4a deploy
+
 #### Third-party licenses
 
 This software uses following technologies with great appreciation:
