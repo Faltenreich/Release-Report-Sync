@@ -1,0 +1,10 @@
+{
+  "applications": {
+    "Release Radar": {
+      "applicationId": "La20z4nOXJhy9FpOfJAsA4M4ucfsns6D1USzjXBj"
+    },
+    "_default": {
+      "link": "Release Radar"
+    }
+  }
+}
