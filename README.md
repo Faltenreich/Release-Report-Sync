@@ -40,8 +40,8 @@ This data is then merged at the backend into one single database. Parse Server i
     }
     ```
 
-4. Deploy repository as Cloud Code
-5. Schedule Background Job which executes script regularly
+4. Deploy cloud code
+5. Schedule Background Job which executes cloud code regularly
 
 #### Deployment
 
