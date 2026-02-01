@@ -1,7 +1,7 @@
 const Config = include('config').movieDb
 const DateUtils = include('util/date')
 
-const HOST = Config.serverUrl
+const HOST = "https://api.themoviedb.org/3"
 const API_KEY = Config.apiKey
 
 global.ID_PREFIX_MOVIEDB = "moviedb_"

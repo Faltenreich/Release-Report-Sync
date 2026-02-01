@@ -26,7 +26,7 @@ module.exports = {
         entity.set("title", dto.name)
         entity.set("description", dto.summary)
         entity.set("releasedAt", dto.first_release_date != null? new Date(dto.first_release_date * 1000) : null)
-        entity.set("popularity", dto.popularity)
+        entity.set("popularity", 100) // TODO: Use IGDB's PopScore
         entity.set("externalUrl", dto.url)
         if (dto.cover != null && dto.cover.url != null && dto.cover.image_id) {
             entity.set("imageUrlForThumbnail", IMAGE_HOST_IGDB + `/t_cover_big/${dto.cover.image_id}.jpg`)

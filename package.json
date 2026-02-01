@@ -1,0 +1,24 @@
+{
+  "name": "release-report-sync",
+  "version": "1.0.0",
+  "description": "[![Project Status: WIP – Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip) [![License](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)",
+  "homepage": "https://github.com/Faltenreich/Release-Report-Sync#readme",
+  "bugs": {
+    "url": "https://github.com/Faltenreich/Release-Report-Sync/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Faltenreich/Release-Report-Sync.git"
+  },
+  "license": "GPL-3.0-or-later",
+  "author": "Philipp Fahlteich",
+  "type": "commonjs",
+  "main": "local.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "parse": "^8.0.3",
+    "xmlhttprequest": "^1.8.0"
+  }
+}

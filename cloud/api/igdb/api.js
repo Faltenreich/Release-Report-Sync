@@ -1,9 +1,10 @@
 const Config = include('config').igdb
 const DateUtils = include('util/date')
 
-const HOST = Config.serverUrl
+const HOST = "https://api.igdb.com/v4"
+const CLIENT_ID = Config.clientId
 const API_KEY = Config.apiKey
-const MAX_PAGE_SIZE = Config.pageSize
+const MAX_PAGE_SIZE = 50
 
 global.ID_PREFIX_IGDB = "igdb_"
 
@@ -15,10 +16,8 @@ module.exports = {
             "endpoint": "/games",
             "params": `fields *, cover.*, screenshots.*, videos.*, involved_companies.*, involved_companies.company.name; ` +
                 `where first_release_date > ${minDateInMillis} &` +
-                `first_release_date < ${maxDateInMillis} &` +
-                `popularity > 1; ` +
-                `sort popularity desc; ` +
-                `limit ${MAX_PAGE_SIZE}; offset ${page * Config.pageSize};`
+                `first_release_date < ${maxDateInMillis}; ` +
+                `limit ${MAX_PAGE_SIZE}; offset ${page * MAX_PAGE_SIZE};`
         })
     },
     genres:function(page) {
@@ -40,9 +39,8 @@ function getRequest(params) {
         "method": "POST",
         "url": HOST + params.endpoint,
         "headers": { 
-            "user-key": API_KEY, 
-            "content-type": "application/raw",
-            "Access-Control-Allow-Origin": "*"
+            "Client-ID": CLIENT_ID,
+            "Authorization": `Bearer ${API_KEY}` // TODO: Replace with token from Twitter
          },
         "body": params.params
     }

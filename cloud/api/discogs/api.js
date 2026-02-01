@@ -1,6 +1,6 @@
 const Config = include('config').discogs
 
-const HOST = Config.serverUrl
+const HOST = ""
 const API_KEY = Config.apiKey
 
 global.ID_PREFIX_DISCOGS = "discogs_"
