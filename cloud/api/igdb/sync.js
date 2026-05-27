@@ -65,6 +65,6 @@ async function syncReleases(accessToken, minDate, maxDate, page) {
 
     const loadMore = dto.length > 0 && nextPage < MAX_PAGE_COUNT
     if (loadMore) {
-        await syncReleases(minDate, maxDate, nextPage)
+        await syncReleases(accessToken, minDate, maxDate, nextPage)
     }
 }

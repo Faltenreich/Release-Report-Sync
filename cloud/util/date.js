@@ -1,6 +1,6 @@
 module.exports = {
     convertToMillis:function(date) {
-        return Math.floor(date.getTime() / 1000)
+        return Math.floor(new Date(date).getTime() / 1000)
     },
     // Formats date as yyyy-MM-dd
     formatDate:function(date) {
