@@ -17,14 +17,17 @@ module.exports = {
     // IGDB is currently not localized
     start:async function(language, minDate, maxDate) {
         try {
+            console.log(`Authenticating to Twitch`)
+            const accessToken = await authenticate()
+            console.log(`Authenticated to Twitch`)
             console.log(`Starting synchronization of game genres`)
-            await syncGenres()
+            await syncGenres(accessToken)
             console.log(`Completed synchronization of game genres`)
             console.log(`Starting synchronization of game platforms`)
-            await syncPlatforms()
+            await syncPlatforms(accessToken)
             console.log(`Completed synchronization of game platforms`)
             console.log(`Starting synchronization of game releases`)
-            await syncReleases(minDate, maxDate, 0)
+            await syncReleases(accessToken, minDate, maxDate, 0)
             console.log(`Completed synchronization of game releases`)
         } catch (error) {
             console.error(error)
@@ -32,22 +35,28 @@ module.exports = {
     }
 }
 
-async function syncGenres() {
-    const request = IgdbApi.genres(0)
+async function authenticate() {
+    const request = IgdbApi.authenticate()
+    const dto = await Networking.sendRequest(request)
+    return dto.access_token
+}
+
+async function syncGenres(accessToken) {
+    const request = IgdbApi.genres(accessToken, 0)
     const dto = await Networking.sendRequest(request)
     const entities = await DtoParser.parseEntitiesFromDto(dto, ID_PREFIX_IGDB, Genre, function() { return new Genre() }, function(dto, entity) { Mapper.mapGenre(dto, entity) })
     await Database.saveAll(entities)
 }
 
-async function syncPlatforms() {
-    const request = IgdbApi.platforms(0)
+async function syncPlatforms(accessToken) {
+    const request = IgdbApi.platforms(accessToken, 0)
     const dto = await Networking.sendRequest(request)
     const entities = await DtoParser.parseEntitiesFromDto(dto, ID_PREFIX_IGDB, Platform, function() { return new Platform() }, function(dto, entity) { Mapper.mapPlatform(dto, entity) })
     await Database.saveAll(entities)
 }
 
-async function syncReleases(minDate, maxDate, page) {
-    const request = IgdbApi.games(minDate, maxDate, page)
+async function syncReleases(accessToken, minDate, maxDate, page) {
+    const request = IgdbApi.games(accessToken, minDate, maxDate, page)
     const dto = await Networking.sendRequest(request)
     const entities = await DtoParser.parseEntitiesFromDto(dto, ID_PREFIX_IGDB, Release, function() { return new Release() }, function(dto, entity) { Mapper.mapRelease(dto, entity) })
     await Database.saveAll(entities)
